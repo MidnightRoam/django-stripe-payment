@@ -1,0 +1,157 @@
+* {
+    font-size: 16px;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+header {
+    background-color: orange;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: 600;
+    transition: 0.5s;
+}
+
+.link:hover {
+    transform: scale(1.4);
+    color: #374E54;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 881px;
+}
+
+
+.item__link {
+    text-decoration: none;
+    color: #252525;
+    margin: 10px;
+    border: 1px solid gainsboro;
+    width: 400px;
+    height: 350px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    font-weight: 400;
+    transition: 0.3s;
+}
+
+.item__link p {
+    font-size: 1.2em;
+}
+
+.item__link:hover {
+    background-color: orange;
+    color: #fff;
+    border: none;
+}
+
+.item__link:hover .item__name {
+    color: #252525;
+    transform: translate(15%) scale(1.1);
+}
+
+.item__name {
+    margin: 10px;
+    font-weight: 600;
+    transition: 0.5s;
+}
+
+.item__description {
+    margin: 10px;
+}
+
+.item__price {
+    margin: 10px;
+    font-weight: 500;
+}
+
+.product__section {
+    margin: 0 auto;
+    margin-top: 50px;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    width: 400px;
+    height: 800px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product__section p {
+    font-size: 1.5em;
+    margin: 10px;
+}
+
+.product__name, .product__price {
+    font-weight: 900;
+}
+
+.simple__page {
+    padding: 50px;
+    height: 881px;
+}
+
+.title {
+    font-size: 2em;
+    font-weight: 500;
+}
+
+.sub__link {
+    font-size: 1.5em;
+}
+
+footer {
+    background: orange;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.logo {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-right: 10px;
+    transition: 0.4s;
+}
+
+.logo:hover {
+    transform: scale(1.4) translate(-40px);
+    color: #374E54;
+}
+
+.btn {
+    padding: 10px 50px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2em;
+}
+
+.btn__primary {
+    transition: 0.3s;
+}
+
+.btn__primary:hover {
+    background: orange;
+    color: #fff;
+    transform: scale(1.1);
+}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container">
+    {% for item in items %}
+      <a href="{% url 'item_page' item.pk %}" class="item__link">
+        <div class="item__card">
+            <p class="item__name">{{ item.name }}</p>
+            <p class="item__description">{{ item.description }}</p>
+            <p class="item__price">Price: ${{ item.get_price }}</p>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+{% endblock %}
