@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="simple__page">
+        <h1 class="title">Cart</h1>
+        <div class="cart__card">
+            {% for item in cart%}
+            <div class="cart__items">
+                {{ item}}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

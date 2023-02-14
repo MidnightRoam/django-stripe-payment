@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Item(models.Model):
@@ -13,7 +14,10 @@ class Item(models.Model):
     def get_price(self):
         return "{0:.2f}".format(self.price / 100)
 
+    def get_absolute_url(self):
+        return reverse('item_detail', kwargs={'pk': self.pk})
+
 
 class Order(models.Model):
     """Order items model"""
-    item = models.OneToManyField("Item")
+    item = models.ManyToManyField(Item)

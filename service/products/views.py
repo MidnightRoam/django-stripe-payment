@@ -1,11 +1,13 @@
 import stripe
 from django.conf import settings
-from django.http import JsonResponse
-from django.shortcuts import render
+from django.core.mail import send_mail
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, redirect
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView
 
-from .models import Item
+from .models import Item, Order
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -91,6 +93,9 @@ class CreateCheckoutSessionView(View):
                     'quantity': 1,
                 },
             ],
+            metadata={
+                'item_id': item.id
+            },
             mode='payment',
             success_url=YOUR_DOMAIN + 'success/',
             cancel_url=YOUR_DOMAIN + 'cancel/',
@@ -98,3 +103,59 @@ class CreateCheckoutSessionView(View):
         return JsonResponse({
             'id': checkout_session.id
         })
+
+
+class CartPageView(View):
+    """Cart page view"""
+    template_name = 'products/cart_page.html'
+
+    def get(self, request, *args, **kwargs):
+        cart = Order.objects.all()
+
+        return render(request, 'products/cart_page.html', {'cart': cart})
+
+    def post(self, request, *args, **kwargs):
+        pass
+
+
+@csrf_exempt
+def stripe_webhook(request):
+    """Stripe webhook view"""
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+        )
+    except ValueError as e:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return HttpResponse(status=400)
+
+    if event['type'] == 'checkout.session.completed':
+        # Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
+
+        session = stripe.checkout.Session.retrieve(
+            event['data']['object']['id'],
+            expand=['line_items'],
+        )
+
+        customer_email = session['customer_details']['email']
+        item_id = session['metadata']['item_id']
+
+        item = Item.objects.get(id=item_id)
+
+        send_mail(
+            subject='Thank you for your purchase!',
+            message=f'Your order for "{item.name}" has been completed.',
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=[customer_email]
+        )
+
+        print(session)
+    # Passed signature verification
+    return HttpResponse(status=200)

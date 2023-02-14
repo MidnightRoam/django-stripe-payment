@@ -131,3 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STRIPE_PUBLIC_KEY = 'pk_test_51MaywiIl1ZUo1uhgiwuDTfp9UhjjWngkxZbMAQsxI9ObP6xyUPDOzXg5RCGR3HSqiQxuVUV6u7cvovW3ED4HHI5600qtMhHp00'
 STRIPE_SECRET_KEY = 'sk_test_51MaywiIl1ZUo1uhgp33QLOLHbarZZQElrUbk5yBzRHt1gCChmpCoSZ8Py0514Av9IHO4UsrvhDN8GJoq6JVjK7rk00Tl6HEnon'
 STRIPE_WEBHOOK_SECRET = ''
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST_USER = 'midnightroam1@gmail.com'

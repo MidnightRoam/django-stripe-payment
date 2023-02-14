@@ -12,6 +12,21 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+.cart__link {
+    position: absolute;
+    left: 90%;
+    top: 22%;
+}
+
+.cart__link img {
+    width: 25px;
+}
+
+.cart__items {
+    color: black;
 }
 
 .link {
@@ -49,6 +64,7 @@ header {
     border-radius: 10px;
     font-weight: 400;
     transition: 0.3s;
+    position: relative;
 }
 
 .item__link p {
@@ -63,7 +79,15 @@ header {
 
 .item__link:hover .item__name {
     color: #252525;
-    transform: translate(15%) scale(1.1);
+    transform: translate(5%) scale(1.1);
+}
+
+.item__link:hover .item__price {
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 7px;
+    top: 83%;
+    left: 58%;
 }
 
 .item__name {
@@ -79,6 +103,9 @@ header {
 .item__price {
     margin: 10px;
     font-weight: 500;
+    position: absolute;
+    left: 60%;
+    top: 85%;
 }
 
 .product__section {
