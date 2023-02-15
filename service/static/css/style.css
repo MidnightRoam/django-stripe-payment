@@ -87,8 +87,8 @@ header {
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     padding: 7px;
-    top: 83%;
-    left: 58%;
+    top: 82.5%;
+    left: 72%;
 }
 
 .item__name {
@@ -107,7 +107,7 @@ header {
     margin: 10px;
     font-weight: 500;
     position: absolute;
-    left: 60%;
+    left: 74%;
     top: 85%;
 }
 
