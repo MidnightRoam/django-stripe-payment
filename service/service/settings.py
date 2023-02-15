@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#e8u5x3q=_9_ufgtxh(j&lw(a!@zw4bk0lw)))8ie)f=-_s38v'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -129,9 +133,9 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STRIPE_PUBLIC_KEY = 'pk_test_51MaywiIl1ZUo1uhgiwuDTfp9UhjjWngkxZbMAQsxI9ObP6xyUPDOzXg5RCGR3HSqiQxuVUV6u7cvovW3ED4HHI5600qtMhHp00'
-STRIPE_SECRET_KEY = 'sk_test_51MaywiIl1ZUo1uhgp33QLOLHbarZZQElrUbk5yBzRHt1gCChmpCoSZ8Py0514Av9IHO4UsrvhDN8GJoq6JVjK7rk00Tl6HEnon'
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = ''
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST_USER = 'midnightroam1@gmail.com'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
