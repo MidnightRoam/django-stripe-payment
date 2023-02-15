@@ -1,8 +1,8 @@
 import stripe
 from django.conf import settings
 from django.core.mail import send_mail
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render, redirect
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView
@@ -19,7 +19,10 @@ class IndexPageView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['items'] = Item.objects.all()
+        context.update({
+            'items': Item.objects.all(),
+            'title': 'Our products'
+        })
         return context
 
 
@@ -27,10 +30,24 @@ class SuccessView(TemplateView):
     """Success order page view"""
     template_name = 'products/success_page.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'title': 'Success order'
+        })
+        return context
+
 
 class CancelView(TemplateView):
     """Cancel order page view"""
     template_name = 'products/cancel_page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'title': 'Cancel order'
+        })
+        return context
 
 
 class ProductPageView(TemplateView):
@@ -42,7 +59,8 @@ class ProductPageView(TemplateView):
         context = super(ProductPageView, self).get_context_data(**kwargs)
         context.update({
             'item': item,
-            'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY
+            'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
+            'title': 'Product details'
         })
         return context
 
@@ -112,7 +130,10 @@ class CartPageView(View):
     def get(self, request, *args, **kwargs):
         cart = Order.objects.all()
 
-        return render(request, 'products/cart_page.html', {'cart': cart})
+        return render(request, 'products/cart_page.html', {
+            'cart': cart,
+            'title': 'Your cart'
+        })
 
     def post(self, request, *args, **kwargs):
         pass

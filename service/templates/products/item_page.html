@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %}
 {% block content %}
     <div class="container">
         <section class="product__section">
@@ -38,7 +39,7 @@
           }
         })
         .catch(function (error) {
-          console.error("Error:", error);
+          console.error("Payment error:", error);
         });
     });
   </script>

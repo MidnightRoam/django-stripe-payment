@@ -98,6 +98,8 @@ header {
 
 .item__description {
     margin: 10px;
+    text-align: justify;
+    word-spacing:-2px;
 }
 
 .item__price {
@@ -124,6 +126,11 @@ header {
 .product__section p {
     font-size: 1.5em;
     margin: 10px;
+}
+
+.product__description {
+    text-align: justify;
+    word-break: break-all;
 }
 
 .product__name, .product__price {
@@ -162,7 +169,7 @@ footer {
 }
 
 .logo:hover {
-    transform: scale(1.4) translate(-40px);
+    transform: scale(1.4) translate(-25px);
     color: #374E54;
 }
 
@@ -175,6 +182,7 @@ footer {
 
 .btn__primary {
     transition: 0.3s;
+    border-bottom: 3px solid orange;
 }
 
 .btn__primary:hover {
