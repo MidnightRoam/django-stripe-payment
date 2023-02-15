@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-  <div class="container">
+    <div class="container">
     {% for item in items %}
       <a href="{% url 'item_detail' item.pk %}" class="item__link">
         <div class="item__card">
@@ -11,5 +11,6 @@
         </div>
       </a>
     {% endfor %}
-  </div>
+    </div>
+    {% include 'include/pagination.html' %}
 {% endblock %}

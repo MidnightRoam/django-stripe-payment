@@ -1,0 +1,19 @@
+<div class="pagination-section">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link"><</a>
+    {% endif %}
+
+    {% for page in page_obj.paginator.page_range %}
+
+    {% if page_obj.number == page %}
+        <a href="?page={{ page }}" class="pagination-link page-num-selected">{{ page }}</a>
+    {% else %}
+        <a href="?page={{ page }}" class="pagination-link">{{ page }}</a>
+    {% endif %}
+
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">></a>
+    {% endif%}
+</div>

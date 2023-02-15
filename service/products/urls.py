@@ -7,7 +7,7 @@ from .views import (
     CancelView,
     IndexPageView,
     CartPageView,
-    stripe_webhook
+    stripe_webhook,
 )
 
 urlpatterns = [

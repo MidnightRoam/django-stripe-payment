@@ -1,6 +1,7 @@
 import stripe
 from django.conf import settings
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
@@ -16,11 +17,13 @@ class IndexPageView(ListView):
     """Index page view"""
     model = Item
     template_name = 'products/index.html'
+    paginate_by = 4
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        p = Paginator(Item.objects.all(), self.paginate_by)
         context.update({
-            'items': Item.objects.all(),
+            'items': p.page(context['page_obj'].number),
             'title': 'Our products'
         })
         return context

@@ -47,6 +47,7 @@ header {
     justify-content: center;
     flex-wrap: wrap;
     height: 881px;
+    padding: 0px 350px;
 }
 
 
@@ -171,6 +172,28 @@ footer {
 .logo:hover {
     transform: scale(1.4) translate(-25px);
     color: #374E54;
+}
+
+.pagination-section {
+    position: absolute;
+    top: 90%;
+    right: 45.35%;
+}
+
+.pagination-link {
+    background-color: orange;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.page-num-selected {
+    padding: 10px 15px;
+    border: 3px solid orange;
+    background: #fff;
+    color: orange;
 }
 
 .btn {
