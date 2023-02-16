@@ -5,7 +5,7 @@
     {% include 'include/sidebar.html' %}
     {% if items %}
         {% for item in items %}
-          <a href="{% url 'item_detail' item.pk %}" class="item__link">
+          <a href="{% url 'item_detail' item.pk %}" class="item__link" style="background-image: url('{{ item.poster.url }}')">
             <div class="item__card">
                 <p class="item__name">{{ item.name }}</p>
                 <p class="item__description">{{ item.description }}</p>
