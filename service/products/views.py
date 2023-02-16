@@ -2,6 +2,7 @@ import stripe
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
+from django.db.models import Q, Count
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
@@ -21,28 +22,36 @@ class IndexPageView(ListView):
     """Index page view"""
     model = Item
     template_name = 'products/index.html'
-    paginate_by = 8
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        p = Paginator(Tag.objects.all().annotate(product_count=Count('item')), self.paginate_by)
+        search_query = self.request.GET.get('q')
+        if search_query:
+            items = Item.objects.filter(Q(name__icontains=search_query) | Q(description__icontains=search_query))
+        else:
+            items = Item.objects.all()
         context.update({
-            'items': Item.objects.all(),
-            'tags': Tag.objects.all(),
+            'items': items,
+            'tags': p.page(context['page_obj'].number),
             'title': 'Our products'
         })
         return context
 
 
 class TagSortPageView(ListView):
+    """Product sort by tags page view"""
     model = Item
     template_name = 'products/sorted_items.html'
-    paginate_by = 4
+    paginate_by = 20
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        p = Paginator(Tag.objects.all().annotate(product_count=Count('item')), self.paginate_by)
         context.update({
             'items': Item.objects.filter(tags__pk=self.kwargs['pk']),
-            'tags': Tag.objects.all(),
+            'tags': p.page(context['page_obj'].number),
             'title': 'Sorted products'
         })
         return context

@@ -3,19 +3,25 @@
 {% block content %}
 <div class="container">
     {% include 'include/sidebar.html' %}
-    {% for item in items %}
-      <a href="{% url 'item_detail' item.pk %}" class="item__link">
-        <div class="item__card">
-            <p class="item__name">{{ item.name }}</p>
-            <p class="item__description">{{ item.description }}</p>
-            {% if 'Euro' in item.currency %}
-            <p class="item__price">€{{ item.get_price }}</p>
-            {% else %}
-            <p class="item__price">${{ item.get_price }}</p>
-            {% endif %}
-            <p class="item__tags">{{ item.get_tags }}</p>
-        </div>
-      </a>
-    {% endfor %}
+    {% if items %}
+        {% for item in items %}
+          <a href="{% url 'item_detail' item.pk %}" class="item__link">
+            <div class="item__card">
+                <p class="item__name">{{ item.name }}</p>
+                <p class="item__description">{{ item.description }}</p>
+                {% if 'Euro' in item.currency %}
+                <p class="item__price">€{{ item.get_price }}</p>
+                {% else %}
+                <p class="item__price">${{ item.get_price }}</p>
+                {% endif %}
+                <p class="item__tags">{{ item.get_tags }}</p>
+            </div>
+          </a>
+        {% endfor %}
+    {% else %}
+    <div class="items__not-found">
+        <h1 class="title bold">Sorry, but we don't have games with this tag yet.</h1>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

@@ -17,17 +17,13 @@
         </div>
       </a>
     {% endfor %}
+    <div class="form__search sticky">
+        <form action="{% url 'search' %}" method="get">
+            <input type="text" name="q" placeholder="Search..." class="search__input">
+            <button type="submit" class="btn__search">Search</button>
+        </form>
+    </div>
     <div>
 </div>
 </div>
-{% endblock %}
-{% block scripts %}
-<script>
-    var height = $(window).height();
-
-
-    $(".container").css ({
-       "height": height + "px"
-    })
-</script>
 {% endblock %}
