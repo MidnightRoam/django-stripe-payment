@@ -1,12 +1,12 @@
 from django.db import models
 from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
 
 
 class Item(models.Model):
     """Product item model"""
 
     class ItemCurrency(models.TextChoices):
+        """Product currency choices"""
         USD = 'USD',
         Euro = 'Euro',
 
@@ -14,15 +14,35 @@ class Item(models.Model):
     description = models.TextField()
     price = models.IntegerField(default=0)  # in cents
     currency = models.CharField(max_length=20, choices=ItemCurrency.choices, default=ItemCurrency.USD)
+    tags = models.ManyToManyField('Tag')
 
     def __str__(self):
         return self.name
 
     def get_price(self):
+        """Return converted price from cents to dollars"""
         return "{0:.2f}".format(self.price / 100)
 
+    def get_tags(self):
+        """Return formatted string with all item tags"""
+        return ", ".join([tag.name for tag in self.tags.all()])
+
     def get_absolute_url(self):
+        """Return absolute url for each item"""
         return reverse('item_detail', kwargs={'pk': self.pk})
+
+
+class Tag(models.Model):
+    """Item genre model"""
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        """Return absolute url for each item tag"""
+        return reverse('items_sort', kwargs={'pk': self.pk})
 
 
 class Order(models.Model):

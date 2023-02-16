@@ -13,6 +13,8 @@ header {
     justify-content: center;
     align-items: center;
     position: relative;
+    width: 100%;
+    z-index: 99;
 }
 
 .cart__link {
@@ -46,10 +48,12 @@ header {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    height: 881px;
+    min-height: 925px;
     padding: 0px 350px;
+    position: relative;
+    overflowX: scroll;
+    padding-top: 50px;
 }
-
 
 .item__link {
     text-decoration: none;
@@ -69,7 +73,7 @@ header {
 }
 
 .item__link p {
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
 .item__link:hover {
@@ -111,12 +115,19 @@ header {
     top: 85%;
 }
 
+.item__tags {
+    color: orange;
+    font-size: 0.8em !important;
+    font-weight: 500;
+    margin: 10px;
+}
+
 .product__section {
     margin: 0 auto;
     margin-top: 50px;
     border: 1px solid gainsboro;
     border-radius: 10px;
-    width: 400px;
+    width: 450px;
     height: 800px;
     padding: 25px;
     display: flex;
@@ -131,7 +142,6 @@ header {
 
 .product__description {
     text-align: justify;
-    word-break: break-all;
 }
 
 .product__name, .product__price {
@@ -196,11 +206,78 @@ footer {
     color: orange;
 }
 
+/* Sidebar styles */
+.sidebar {
+    position: absolute;
+    top: 5%;
+    left: 2%;
+}
+
+.sorting__items {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar {
+    margin-top: 10px;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    width: 250px;
+    padding: 20px;
+    position: relative;
+}
+
+.sidebar__title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.sort__link {
+    margin: 2px;
+    padding: 5px;
+    background-color: orange;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 5px;
+    flex: 1 1 10px;
+    transition: 0.3s;
+}
+
+.sort__link:hover {
+    translateX: (10px, 50px);
+    background-color: gainsboro;
+    flex: 1 1 50px;
+    font-size: 1em;
+}
+
+.sidebar__btn {
+    position: absolute;
+    background-color: orange;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    width: 250px;
+    left: 0%;
+    top: 105%;
+    padding: 10px 0px;
+    text-align: center;
+}
+
+.sidebar__btn:hover {
+    color: orange;
+    background-color: #fff;
+    border: 1px solid gainsboro;
+}
+
+/* UI/UX elements styles */
 .btn {
     padding: 10px 50px;
     border: none;
     border-radius: 10px;
     font-size: 1.2em;
+    font-weight: 500;
 }
 
 .btn__primary {
@@ -211,5 +288,8 @@ footer {
 .btn__primary:hover {
     background: orange;
     color: #fff;
-    transform: scale(1.1);
+}
+
+.sticky {
+    position: fixed;
 }

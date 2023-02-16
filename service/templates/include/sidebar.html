@@ -1,0 +1,11 @@
+<sidebar class="sidebar sticky">
+    <div class="sidebar__content">
+        <h1 class="sidebar__title">Sort items by tags</h1>
+        <div class="sorting__items">
+            {% for tag in tags %}
+            <a href="{{ tag.get_absolute_url }}" class="sort__link">{{ tag }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <a href="{% url 'index' %}" class="sidebar__btn">Reset</a>
+</sidebar>

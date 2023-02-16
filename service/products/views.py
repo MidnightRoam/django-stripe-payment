@@ -8,8 +8,12 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView
 
-from .models import Item, Order
+from .models import Item, Order, Tag
 
+# stripe.api_key = {
+#     'usd': settings.STRIPE_SECRET_KEY,
+#     'Euro': settings.STRIPE_SECRET_KEY
+# }
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -17,14 +21,29 @@ class IndexPageView(ListView):
     """Index page view"""
     model = Item
     template_name = 'products/index.html'
+    paginate_by = 8
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'items': Item.objects.all(),
+            'tags': Tag.objects.all(),
+            'title': 'Our products'
+        })
+        return context
+
+
+class TagSortPageView(ListView):
+    model = Item
+    template_name = 'products/sorted_items.html'
     paginate_by = 4
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        p = Paginator(Item.objects.all(), self.paginate_by)
         context.update({
-            'items': p.page(context['page_obj'].number),
-            'title': 'Our products'
+            'items': Item.objects.filter(tags__pk=self.kwargs['pk']),
+            'tags': Tag.objects.all(),
+            'title': 'Sorted products'
         })
         return context
 

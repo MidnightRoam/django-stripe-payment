@@ -1,4 +1,4 @@
-<div class="pagination-section">
+<section class="pagination-section">
     {% if page_obj.has_previous %}
         <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link"><</a>
     {% endif %}
@@ -16,4 +16,4 @@
     {% if page_obj.has_next %}
         <a href="?page={{ page_obj.next_page_number }}" class="pagination-link">></a>
     {% endif%}
-</div>
+</section>
