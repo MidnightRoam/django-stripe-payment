@@ -194,7 +194,8 @@ class CartPageView(ListView):
 
         cart, _ = Order.objects.get_or_create(customer=customer)
         cart_item = Item.objects.get(order=cart, id=item.id)
-        cart_item.delete()
+        cart.item.remove(cart_item)
+        cart.save()
 
         return redirect('cart')
 
