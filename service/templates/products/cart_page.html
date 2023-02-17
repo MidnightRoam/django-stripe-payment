@@ -2,6 +2,7 @@
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
     <div class="simple__page">
+        {% if items %}
         <h1 class="title">Cart</h1>
         <div class="cart__card">
             {% for item in items %}
@@ -17,5 +18,8 @@
             </div>
             {% endfor %}
         </div>
+        {% else %}
+        <h1 class="title bold">Your cart is empty, order something and come back!</h1>
+        {% endif %}
     </div>
 {% endblock %}
