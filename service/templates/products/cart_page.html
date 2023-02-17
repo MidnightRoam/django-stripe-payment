@@ -8,7 +8,12 @@
             <div class="cart__items">
                 <p class="cart__item">{{ item }}</p>
                 <p class="cart__price">{{ item.currency }} {{ item.get_price }}</p>
-                <button class="btn">Delete</button>
+
+                <form method="post" action="{% url 'cart' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_id" value="{{ item.id }}">
+                    <button type="submit" class="btn">Delete</button>
+                </form>
             </div>
             {% endfor %}
         </div>

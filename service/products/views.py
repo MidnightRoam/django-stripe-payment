@@ -84,7 +84,6 @@ class ProductPageDetailView(DetailView):
 
     def post(self, request, pk):
         item = Item.objects.get(pk=pk)
-        print(item.currency)
         try:
             customer = request.user.customer
         except:
@@ -185,7 +184,19 @@ class CartPageView(ListView):
         })
 
     def post(self, request, *args, **kwargs):
-        pass
+        item_id = request.POST.get('item_id')
+        item = get_object_or_404(Item, id=item_id)
+        try:
+            customer = request.user.customer
+        except:
+            device = request.COOKIES['device']
+            customer, created = Customer.objects.get_or_create(device=device)
+
+        cart, _ = Order.objects.get_or_create(customer=customer)
+        cart_item = Item.objects.get(order=cart, id=item.id)
+        cart_item.delete()
+
+        return redirect('cart')
 
 
 @csrf_exempt
