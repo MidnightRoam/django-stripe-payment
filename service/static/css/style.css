@@ -103,7 +103,7 @@ header {
     opacity: 1;
 }
 
-.item__link:hover .item__tags {
+.item__link:hover .item__tag {
     opacity: 1;
 }
 
@@ -152,15 +152,39 @@ header {
     position: absolute;
     left: 74%;
     top: 85%;
-    opacity: 0;
+    background-color: rgba(255,165,0, 0.8);
+    border-radius: 10px;
+    padding: 7px;
+    top: 82.5%;
+    left: 72%;
 }
 
 .item__tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.item__tag {
     color: #fff;
     font-size: 0.8em !important;
     font-weight: 500;
     margin: 10px;
     opacity: 0;
+    background: rgba(1, 1, 1, 0.7);
+    padding: 5px;
+    border-radius: 10px;
+    margin: 1px;
+}
+
+.product__tag {
+    color: #fff;
+    font-size: 0.8em !important;
+    font-weight: 500;
+    margin: 1px;
+    background: rgba(1, 1, 1, 0.7);
+    padding: 5px;
+    border-radius: 10px;
 }
 
 .product__section {
@@ -168,7 +192,7 @@ header {
     margin-top: 50px;
     border: 1px solid gainsboro;
     border-radius: 10px;
-    width: 450px;
+    width: 460px;
     height: 800px;
     padding: 25px;
     display: flex;
@@ -189,9 +213,45 @@ header {
     font-weight: 900;
 }
 
+.product__controls {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    position: relative;
+}
+
+.to-cart__form .btn {
+    transition: 0.3s;
+    width: 205px;
+    margin-bottom: 0px;
+    background-color: orange;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+.to-cart__form .btn:hover {
+    background-color: lightgreen;
+    color: #252525;
+}
+
+.controls__separator {
+    text-align: center;
+    font-style: oblique;
+    transform: rotate(10deg);
+    position: absolute;
+    left: 40%;
+    top: 15%;
+    background-color: lightgreen;
+    padding: 10px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 600;
+}
+
 .simple__page {
     padding: 50px;
     height: 881px;
+    min-height: 925px;
 }
 
 .title {
@@ -249,7 +309,7 @@ footer {
 
 .form__search {
     position: absolute;
-    right: 5%;
+    right: 3%;
     top: 6.3%;
 }
 
@@ -296,6 +356,54 @@ footer {
 
 .btn__search:hover {
     background-color: orange;
+    color: #fff;
+}
+
+/* Cart page styles */
+.cart__card {
+
+}
+
+.cart__items {
+    display: flex;
+    align-items: start;
+    flex-direction: row;
+}
+
+.cart__item {
+    margin: 10px 0px 10px 10px;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    width: 20%;
+    padding: 10px;
+    height: 50px;
+    font-size: 1.1em;
+}
+
+.cart__price {
+    padding: 15px 10px 10px 10px;
+    background-color: orange;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    margin-top: 10px;
+    height: 50px;
+}
+
+.cart__items .btn {
+    width: 100px;
+    text-align: center;
+    margin: 10px 0px 0px 10px;
+    height: 50px;
+    padding: 0;
+}
+
+.cart__items .btn:hover {
+    background-color: rgb(255,99,71);
     color: #fff;
 }
 

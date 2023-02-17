@@ -7,14 +7,10 @@ from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 
-from .models import Item, Order, Tag
+from .models import Item, Order, Tag, Customer
 
-# stripe.api_key = {
-#     'usd': settings.STRIPE_SECRET_KEY,
-#     'Euro': settings.STRIPE_SECRET_KEY
-# }
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
@@ -81,15 +77,29 @@ class CancelView(TemplateView):
         return context
 
 
-class ProductPageView(TemplateView):
+class ProductPageDetailView(DetailView):
     """Product page view"""
     template_name = 'products/item_page.html'
+    model = Item
+
+    def post(self, request, pk):
+        item = Item.objects.get(pk=pk)
+        print(item.currency)
+        try:
+            customer = request.user.customer
+        except:
+            device = request.COOKIES['device']
+            customer, created = Customer.objects.get_or_create(device=device)
+
+        order, created = Order.objects.get_or_create(customer=customer)
+        order.item.add(item.id)
+        order.save()
+
+        return redirect('cart')
 
     def get_context_data(self, **kwargs):
-        item = Item.objects.get(pk=self.kwargs["pk"])
-        context = super(ProductPageView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update({
-            'item': item,
             'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
             'title': 'Product details'
         })
@@ -154,15 +164,23 @@ class CreateCheckoutSessionView(View):
         })
 
 
-class CartPageView(View):
+class CartPageView(ListView):
     """Cart page view"""
     template_name = 'products/cart_page.html'
 
     def get(self, request, *args, **kwargs):
-        cart = Order.objects.all()
+        try:
+            customer = request.user.customer
+        except:
+            device = request.COOKIES['device']
+            customer, created = Customer.objects.get_or_create(device=device)
+
+        cart, _ = Order.objects.get_or_create(customer=customer)
+        items = cart.item.all()
 
         return render(request, 'products/cart_page.html', {
             'cart': cart,
+            'items': items,
             'title': 'Your cart'
         })
 

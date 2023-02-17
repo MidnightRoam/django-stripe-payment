@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import (
     CreateCheckoutSessionView,
-    ProductPageView,
+    ProductPageDetailView,
     SuccessView,
     CancelView,
     IndexPageView,
@@ -13,7 +13,7 @@ from .views import (
 
 urlpatterns = [
     path('', IndexPageView.as_view(), name='index'),
-    path('item/<int:pk>/', ProductPageView.as_view(), name='item_detail'),
+    path('item/<int:pk>/', ProductPageDetailView.as_view(), name='item_detail'),
     path('buy/<int:pk>/', CreateCheckoutSessionView.as_view(), name='buy'),
     path('items/<int:pk>/', TagSortPageView.as_view(), name='items_sort'),
     path('search/', IndexPageView.as_view(), name='search'),

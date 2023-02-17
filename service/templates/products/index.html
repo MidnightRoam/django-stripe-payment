@@ -13,16 +13,15 @@
             {% else %}
             <p class="item__price">${{ item.get_price }}</p>
             {% endif %}
-            <p class="item__tags">{{ item.get_tags }}</p>
+            <div class="item__tags">
+            {% for tag in item.tags.all %}
+                <p class="item__tag">{{ tag }}</p>
+            {% endfor %}
+            </div>
         </div>
       </a>
     {% endfor %}
-    <div class="form__search sticky">
-        <form action="{% url 'search' %}" method="get">
-            <input type="text" name="q" placeholder="Search..." class="search__input">
-            <button type="submit" class="btn__search">Search</button>
-        </form>
-    </div>
+    {% include 'include/search_bar.html' %}
     <div>
 </div>
 </div>

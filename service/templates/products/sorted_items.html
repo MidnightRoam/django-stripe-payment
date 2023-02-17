@@ -14,7 +14,11 @@
                 {% else %}
                 <p class="item__price">${{ item.get_price }}</p>
                 {% endif %}
-                <p class="item__tags">{{ item.get_tags }}</p>
+                <div class="item__tags">
+                {% for tag in item.tags.all %}
+                    <p class="item__tag">{{ tag }}</p>
+                {% endfor %}
+                </div>
             </div>
           </a>
         {% endfor %}
@@ -23,5 +27,6 @@
         <h1 class="title bold">Sorry, but we don't have games with this tag yet.</h1>
     </div>
     {% endif %}
+    {% include 'include/search_bar.html' %}
 </div>
 {% endblock %}
