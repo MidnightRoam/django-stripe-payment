@@ -17,6 +17,10 @@ header {
     z-index: 99;
 }
 
+header .link {
+    margin: 0px 20px;
+}
+
 .cart__link {
     position: absolute;
     left: 90%;
@@ -48,7 +52,7 @@ header {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    min-height: 925px;
+    min-height: 969px;
     padding: 0px 335px;
     position: relative;
     overflowX: scroll;
@@ -405,6 +409,113 @@ footer {
 .cart__items .btn:hover {
     background-color: rgb(255,99,71);
     color: #fff;
+}
+
+/* Sign in page styles */
+.tornado__background {
+    background-image: url('../vendor/sun-tornado.svg');
+    background-size: cover;
+    position: relative;
+}
+
+.auth__card {
+    position: relative;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 30%;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 33px 2px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 0px 33px 2px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 33px 2px rgba(0,0,0,0.2);
+    background: #fff;
+    padding: 20px;
+}
+
+.auth__card .title {
+    text-align: center;
+    font-weight: 600;
+}
+
+.auth__card .btn {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.login__form {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 80%;
+}
+
+.login__input {
+    padding: 15px 10px;
+    border-radius: 5px;
+    margin: 8px 0px;
+    outline: none;
+    border: 1px solid gainsboro;
+    width: 100%;
+}
+
+.box {
+    position: relative;
+}
+
+.form__label {
+    position: absolute;
+    left: 10px;
+    pointer-events: none;
+    transition: 150ms cubic-bezier(.4, 0, .2, 1);
+    background: orange;
+    padding: 2px 5px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.form__error {
+    color: red;
+}
+
+.login-card__icon {
+    position: absolute;
+    width: 25px;
+    transform: rotate(0.75turn);
+    top: 3%;
+    left: 3%;
+    transition: 0.2s;
+}
+
+.login-card__icon:hover {
+    background: orange;
+    border-radius: 50px;
+}
+
+.login__redirect {
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0px 0px 5px;
+}
+
+.sub__text {
+    color: grey;
+    font-weight: 500;
+    align-self: center;
+}
+
+.sub__link {
+    color: #fff;
+    font-size: 1em;
+    background: orange;
+    border-radius: 10px;
+    margin-left: 5px;
+    padding: 10px;
+    font-weight: 500;
 }
 
 /* Sidebar styles */
