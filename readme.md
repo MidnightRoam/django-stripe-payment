@@ -1,3 +1,8 @@
+# A few words about the web application
+### Online video game store with Stripe payment system connected, written in Python, Django as backend and CSS, JavaScript as frontend
+
+# Deployed application address
+### http://midnightuser.pythonanywhere.com
 # Getting started
 ## Using Docker:
 #### 1. Select a hard drive location where the project will be located
