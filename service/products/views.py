@@ -2,7 +2,7 @@ import stripe
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
-from django.db.models import Q, Count
+from django.db.models import Q, Count, Sum
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
@@ -20,7 +20,7 @@ class IndexPageView(ListView):
     template_name = 'products/index.html'
     paginate_by = 20
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         p = Paginator(Tag.objects.all().annotate(product_count=Count('item')), self.paginate_by)
         search_query = self.request.GET.get('q')
@@ -176,10 +176,12 @@ class CartPageView(ListView):
 
         cart, _ = Order.objects.get_or_create(customer=customer)
         items = cart.item.all()
+        total_amount = cart.item.aggregate(total_amount=Sum('price') / 100)['total_amount']
 
         return render(request, 'products/cart_page.html', {
             'cart': cart,
             'items': items,
+            'total_amount': total_amount,
             'title': 'Your cart'
         })
 

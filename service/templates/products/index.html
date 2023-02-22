@@ -4,7 +4,7 @@
 <div class="container">
     {% include 'include/sidebar.html' %}
     {% for item in items %}
-      <a href="{% url 'item_detail' item.pk %}" class="item__link" style="background-image: url('{{ item.poster.url }}')">
+      <a href="{% url 'item_detail' item.pk %}" class="item__link inset__shadow" style="background-image: url('{{ item.poster.url }}')">
         <div class="item__card">
             <p class="item__name">{{ item.name }}</p>
             <p class="item__description">{{ item.description }}</p>
@@ -22,6 +22,7 @@
       </a>
     {% endfor %}
     {% include 'include/search_bar.html' %}
+    {% include 'include/basket.html' %}
     <div>
 </div>
 </div>

@@ -26,6 +26,7 @@
                 <button type="submite" id="checkout-button" class="btn btn__primary">Buy</button>
             </div>
         </section>
+        {% include 'include/basket.html' %}
     </div>
     {% csrf_token %}
 {% endblock %}

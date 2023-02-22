@@ -21,18 +21,51 @@ header .link {
     margin: 0px 20px;
 }
 
+.cart__icon {
+    position: relative;
+    display: flex;
+}
+
 .cart__link {
     position: absolute;
-    left: 90%;
-    top: 22%;
+    left: 88%;
+    top: 75%;
+    padding: 25px;
+    border-radius: 50%;
+    background: orange;
 }
 
 .cart__link img {
-    width: 25px;
+    width: 120px;
 }
 
 .cart__items {
     color: black;
+}
+
+.cart__amount {
+    position: absolute;
+    left: 65%;
+    top: 5%;
+    background: gainsboro;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    margin: 0 auto;
+    border-radius: 50%;
+    font-weight: 600;
+    font-size: 1.1em;
+    color: #252525;
+}
+
+.cart__title {
+    border: 1px solid gainsboro;
+    width: 30%;
+    text-align: center;
+    padding: 10px 0px;
+    border-radius: 10px;
+    font-weight: 600;
 }
 
 .link {
@@ -90,6 +123,7 @@ header .link {
     -o-background-size: cover;
     background-size: cover;
     background-repeat: no-repeat center center fixed;
+
 }
 
 .item__link p {
@@ -101,6 +135,7 @@ header .link {
     color: #fff;
     border: none;
     background-color: orange;
+    box-shadow: none;
 }
 
 .item__link:hover .item__description  {
@@ -137,10 +172,9 @@ header .link {
     margin: 10px;
     font-weight: 600;
     transition: 0.5s;
-    background: rgba(255,165,0, 0.8);
     border-radius: 5px;
     padding-left: 5px;
-    color: #252525;
+    color: #fff;
 }
 
 .item__description {
@@ -609,4 +643,14 @@ footer {
 
 .bold {
     font-weight: 600;
+}
+
+.border__bottom {
+    border-bottom: 2px solid gainsoboro;
+}
+
+.inset__shadow {
+    -webkit-box-shadow: inset 2px 92px 0px -8px rgba(0,0,0,0.39);
+    -moz-box-shadow: inset 2px 92px 0px -8px rgba(0,0,0,0.39);
+    box-shadow: inset 2px 92px 0px -8px rgba(0,0,0,0.39);
 }

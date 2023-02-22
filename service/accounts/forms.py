@@ -22,34 +22,6 @@ class UserLoginForm(AuthenticationForm):
     )
 
 
-# class UserLoginForm(ModelForm):
-#
-#     class Meta:
-#         model = User
-#         fields = ('username', 'password')
-#         labels = {
-#             'username': "Username",
-#             'password': 'Password'
-#         }
-#         widgets = {
-#             "username": forms.TextInput(
-#                 attrs={'class': 'login__input', 'type': 'text'}
-#             ),
-#             "password": forms.PasswordInput(
-#                 attrs={'class': 'login__input', 'type': 'password'}
-#             )
-#         }
-#
-#     def __init__(self, request=None, *args, **kwargs):
-#         self.request = request
-#         super().__init__(*args, **kwargs)
-#
-#     def get_user(self):
-#         username = self.cleaned_data.get('username')
-#         password = self.cleaned_data.get('password')
-#         return authenticate(request=self.request, username=username, password=password)
-
-
 class UserSignupForm(ModelForm):
     username = forms.CharField(
         help_text='',
