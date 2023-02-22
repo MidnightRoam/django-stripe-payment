@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %}
+    <div class="container">
+        <section class="product__section">
+          <div class="product">
+              <p class="product__name">{{ item.name }}</p>
+              <p class="product__description">{{ item.description }}</p>
+              <div class="item__tags">
+                  {% for tag in item.tags.all %}
+                  <p class="product__tag">{{ tag }}</p>
+                  {% endfor %}
+              </div>
+              <div class="row">
+                  {% if 'Euro' in item.currency %}
+                  <p class="product__price">€{{ item.get_price }}</p>
+                  {% else %}
+                  <p class="product__price">${{ item.get_price }}</p>
+                  {% endif %}
+                  <form action="{% url 'add_to_favorites' item.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="item_id" value="{{ item.id }}">
+                    <input type="image" id="favorite-img" class="favorite__img" src="https://cdn-icons-png.flaticon.com/512/535/535285.png" />
+                  </form>
+              </div>
+              {% if added_to_favorites %}
+              <p class="added_to_favorites">Added to favorites: {{ added_to_favorites }} users</p>
+              {% else %}
+              <p class="added_to_favorites">Nobody added to favorites yet</p>
+              {% endif %}
+          </div>
+            <div class="product__controls">
+                <form action="{% url 'item_detail' item.pk %}" method="POST" class="to-cart__form">
+                    {% csrf_token %}
+                    <input class="btn" type="submit" value="Add to Cart">
+                </form>
+                <p class="controls__separator">OR</p>
+                <button type="submite" id="checkout-button" class="btn btn__primary">Buy</button>
+            </div>
+        </section>
+        {% include 'include/basket.html' %}
+    </div>
+    {% csrf_token %}
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+        var checkoutButton = document.getElementById("checkout-button");
+        checkoutButton.addEventListener("click", function () {
+          fetch("{% url 'buy' item.id %}", {
+            method: "POST",
+            headers: {
+                'X-CSRFToken': csrftoken
+            }
+          })
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function (session) {
+              return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(function (result) {
+              if (result.error) {
+                alert(result.error.message);
+              }
+            })
+            .catch(function (error) {
+              console.error("Payment error:", error);
+            });
+        });
+    </script>
+    <script src="{% static 'js/changeItemFavoriteIcon.js' %}"></script>
+{% endblock %}

@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
@@ -62,3 +63,10 @@ class Order(models.Model):
     """Order items model"""
     item = models.ManyToManyField(Item)
     customer = models.OneToOneField(Customer, on_delete=models.CASCADE, default='')
+
+
+class Favorite(models.Model):
+    """Favorites items model"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)

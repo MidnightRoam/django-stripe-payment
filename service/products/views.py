@@ -2,14 +2,15 @@ import stripe
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
-from django.db.models import Q, Count, Sum
+from django.db.models import Q, Count, Sum, OuterRef, Exists
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, FormView
 
-from .models import Item, Order, Tag, Customer
+from .models import Item, Order, Tag, Customer, Favorite
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -81,7 +82,7 @@ class CancelView(TemplateView):
 
 class ProductPageDetailView(DetailView):
     """Product page view"""
-    template_name = 'products/item_page.html'
+    template_name = 'products/item_detail_page.html'
     model = Item
 
     def post(self, request, pk):
@@ -100,9 +101,11 @@ class ProductPageDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        added_to_favorites = Favorite.objects.filter(item=self.object).count()
         context.update({
             'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
-            'title': 'Product details'
+            'title': 'Product details',
+            'added_to_favorites': added_to_favorites,
         })
         return context
 
@@ -179,11 +182,13 @@ class CartPageView(ListView):
         cart, _ = Order.objects.get_or_create(customer=customer)
         items = cart.item.all()
         total_amount = cart.item.aggregate(total_amount=Sum('price') / 100)['total_amount']
+        favorites = Favorite.objects.filter(user=request.user).select_related('item')
 
         return render(request, 'products/cart_page.html', {
             'cart': cart,
             'items': items,
             'total_amount': total_amount,
+            'favorites': favorites,
             'title': 'Your cart'
         })
 
@@ -203,6 +208,23 @@ class CartPageView(ListView):
 
         return redirect('cart')
 
+
+class AddToFavoritesView(View):
+    """Add product to favorites view"""
+    def post(self, request, *args, **kwargs):
+        item_id = request.POST.get('item_id')
+        item = get_object_or_404(Item, id=item_id)
+        favorite = Favorite.objects.get_or_create(user=request.user, item=item)
+        return redirect('cart')
+
+
+class DeleteFromFavoritesView(View):
+    """Delete product from favorites view"""
+    def post(self, request, *args, **kwargs):
+        item_id = request.POST.get('item_id')
+        item = get_object_or_404(Item, id=item_id)
+        favorite = Favorite.objects.delete(user=request.user, item=item)
+        return redirect('cart')
 
 @csrf_exempt
 def stripe_webhook(request):

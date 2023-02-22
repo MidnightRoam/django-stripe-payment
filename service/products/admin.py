@@ -3,7 +3,7 @@ from django.forms import TextInput
 from django.db import models
 from django.utils.safestring import mark_safe
 
-from .models import Item, Order, Tag, Customer
+from .models import Item, Order, Tag, Customer, Favorite
 
 admin.site.site_header = "Game Store administration"
 
@@ -39,5 +39,11 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
+    """Customer admin model"""
+    pass
+
+
+@admin.register(Favorite)
+class FavoriteAdmin(admin.ModelAdmin):
     """Customer admin model"""
     pass

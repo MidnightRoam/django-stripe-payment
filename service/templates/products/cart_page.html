@@ -3,24 +3,40 @@
 {% block content %}
     <div class="simple__page">
         {% if items %}
-        <h1 class="title cart__title">Total products: {{ items|length }}</h1>
-        <div class="cart__card">
-            {% for item in items %}
-            <div class="cart__items">
-                <p class="cart__item">{{ item }}</p>
-                <p class="cart__price">{{ item.currency }}{{ item.get_price }}</p>
-                <form method="post" action="{% url 'cart' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="item_id" value="{{ item.id }}">
-                    <button type="submit" class="btn">Delete</button>
-                </form>
+        <div>
+            <h1 class="title cart__title">Total products: {{ items|length }}</h1>
+            <div class="cart__card">
+                {% for item in items %}
+                <div class="cart__items">
+                    <p class="cart__item">{{ item }}</p>
+                    <p class="cart__price">{{ item.currency }}{{ item.get_price }}</p>
+                    <form method="post" action="{% url 'cart' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ item.id }}">
+                        <button type="submit" class="btn__cross">&#9587;</button>
+                    </form>
+                </div>
+                {% endfor %}
             </div>
+            <h1 class="title cart__title">Total amount: ${{ total_amount }}</h1>
+        </div>
+        <div>
+        <h1 class="title">Your favorite list</h1>
+        <div class="favorite__list">
+            {% for fav_item in favorites %}
+                    <a href="{% url 'index' %}" class="favorite__link">
+                        {{ fav_item.item }}
+                    </a>
+                    <form method="post" action="{% url 'cart' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ item.id }}">
+                        <button type="submit" class="btn__cross">&#9587;</button>
+                    </form>
             {% endfor %}
         </div>
-        <h1 class="title cart__title">Total amount: ${{ total_amount }}</h1>
         {% else %}
         <h1 class="title bold">Your cart is empty, order something and come back!</h1>
         {% endif %}
-    <button type="submite" id="checkout-button" class="btn btn__primary">Buy</button>
+        </div>
     </div>
 {% endblock %}
