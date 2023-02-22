@@ -1,11 +1,26 @@
 .column-name {
     width: 250px;
+    font-size: 1em;
 }
 
 .column-id {
     width: 20px;
+    font-size: 1em;
 }
 
 .column-get_price {
     width: 50px;
+    font-size: 1em;
+}
+
+.column-currency {
+    font-size: 1em;
+}
+
+.column-get_tags {
+    font-size: 1em;
+}
+
+.column-get_poster {
+    font-size: 1em;
 }

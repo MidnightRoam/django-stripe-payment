@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'debug_toolbar',
+
     'products.apps.ProductsConfig',
     'accounts.apps.AccountsConfig',
 ]
@@ -54,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'service.urls'
@@ -140,3 +144,7 @@ STRIPE_WEBHOOK_SECRET = ''
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

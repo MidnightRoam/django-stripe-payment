@@ -20,14 +20,16 @@ class IndexPageView(ListView):
     template_name = 'products/index.html'
     paginate_by = 20
 
-    def get_context_data(self,**kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         p = Paginator(Tag.objects.all().annotate(product_count=Count('item')), self.paginate_by)
         search_query = self.request.GET.get('q')
         if search_query:
-            items = Item.objects.filter(Q(name__icontains=search_query) | Q(description__icontains=search_query))
+            items = Item.objects\
+                .filter(Q(name__icontains=search_query) | Q(description__icontains=search_query))\
+                .prefetch_related('tags')
         else:
-            items = Item.objects.all()
+            items = Item.objects.all().prefetch_related('tags')
         context.update({
             'items': items,
             'tags': p.page(context['page_obj'].number),
@@ -46,7 +48,7 @@ class TagSortPageView(ListView):
         context = super().get_context_data(**kwargs)
         p = Paginator(Tag.objects.all().annotate(product_count=Count('item')), self.paginate_by)
         context.update({
-            'items': Item.objects.filter(tags__pk=self.kwargs['pk']),
+            'items': Item.objects.filter(tags__pk=self.kwargs['pk']).prefetch_related('tags'),
             'tags': p.page(context['page_obj'].number),
             'title': 'Sorted products'
         })
