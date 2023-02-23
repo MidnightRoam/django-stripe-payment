@@ -10,6 +10,8 @@ from .views import (
     TagSortPageView,
     AddToFavoritesView,
     DeleteFromFavoritesView,
+    ItemRatingCreateView,
+    ItemRatingView,
     stripe_webhook,
 )
 
@@ -20,6 +22,8 @@ urlpatterns = [
     path('items/<int:pk>/', TagSortPageView.as_view(), name='items_sort'),
     path('add-to-favorites/<int:pk>/', AddToFavoritesView.as_view(), name='add_to_favorites'),
     path('delete-from-favorites/<int:pk>/', DeleteFromFavoritesView.as_view(), name='delete_from_favorites'),
+    path('item/<int:item_id>/reviews', ItemRatingView.as_view(), name='reviews'),
+    path('item/<int:pk>/reviews', ItemRatingCreateView.as_view(), name='rating_form'),
     path('search/', IndexPageView.as_view(), name='search'),
     path('success/', SuccessView.as_view(), name='success'),
     path('cancel/', CancelView.as_view(), name='cancel'),

@@ -333,6 +333,33 @@ header .link {
     position: relative;
 }
 
+.product__rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.product__rating img {
+    width: 10px;
+    height: 10px;
+}
+
+.rating {
+    background: orange;
+    padding: 5px;
+    font-size: 0.9em !important;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.rating__link {
+    background: orange;
+    color: #252525;
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 5px;
+}
+
 .to-cart__form .btn {
     transition: 0.3s;
     width: 205px;
@@ -470,6 +497,47 @@ footer {
 .btn__search:hover {
     background-color: orange;
     color: #fff;
+}
+/* Reviews page styles */
+.reviews__page {
+
+}
+
+.review__card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid gainsboro;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    height: auto;
+    max-width: 800px;
+    position: relative;
+}
+
+.review__user {
+    font-size: 1.3em;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.review__rate {
+    background: orange;
+    border-radius: 5px;
+    padding: 5px 5px;
+    font-weight: 600;
+    width: 725px;
+    max-width: 8.5%;
+    height: 30px;
+    color: #fff;
+    position: absolute;
+    left: 88%;
+    top: 5%;
+}
+
+.review__text {
+    text-align: justify;
 }
 
 /* Cart page styles */

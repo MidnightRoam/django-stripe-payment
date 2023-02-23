@@ -6,6 +6,17 @@
         <section class="product__section">
           <div class="product">
               <p class="product__name">{{ item.name }}</p>
+              <div class="product__rating">
+                  <p class="rating">
+                      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828961.png" alt="product-rating">
+                      {% if product_rating.rate__avg %}
+                        {{ product_rating.rate__avg|floatformat }} / 5
+                      {% else %}
+                        No one has rated yet
+                      {% endif %}
+                  </p>
+                  <a href="{% url 'reviews' item.pk %}" class="rating__link">Rate</a>
+              </div>
               <p class="product__description">{{ item.description }}</p>
               <div class="item__tags">
                   {% for tag in item.tags.all %}

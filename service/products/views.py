@@ -1,16 +1,18 @@
 import stripe
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
-from django.db.models import Q, Count, Sum, OuterRef, Exists
+from django.db.models import Q, Count, Sum, OuterRef, Exists, Avg
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView, ListView, DetailView, FormView
+from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
 
-from .models import Item, Order, Tag, Customer, Favorite, ItemScreenshot
+from .forms import ItemRatingForm
+from .models import Item, Order, Tag, Customer, Favorite, ItemScreenshot, ItemRating
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -26,8 +28,8 @@ class IndexPageView(ListView):
         p = Paginator(Tag.objects.all().annotate(product_count=Count('item')), self.paginate_by)
         search_query = self.request.GET.get('q')
         if search_query:
-            items = Item.objects\
-                .filter(Q(name__icontains=search_query) | Q(description__icontains=search_query))\
+            items = Item.objects \
+                .filter(Q(name__icontains=search_query) | Q(description__icontains=search_query)) \
                 .prefetch_related('tags')
         else:
             items = Item.objects.all().prefetch_related('tags')
@@ -84,6 +86,7 @@ class ProductPageDetailView(DetailView):
     """Product page view"""
     template_name = 'products/item_detail_page.html'
     model = Item
+    context_object_name = 'item'
 
     def post(self, request, pk):
         item = Item.objects.get(pk=pk)
@@ -102,10 +105,13 @@ class ProductPageDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         added_to_favorites = Favorite.objects.filter(item=self.object).count()
+        product_rating = ItemRating.objects.filter(item=self.object).aggregate(Avg('rate'))
+        title = Item.objects.get(pk=self.kwargs['pk']).name
         context.update({
             'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
-            'title': 'Product details',
+            'title': f'{title}',
             'added_to_favorites': added_to_favorites,
+            'product_rating': product_rating
         })
         return context
 
@@ -113,32 +119,6 @@ class ProductPageDetailView(DetailView):
 class CreateCheckoutSessionView(View):
     """Create checkout session view"""
     domain = 'http://127.0.0.1:8000/'
-
-    # def get(self, *args, **kwargs):
-    #     item = Item.objects.get(pk=self.kwargs["pk"])
-    #     YOUR_DOMAIN = self.domain
-    #     checkout_session = stripe.checkout.Session.create(
-    #         payment_method_types=['card'],
-    #         line_items=[
-    #             {
-    #                 'price_data': {
-    #                     'currency': 'usd',
-    #                     'unit_amount': item.price,
-    #                     'product_data': {
-    #                         'name': item.name,
-    #                         'description': item.description
-    #                     }
-    #                 },
-    #                 'quantity': 1,
-    #             },
-    #         ],
-    #         mode='payment',
-    #         success_url=YOUR_DOMAIN + 'success/',
-    #         cancel_url=YOUR_DOMAIN + 'cancel/',
-    #     )
-    #     return JsonResponse({
-    #         'id': checkout_session.id
-    #     })
 
     def post(self, request, *args, **kwargs):
         item = Item.objects.get(pk=self.kwargs["pk"])
@@ -170,9 +150,10 @@ class CreateCheckoutSessionView(View):
         })
 
 
-class CartPageView(ListView):
+class CartPageView(LoginRequiredMixin, ListView):
     """Cart page view"""
     template_name = 'products/cart_page.html'
+    login_url = reverse_lazy('login')
 
     def get(self, request, *args, **kwargs):
         try:
@@ -211,8 +192,10 @@ class CartPageView(ListView):
         return redirect('cart')
 
 
-class AddToFavoritesView(View):
+class AddToFavoritesView(LoginRequiredMixin, View):
     """Add product to favorites view"""
+    login_url = reverse_lazy('login')
+
     def post(self, request, *args, **kwargs):
         item_id = request.POST.get('item_id')
         item = get_object_or_404(Item, id=item_id)
@@ -222,11 +205,13 @@ class AddToFavoritesView(View):
 
 class DeleteFromFavoritesView(View):
     """Delete product from favorites view"""
+
     def post(self, request, *args, **kwargs):
         item_id = request.POST.get('item_id')
         item = get_object_or_404(Item, id=item_id)
         favorite = Favorite.objects.delete(user=request.user, item=item)
         return redirect('cart')
+
 
 @csrf_exempt
 def stripe_webhook(request):
@@ -269,3 +254,46 @@ def stripe_webhook(request):
         print(session)
     # Passed signature verification
     return HttpResponse(status=200)
+
+
+class ItemRatingView(DetailView):
+    template_name = 'products/reviews_form.html'
+
+    def get(self, *args, **kwargs):
+        current_item = Item.objects.get(id=self.kwargs['item_id'])
+        context = {
+            'item': current_item,
+            'title': f'{current_item} Reviews'
+        }
+        return render(self.request, self.template_name, context)
+
+
+class ItemRatingCreateView(FormView):
+    # model = ItemRating
+    # form_class = ItemRatingForm
+    # template_name = 'products/reviews_form.html'
+    # success_url = reverse_lazy('index')
+    #
+    # def form_valid(self, form, *args, **kwargs):
+    #     # Проверяем, существует ли отзыв от пользователя на данный продукт
+    #     if ItemRating\
+    #             .objects.filter(user=self.request.user) \
+    #             .filter(item_id=self.kwargs['pk'])\
+    #             .exists():
+    #         return redirect('index')  # Если отзыв уже существует, то редирект на главную страницу
+    #     form.instance.user = self.request.user
+    #     form.instance.item = Item.objects.get(pk=self.kwargs['pk'])
+    #     return super().form_valid(form)
+
+    form_class = ItemRatingForm
+    template_name = 'products/reviews_form.html'
+    success_url = reverse_lazy('index')
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            # Save form data to the database
+            form.save()
+            return redirect(self.success_url)
+        else:
+            return self.form_invalid(form)
