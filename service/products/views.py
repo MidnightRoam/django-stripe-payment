@@ -10,7 +10,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, DetailView, FormView
 
-from .models import Item, Order, Tag, Customer, Favorite
+from .models import Item, Order, Tag, Customer, Favorite, ItemScreenshot
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -112,35 +112,37 @@ class ProductPageDetailView(DetailView):
 
 class CreateCheckoutSessionView(View):
     """Create checkout session view"""
-    def get(self, *args, **kwargs):
-        item = Item.objects.get(pk=self.kwargs["pk"])
-        YOUR_DOMAIN = 'http://127.0.0.1:8000/'
-        checkout_session = stripe.checkout.Session.create(
-            payment_method_types=['card'],
-            line_items=[
-                {
-                    'price_data': {
-                        'currency': 'usd',
-                        'unit_amount': item.price,
-                        'product_data': {
-                            'name': item.name,
-                            'description': item.description
-                        }
-                    },
-                    'quantity': 1,
-                },
-            ],
-            mode='payment',
-            success_url=YOUR_DOMAIN + 'success/',
-            cancel_url=YOUR_DOMAIN + 'cancel/',
-        )
-        return JsonResponse({
-            'id': checkout_session.id
-        })
+    domain = 'http://127.0.0.1:8000/'
+
+    # def get(self, *args, **kwargs):
+    #     item = Item.objects.get(pk=self.kwargs["pk"])
+    #     YOUR_DOMAIN = self.domain
+    #     checkout_session = stripe.checkout.Session.create(
+    #         payment_method_types=['card'],
+    #         line_items=[
+    #             {
+    #                 'price_data': {
+    #                     'currency': 'usd',
+    #                     'unit_amount': item.price,
+    #                     'product_data': {
+    #                         'name': item.name,
+    #                         'description': item.description
+    #                     }
+    #                 },
+    #                 'quantity': 1,
+    #             },
+    #         ],
+    #         mode='payment',
+    #         success_url=YOUR_DOMAIN + 'success/',
+    #         cancel_url=YOUR_DOMAIN + 'cancel/',
+    #     )
+    #     return JsonResponse({
+    #         'id': checkout_session.id
+    #     })
 
     def post(self, request, *args, **kwargs):
         item = Item.objects.get(pk=self.kwargs["pk"])
-        YOUR_DOMAIN = 'http://127.0.0.1:8000/'
+        YOUR_DOMAIN = self.domain
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[

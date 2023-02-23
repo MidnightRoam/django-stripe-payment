@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-    <div class="container">
+    <div class="container flex__page">
         <section class="product__section">
           <div class="product">
               <p class="product__name">{{ item.name }}</p>
@@ -25,11 +25,11 @@
                   </form>
               </div>
               {% if added_to_favorites %}
-              <p class="added_to_favorites">Added to favorites: {{ added_to_favorites }} users</p>
+              <p class="added_to_favorites">{{ added_to_favorites }} users added to favorites</p>
               {% else %}
               <p class="added_to_favorites">Nobody added to favorites yet</p>
               {% endif %}
-          </div>
+              </div>
             <div class="product__controls">
                 <form action="{% url 'item_detail' item.pk %}" method="POST" class="to-cart__form">
                     {% csrf_token %}
@@ -38,6 +38,11 @@
                 <p class="controls__separator">OR</p>
                 <button type="submite" id="checkout-button" class="btn btn__primary">Buy</button>
             </div>
+        </section>
+        <section class="product__screenshots">
+            {% for screenshot in item.screenshots.all %}
+                <img src="{{ screenshot.image.url }}" alt="{{ screenshot.item.name }}" class="screenshot">
+            {% endfor %}
         </section>
         {% include 'include/basket.html' %}
     </div>

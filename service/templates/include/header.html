@@ -1,10 +1,14 @@
 <header class="sticky">
-    <a href="{% url 'index' %}" class="link">Products</a>
-<!--    <a href="{% url 'cart' %}" class="link cart__link"><img src="https://cdn-icons-png.flaticon.com/512/9284/9284080.png" alt=""></a>-->
-    {% if user.is_authenticated %}
-    <a href="{% url 'logout' %}" class="link">Logout</a>
-    {% else %}
-    <a href="{% url 'login' %}" class="link">Sign In</a>
-    <a href="{% url 'signup' %}" class="link">Sign Up</a>
-    {% endif %}
+    <div class="navbar__left">
+        <a href="{% url 'index' %}" class="link">Store</a>
+    </div>
+    <div class="navbar__right">
+        <a href="{% url 'index' %}" class="link">Products</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="link">Logout</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="link">Sign In</a>
+        <a href="{% url 'signup' %}" class="link">Sign Up</a>
+        {% endif %}
+    </div>
 </header>

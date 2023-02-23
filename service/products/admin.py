@@ -3,15 +3,31 @@ from django.forms import TextInput
 from django.db import models
 from django.utils.safestring import mark_safe
 
-from .models import Item, Order, Tag, Customer, Favorite
+from .models import (
+    Item,
+    Order,
+    Tag,
+    Customer,
+    Favorite,
+    ItemScreenshot
+)
 
 admin.site.site_header = "Game Store administration"
+
+
+class ItemScreenshotInLine(admin.TabularInline):
+    """Item screenshots in line admin model"""
+    model = ItemScreenshot
 
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'get_price', 'currency', 'get_tags', 'get_poster')
     list_editable = ('currency', )
+
+    inlines = [
+        ItemScreenshotInLine,
+    ]
 
     class Media:
         css = {
@@ -45,5 +61,5 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(Favorite)
 class FavoriteAdmin(admin.ModelAdmin):
-    """Customer admin model"""
+    """Favorite admin model"""
     pass

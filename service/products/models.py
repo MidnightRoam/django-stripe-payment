@@ -35,6 +35,12 @@ class Item(models.Model):
         return reverse('item_detail', kwargs={'pk': self.pk})
 
 
+class ItemScreenshot(models.Model):
+    """Item screenshots model"""
+    product = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='screenshots')
+    image = models.ImageField(upload_to='product_images', blank=True)
+
+
 class Tag(models.Model):
     """Item genre model"""
     name = models.CharField(max_length=100)
