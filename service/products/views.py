@@ -259,6 +259,7 @@ def stripe_webhook(request):
 class ItemRatingDetailView(DetailView):
     """Item rating detail view"""
     template_name = 'products/reviews_form.html'
+    login_url = reverse_lazy('login')
 
     def get(self, *args, **kwargs):
         current_item = Item.objects.get(id=self.kwargs['item_id'])
@@ -269,7 +270,7 @@ class ItemRatingDetailView(DetailView):
         return render(self.request, self.template_name, context)
 
 
-class AddReviewView(View):
+class AddReviewView(LoginRequiredMixin, View):
     """Add review view"""
     def post(self, request, pk, *args, **kwargs):
         form = ItemRatingForm(request.POST)

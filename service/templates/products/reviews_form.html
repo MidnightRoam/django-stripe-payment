@@ -11,12 +11,17 @@
                 <p class="title">{{ item }} reviews</p>
                 <img src="{{ item.poster.url }}" alt="{{ item }}-poster" class="poster">
             </div>
+            {% if user.is_authenticated %}
             <div class="review__form">
+            {% else %}
+            <div class="review__form disabled">
+            <p class="title__danger">You must be logged in to leave a review</p>
+            {% endif %}
                 <form method="post" action="{% url 'add_review' item.pk %}">
                     {% csrf_token %}
                     <div class="form__control">
                         <p class="title">Rate:</p>
-                        <div class="start__container">
+                        <div class="stars__container">
                             {% for i in '12345'|make_list %}
                                 <div>
                                     <input type="radio" id="rate{{ i }}" name="rate" value="{{ i }}" class="custom__radio">
@@ -32,6 +37,7 @@
                     <button class="btn btn__primary" type="submit">Rate</button>
                 </form>
             </div>
+            {% if item.reviews.all %}
             {% for review in item.reviews.all %}
             <div class="review__card">
                 <div class="">
@@ -42,8 +48,10 @@
                 <p class="review__rate">Rate: {{ review.rate }}</p>
             </div>
             {% endfor %}
+            {% else %}
+                <p class="sub__title mt-10 normal">No one has left a review yet, you can be the first!</p>
+            {% endif %}
         </section>
     </div>
 </div>
 {% endblock %}
-
