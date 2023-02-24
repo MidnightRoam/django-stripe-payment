@@ -92,8 +92,10 @@ class ItemRating(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='reviews')
     rate = models.CharField(choices=ItemRatingChoices.choices, max_length=10)
     text = models.TextField(blank=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         constraints = [
             UniqueConstraint(fields=('user', 'item'), name='product_user_unique'),
         ]
+        ordering = ['-created_at']

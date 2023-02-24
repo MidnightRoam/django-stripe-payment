@@ -256,44 +256,40 @@ def stripe_webhook(request):
     return HttpResponse(status=200)
 
 
-class ItemRatingView(DetailView):
+class ItemRatingDetailView(DetailView):
+    """Item rating detail view"""
     template_name = 'products/reviews_form.html'
 
     def get(self, *args, **kwargs):
         current_item = Item.objects.get(id=self.kwargs['item_id'])
         context = {
             'item': current_item,
-            'title': f'{current_item} Reviews'
+            'title': f'{current_item} Reviews',
         }
         return render(self.request, self.template_name, context)
 
 
-class ItemRatingCreateView(FormView):
-    # model = ItemRating
-    # form_class = ItemRatingForm
-    # template_name = 'products/reviews_form.html'
-    # success_url = reverse_lazy('index')
-    #
-    # def form_valid(self, form, *args, **kwargs):
-    #     # Проверяем, существует ли отзыв от пользователя на данный продукт
-    #     if ItemRating\
-    #             .objects.filter(user=self.request.user) \
-    #             .filter(item_id=self.kwargs['pk'])\
-    #             .exists():
-    #         return redirect('index')  # Если отзыв уже существует, то редирект на главную страницу
-    #     form.instance.user = self.request.user
-    #     form.instance.item = Item.objects.get(pk=self.kwargs['pk'])
-    #     return super().form_valid(form)
-
-    form_class = ItemRatingForm
-    template_name = 'products/reviews_form.html'
-    success_url = reverse_lazy('index')
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+class AddReviewView(View):
+    """Add review view"""
+    def post(self, request, pk, *args, **kwargs):
+        form = ItemRatingForm(request.POST)
+        item = get_object_or_404(Item, pk=pk)
         if form.is_valid():
+            # Проверяем, делал ли пользователь ранее отзыв на этот продукт
+            if ItemRating\
+                    .objects\
+                    .filter(user=self.request.user)\
+                    .filter(item_id=item)\
+                    .exists():
+                return redirect('reviews', item_id=item.id)  # Если да, то редирект
+                # на страницу с обзорами этого продукта
             # Save form data to the database
-            form.save()
-            return redirect(self.success_url)
+            rating = form.save(commit=False)
+            rating.item = item
+            rating.user = request.user
+            rating.rate = form.cleaned_data['rate']
+            rating.text = form.cleaned_data['text']
+            rating.save()
+            return redirect('reviews', item_id=item.id)
         else:
-            return self.form_invalid(form)
+            return redirect('index')

@@ -7,24 +7,43 @@
 <div class="container">
     <div class="reviews__page">
         <section class="reviews__section">
-            <p class="title">{{ item }} reviews </p>
+            <div class="reviews__game">
+                <p class="title">{{ item }} reviews</p>
+                <img src="{{ item.poster.url }}" alt="{{ item }}-poster" class="poster">
+            </div>
+            <div class="review__form">
+                <form method="post" action="{% url 'add_review' item.pk %}">
+                    {% csrf_token %}
+                    <div class="form__control">
+                        <p class="title">Rate:</p>
+                        <div class="start__container">
+                            {% for i in '12345'|make_list %}
+                                <div>
+                                    <input type="radio" id="rate{{ i }}" name="rate" value="{{ i }}" class="custom__radio">
+                                    <label for="rate{{ i }}" class="radio__label">{{ i }}<img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="{{ i }}-star-rating"></label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="form__control">
+                        <label for="text" class="title">Text:</label>
+                        <textarea class="review__textarea" id="text" name="text" required></textarea>
+                    </div>
+                    <button class="btn btn__primary" type="submit">Rate</button>
+                </form>
+            </div>
             {% for review in item.reviews.all %}
             <div class="review__card">
                 <div class="">
                     <p class="review__user">{{ review.user }}</p>
                     <p class="review__text">{{ review.text }}</p>
+                    <p class="review__date">{{ review.created_at }}</p>
                 </div>
                 <p class="review__rate">Rate: {{ review.rate }}</p>
             </div>
             {% endfor %}
         </section>
-        <div>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button class="btn btn__primary" type="submit">Rate</button>
-            </form>
-        </div>
     </div>
 </div>
 {% endblock %}
+

@@ -500,7 +500,28 @@ footer {
 }
 /* Reviews page styles */
 .reviews__page {
+    padding: 25px;
+}
 
+.reviews__section .title {
+    text-align: center;
+    font-weight: 600;
+}
+
+.reviews__section .poster {
+    height: 150px;
+    margin-left: 15px;
+    border-radius: 10px;
+}
+
+.reviews__game {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid gainsboro;
+    padding: 15px;
+    border-radius: 10px;
 }
 
 .review__card {
@@ -509,7 +530,7 @@ footer {
     justify-content: space-between;
     border: 1px solid gainsboro;
     border-radius: 10px;
-    margin: 10px;
+    margin-top: 10px;
     padding: 20px;
     height: auto;
     max-width: 800px;
@@ -528,16 +549,74 @@ footer {
     padding: 5px 5px;
     font-weight: 600;
     width: 725px;
-    max-width: 8.5%;
+    max-width: 70px;
     height: 30px;
     color: #fff;
     position: absolute;
-    left: 88%;
-    top: 5%;
+    left: 86%;
+    top: 7%;
 }
 
 .review__text {
     text-align: justify;
+    font-size: 1.1em;
+}
+
+.review__date {
+    color: grey;
+    font-size: 0.8em;
+    text-align: right;
+    margin-top: 10px;
+}
+
+/* Add review form styles */
+.review__form {
+    border: 3px solid orange;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.review__form .radio__label {
+    font-size: 1.2em;
+}
+
+.review__form .radio__label img {
+    height: 15px;
+    margin-left: 5px;
+}
+
+.review__form .title {
+    text-align: left;
+    font-size: 1.5em;
+}
+
+.review__form .btn {
+    text-align: center;
+}
+
+.review__textarea {
+    border: 2px solid gainsboro;
+    padding: 15px;
+    transition: 0.1s;
+    width: 100%;
+}
+
+.review__textarea:hover, .review__textarea:focus {
+    border-color: orange;
+    outline: none;
+}
+
+.review__textarea:focus {
+    border: 2px solid orange;
+}
+
+.custom__radio {
+  width: 20px;
+  height: 20px;
+  accent-color: orange;
+  outline: none;
+  border: 2px solid blue;
 }
 
 /* Cart page styles */
