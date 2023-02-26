@@ -15,7 +15,7 @@
 </ul>
 
 # Deployed application address
-### http://midnightuser.pythonanywhere.com
+### http://midnightlight.pythonanywhere.com
 # Getting started
 ## Using Docker:
 #### 1. Select a hard drive location where the project will be located
