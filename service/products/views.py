@@ -25,7 +25,8 @@ class IndexPageView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        p = Paginator(Tag.objects.all().annotate(product_count=Count('item')), self.paginate_by)
+        # Выводим только те теги, за которыми закреплен хотя бы 1 продукт
+        p = Paginator(Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item')), self.paginate_by)
         search_query = self.request.GET.get('q')
         if search_query:
             items = Item.objects \
@@ -49,7 +50,7 @@ class TagSortPageView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        p = Paginator(Tag.objects.all().annotate(product_count=Count('item')), self.paginate_by)
+        p = Paginator(Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item')), self.paginate_by)
         context.update({
             'items': Item.objects.filter(tags__pk=self.kwargs['pk']).prefetch_related('tags'),
             'tags': p.page(context['page_obj'].number),

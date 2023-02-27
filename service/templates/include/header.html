@@ -1,8 +1,8 @@
-<header class="sticky">
+<header class="sticky navbar">
     <div class="navbar__left">
         <a href="{% url 'index' %}" class="link">Pixel Playground</a>
     </div>
-    <div class="navbar__right">
+    <div class="navbar__right" id="navbar">
         <a href="{% url 'index' %}" class="link">Products</a>
         {% if user.is_authenticated %}
         <a href="{% url 'logout' %}" class="link">Logout</a>

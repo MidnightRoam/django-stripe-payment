@@ -1,6 +1,6 @@
 <sidebar class="sidebar sticky">
     <div class="sidebar__content">
-        <h1 class="sidebar__title">Sort items by tags</h1>
+        <h1 class="sidebar__title">Games by tags</h1>
         <div class="sorting__items">
             {% for tag in tags %}
             <a href="{{ tag.get_absolute_url }}" class="sort__link">{{ tag }} ({{ tag.product_count }})</a>

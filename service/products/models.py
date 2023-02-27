@@ -25,7 +25,7 @@ class Item(models.Model):
 
     def get_price(self):
         """Return converted price from cents to dollars"""
-        return "{0:.2f}".format(self.price / 100)
+        return self.currency + "{0:.2f}".format(self.price / 100)
 
     def get_tags(self):
         """Return formatted string with all item tags"""
@@ -34,6 +34,10 @@ class Item(models.Model):
     def get_absolute_url(self):
         """Return absolute url for each item"""
         return reverse('item_detail', kwargs={'pk': self.pk})
+
+    def get_short_description(self):
+        return self.description[:220] + '...'
+
 
 
 class ItemScreenshot(models.Model):
