@@ -23,7 +23,7 @@ class ItemScreenshotInLine(admin.TabularInline):
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'get_price', 'currency', 'get_tags', 'get_poster')
+    list_display = ('id', 'name', 'get_price', 'currency', 'get_tags', 'get_poster', )
     list_editable = ('currency', )
 
     inlines = [

@@ -6,6 +6,10 @@ from django.db import models
 from django.urls import reverse
 
 
+def new_status_expiration_date():
+    return timezone.now() + timezone.delta(seconds=5)
+
+
 class Item(models.Model):
     """Product item model"""
     class ItemCurrency(models.TextChoices):
@@ -13,12 +17,22 @@ class Item(models.Model):
         USD = '$',
         Euro = '€',
 
+    class ItemStatus(models.TextChoices):
+        """Product status choices"""
+        common = 'Common',
+        new = 'New',
+        outdated = 'Outdated',
+
     name = models.CharField(max_length=100)
     description = models.TextField()
     price = models.IntegerField(default=0)  # in cents
     currency = models.CharField(max_length=20, choices=ItemCurrency.choices, default=ItemCurrency.USD)
     tags = models.ManyToManyField('Tag')
     poster = models.ImageField(upload_to='static/vendor/product_images', blank=True)
+    status = models.CharField(max_length=20, choices=ItemStatus.choices, default=ItemStatus.new)
+    created = models.DateTimeField(editable=False, blank=True, default=timezone.now)
+    modified = models.DateTimeField(blank=True, default=timezone.now)
+    new_expiration_date = models.DateTimeField(default=new_status_expiration_date)
 
     def __str__(self):
         return self.name
@@ -38,6 +52,12 @@ class Item(models.Model):
     def get_short_description(self):
         return self.description[:220] + '...'
 
+
+    # def save(self, *args, **kwargs):
+    #     """On save, update timestamps"""
+    #     if not self.id:
+    #         self.created = timezone.now()
+    #     self.modified = timezone.now()
 
 
 class ItemScreenshot(models.Model):
