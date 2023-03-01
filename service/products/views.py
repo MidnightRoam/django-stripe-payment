@@ -33,11 +33,11 @@ class IndexPageView(ListView):
                 .filter(Q(name__icontains=search_query) | Q(description__icontains=search_query)) \
                 .prefetch_related('tags')
         else:
-            items = Item.objects.all().prefetch_related('tags')
+            items = Item.objects.prefetch_related('tags', 'discounts').all()
         context.update({
             'items': items,
             'tags': p.page(context['page_obj'].number),
-            'title': 'Our products'
+            'title': 'Games',
         })
         return context
 
@@ -51,10 +51,11 @@ class TagSortPageView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         p = Paginator(Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item')), self.paginate_by)
+        tag = Tag.objects.get(pk=self.kwargs['pk'])
         context.update({
             'items': Item.objects.filter(tags__pk=self.kwargs['pk']).prefetch_related('tags'),
             'tags': p.page(context['page_obj'].number),
-            'title': 'Sorted products'
+            'title': f'{tag} games'
         })
         return context
 
@@ -201,7 +202,7 @@ class AddToFavoritesView(LoginRequiredMixin, View):
         item_id = request.POST.get('item_id')
         item = get_object_or_404(Item, id=item_id)
         favorite = Favorite.objects.get_or_create(user=request.user, item=item)
-        return redirect('cart')
+        return redirect('item_detail', pk=item.id)
 
 
 class DeleteFromFavoritesView(View):

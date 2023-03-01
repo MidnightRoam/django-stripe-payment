@@ -9,7 +9,7 @@
                 {% for item in items %}
                 <div class="cart__items">
                     <p class="cart__item">{{ item }}</p>
-                    <div class="cart__price">{{ item.get_price }}
+                    <div class="cart__price">{{ item.get_discounted_price }}
                         <form method="post" action="{% url 'cart' %}">
                             {% csrf_token %}
                             <input type="hidden" name="item_id" value="{{ item.id }}">

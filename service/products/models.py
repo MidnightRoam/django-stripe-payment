@@ -6,10 +6,6 @@ from django.db import models
 from django.urls import reverse
 
 
-def new_status_expiration_date():
-    return timezone.now() + timezone.delta(seconds=5)
-
-
 class Item(models.Model):
     """Product item model"""
     class ItemCurrency(models.TextChoices):
@@ -32,7 +28,6 @@ class Item(models.Model):
     status = models.CharField(max_length=20, choices=ItemStatus.choices, default=ItemStatus.new)
     created = models.DateTimeField(editable=False, blank=True, default=timezone.now)
     modified = models.DateTimeField(blank=True, default=timezone.now)
-    new_expiration_date = models.DateTimeField(default=new_status_expiration_date)
 
     def __str__(self):
         return self.name
@@ -40,6 +35,22 @@ class Item(models.Model):
     def get_price(self):
         """Return converted price from cents to dollars"""
         return self.currency + "{0:.2f}".format(self.price / 100)
+
+    def get_discounted_price(self):
+        """Return converted price from cents to dollars including discount"""
+        discount = self.discounts.filter(end_date__gte=timezone.now()).last()
+        if discount:
+            discount = self.price * float(discount.value)
+            price = (self.price - discount) / 100
+        else:
+            price = self.price / 100
+        return self.currency + "{0:.2f}".format(price)
+
+    def get_percent_discount(self):
+        """Return percent discount"""
+        discount = self.discounts.filter(end_date__gte=timezone.now()).last()
+        if discount:
+            return "{:.0%}".format(float(discount.value))
 
     def get_tags(self):
         """Return formatted string with all item tags"""
@@ -53,17 +64,31 @@ class Item(models.Model):
         return self.description[:220] + '...'
 
 
-    # def save(self, *args, **kwargs):
-    #     """On save, update timestamps"""
-    #     if not self.id:
-    #         self.created = timezone.now()
-    #     self.modified = timezone.now()
-
-
 class ItemScreenshot(models.Model):
     """Item screenshots model"""
     product = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='screenshots')
     image = models.ImageField(upload_to='product_images', blank=True)
+
+
+class ItemDiscount(models.Model):
+    """Item discount model"""
+    class DiscountValue(models.TextChoices):
+        ten_percent = 0.10, '10%'
+        twenty_percent = 0.20, '20%'
+        thirty_percent = 0.30, '30%'
+        fifty_percent = 0.50, '50%'
+        eighty_percent = 0.80, '80%'
+
+    class DiscountEndDates(models.TextChoices):
+        test = timezone.timedelta(days=1), '1 day'
+        days_7 = timezone.timedelta(days=7), '7 days'
+        days_14 = timezone.timedelta(days=14), '14 days'
+
+    product = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='discounts')
+    value = models.CharField(max_length=20, choices=DiscountValue.choices)
+    start_date = models.DateTimeField(default=timezone.now())
+    end_date = models.CharField(max_length=30, choices=DiscountEndDates.choices, default=DiscountEndDates.days_7)
+    name = models.CharField(max_length=50, blank=True)
 
 
 class Tag(models.Model):

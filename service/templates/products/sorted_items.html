@@ -9,10 +9,14 @@
             <div class="item__card">
                 <p class="item__name">{{ item.name }}</p>
                 <p class="item__description">{{ item.description }}</p>
-                {% if 'Euro' in item.currency %}
-                <p class="item__price">€{{ item.get_price }}</p>
+                {% if item.discounts.exists %}
+                <div class="item__price discount">
+                    <p class="discount">{{ item.get_discounted_price }}</p>
+                    <p class="discount__percent">-{{ item.get_percent_discount }}</p>
+                </div>
+                <p class="item__price old__price">{{ item.get_price }}</p>
                 {% else %}
-                <p class="item__price">${{ item.get_price }}</p>
+                <p class="item__price">{{ item.get_price }}</p>
                 {% endif %}
                 <div class="item__tags">
                 {% for tag in item.tags.all %}

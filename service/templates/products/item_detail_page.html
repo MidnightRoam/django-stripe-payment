@@ -24,28 +24,36 @@
                   <p class="product__tag">{{ tag }}</p>
                   {% endfor %}
               </div>
-              <div class="row">
-                  <p class="product__price">{{ item.get_price }}</p>
-                  <form action="{% url 'add_to_favorites' item.pk %}" method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="item_id" value="{{ item.id }}">
-                    <input type="image" id="favorite-img" class="favorite__img" src="https://cdn-icons-png.flaticon.com/512/535/535285.png" />
+              <div class="col">
+                  {% if item.discounts.exists %}
+                  <div class="row">
+                      <div class="product__discount">
+                          <p class="discount">{{ item.get_discounted_price }}</p>
+                          <p class="discount__percent">-{{ item.get_percent_discount }}</p>
+                      </div>
+                      <p class="product__price old__price">{{ item.get_price }}</p>
+                  {% else %}
+                      <p class="product__price">{{ item.get_price }}</p>
+                  {% endif%}
+                  </div>
+                  <div class="row product__likes">
+                      <form action="{% url 'add_to_favorites' item.pk %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="item_id" value="{{ item.id }}">
+                        <input type="image" id="favorite-img" class="favorite__img" src="https://cdn-icons-png.flaticon.com/512/535/535285.png" />
+                      </form>
+                      <p class="added_to_favorites">{{ added_to_favorites }} &#x2764;</p>
+                  </div>
+              </div>
+              <div class="product__controls">
+                  <form action="{% url 'item_detail' item.pk %}" method="POST" class="to-cart__form">
+                      {% csrf_token %}
+                      <input class="btn" type="submit" value="Add to Cart">
                   </form>
+                  <p class="controls__separator">OR</p>
+                  <button type="submite" id="checkout-button" class="btn btn__primary">Buy</button>
               </div>
-              {% if added_to_favorites %}
-              <p class="added_to_favorites">{{ added_to_favorites }} users added to favorites</p>
-              {% else %}
-              <p class="added_to_favorites">Nobody added to favorites yet</p>
-              {% endif %}
-              </div>
-            <div class="product__controls">
-                <form action="{% url 'item_detail' item.pk %}" method="POST" class="to-cart__form">
-                    {% csrf_token %}
-                    <input class="btn" type="submit" value="Add to Cart">
-                </form>
-                <p class="controls__separator">OR</p>
-                <button type="submite" id="checkout-button" class="btn btn__primary">Buy</button>
-            </div>
+          </div>
         </section>
         <section class="product__screenshots">
             {% for screenshot in item.screenshots.all %}

@@ -10,7 +10,7 @@ from .models import (
     Customer,
     Favorite,
     ItemScreenshot,
-    ItemRating
+    ItemRating, ItemDiscount
 )
 
 admin.site.site_header = "Game Store administration"
@@ -67,6 +67,12 @@ class FavoriteAdmin(admin.ModelAdmin):
 
 
 @admin.register(ItemRating)
+class ItemRatingAdmin(admin.ModelAdmin):
+    """Favorite admin model"""
+    pass
+
+
+@admin.register(ItemDiscount)
 class ItemRatingAdmin(admin.ModelAdmin):
     """Favorite admin model"""
     pass

@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+
+from celery.schedules import crontab
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
@@ -24,7 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+# SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = 'django-insecure-#e8u5x3q=_9_ufgtxh(j&lw(a!@zw4bk0lw)))8ie)f=-_s38v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -43,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'debug_toolbar',
+    'django_celery_beat',
 
     'products.apps.ProductsConfig',
     'accounts.apps.AccountsConfig',
@@ -116,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Belgrade'
 
 USE_I18N = True
 
@@ -141,7 +145,8 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STRIPE_PUBLIC_KEY = 'pk_test_51MaywiIl1ZUo1uhgiwuDTfp9UhjjWngkxZbMAQsxI9ObP6xyUPDOzXg5RCGR3HSqiQxuVUV6u7cvovW3ED4HHI5600qtMhHp00'
-STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+# STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
+STRIPE_SECRET_KEY = 'sk_test_51MaywiIl1ZUo1uhgp33QLOLHbarZZQElrUbk5yBzRHt1gCChmpCoSZ8Py0514Av9IHO4UsrvhDN8GJoq6JVjK7rk00Tl6HEnon'
 STRIPE_WEBHOOK_SECRET = ''
 
 
@@ -151,3 +156,19 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+# CELERY_BEAT_SCHEDULE = {
+#     'delete_expired_discounts': {
+#         'task': 'products.tasks.delete_expired_discounts',
+#         'schedule': 5,  # Запускать в полночь каждый день
+#     },
+# }
+
+# REDIS related settings
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'  # URL для подключения к Redis
+CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}'  # URL для хранения результатов выполнения задач в Redis
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

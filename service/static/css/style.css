@@ -25,7 +25,6 @@ header {
     width: 100%;
     padding: 0px 335px;
     position: relative;
-    overflow-x: scroll;
     padding-top: 50px;
 }
 
@@ -283,12 +282,22 @@ header .link {
     }
 }
 
-.item__link:hover .item__price {
+.item__link:hover .item__price, .old__price {
     background-color: rgba(0, 0, 0, 0.6);
     border-radius: 10px;
     padding: 7px;
     top: 82.5%;
     left: 72%;
+}
+
+.item__link:hover .old__price {
+    color: #252525;
+}
+
+.item__link:hover .discount {
+    left: 50%;
+    background-color: yellow;
+    color: #252525;
 }
 
 @media (max-width: 1024px) {
@@ -360,6 +369,30 @@ header .link {
     left: 72%;
 }
 
+.old__price {
+    padding: 7px;
+    transform: scale(0.8);
+    text-decoration: line-through;
+    background-color: grey;
+    font-weight: 600;
+    color: #252525;
+}
+
+.discount {
+    left: 50%;
+    background-color: yellow;
+}
+
+.item__price .discount__percent {
+    position: absolute;
+    top: -35%;
+    left: 60%;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 0.8em !important;
+}
+
 @media (max-width: 1024px) {
     .item__price {
         left: 65%;
@@ -420,10 +453,9 @@ header .link {
 }
 
 .added_to_favorites {
-    position: absolute;
-    top: -11%;
-    right: -38%;
     padding: 10px;
+    width: auto;
+    height: 40px;
     border-radius: 10px;
     font-size: 1em !important;
     font-weight: 600;
@@ -498,17 +530,22 @@ header .link {
     border-radius: 10px;
 }
 
+.product__likes {
+    margin-left: 5%;
+}
+
 .product__section {
     margin: 0 auto;
-    margin-top: 50px;
+    margin: 50px 0px 50px 0px;
     border: 1px solid gainsboro;
     border-radius: 10px;
     width: 460px;
-    height: 800px;
+    height: 810px;
     padding: 25px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
 }
 
 @media (max-width: 1024px) {
@@ -535,6 +572,33 @@ header .link {
 
 .product__name, .product__price {
     font-weight: 900;
+}
+
+.product__discount {
+    position: relative;
+}
+
+.product__discount .discount {
+    padding: 5px;
+    border: 1px solid #252525;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.product__discount .discount__percent {
+    position: absolute;
+    top: -25%;
+    left: 60%;
+    background-color: orange;
+    border-radius: 50%;
+    padding: 5px 2px;
+    font-weight: 600;
+    font-size: 0.9em !important;
+}
+
+.row .old__price {
+    font-weight: 500;
+    margin: 0;
 }
 
 .product__controls {
@@ -1126,6 +1190,7 @@ footer {
 .sort__link {
     margin: 2px;
     padding: 5px;
+    width: 100%;
     background-color: orange;
     color: #fff;
     font-weight: 600;
@@ -1229,6 +1294,12 @@ footer {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .disabled * {

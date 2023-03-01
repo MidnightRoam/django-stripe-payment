@@ -1,5 +1,5 @@
-<sidebar class="sidebar sticky">
-    <div class="sidebar__content">
+<sidebar class="sidebar">
+    <div class="sidebar__content" id="sidebar">
         <h1 class="sidebar__title">Games by tags</h1>
         <div class="sorting__items">
             {% for tag in tags %}
@@ -7,6 +7,6 @@
             {% endfor %}
         </div>
     </div>
-    <a href="{% url 'index' %}" class="sidebar__btn">Reset</a>
+    <a href="{% url 'index' %}" class="sidebar__btn" id="sidebar-btn">Reset</a>
     {% include 'include/pagination.html' %}
 </sidebar>
