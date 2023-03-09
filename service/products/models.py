@@ -46,6 +46,17 @@ class Item(models.Model):
             price = self.price / 100
         return self.currency + "{0:.2f}".format(price)
 
+    def get_price_stripe(self):
+        """Return price for stripe payment"""
+        discount = self.discounts.filter(end_date__gte=timezone.now()).last()
+        if discount:
+            discount = float(discount.value)
+            round_price = round((self.price - self.price * discount) / 100, 2)
+            price_in_cents = round(round_price * 100)
+        else:
+            price_in_cents = self.price
+        return price_in_cents
+
     def get_percent_discount(self):
         """Return percent discount"""
         discount = self.discounts.filter(end_date__gte=timezone.now()).last()
@@ -61,7 +72,12 @@ class Item(models.Model):
         return reverse('item_detail', kwargs={'pk': self.pk})
 
     def get_short_description(self):
-        return self.description[:220] + '...'
+        """Return short description for product card"""
+        short_description = self.description[:220]
+        if short_description.endswith('.'):
+            return short_description + '..'
+        else:
+            return short_description + '...'
 
 
 class ItemScreenshot(models.Model):
