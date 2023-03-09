@@ -1,12 +1,16 @@
-<sidebar class="sidebar">
-    <div class="sidebar__content" id="sidebar">
+{% load static %}
+<sidebar class="sidebar sticky" id="side-bar">
+    <div class="sidebar__content">
         <h1 class="sidebar__title">Games by tags</h1>
-        <div class="sorting__items">
+        <div class="sorting__items" id="sort-sidebar">
             {% for tag in tags %}
             <a href="{{ tag.get_absolute_url }}" class="sort__link">{{ tag }} ({{ tag.product_count }})</a>
             {% endfor %}
         </div>
+        <a href="{% url 'index' %}" class="sidebar__btn" id="sidebar-btn">Reset</a>
+        {% include 'include/pagination.html' %}
     </div>
-    <a href="{% url 'index' %}" class="sidebar__btn" id="sidebar-btn">Reset</a>
-    {% include 'include/pagination.html' %}
+    <button id="hide-sidebar-btn" class="fa fa-angle-double-up btn"></button>
 </sidebar>
+<script src="{% static 'js/hideSortSidebar.js' %}"></script>
+
