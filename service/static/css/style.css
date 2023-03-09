@@ -8,12 +8,13 @@
 
 header {
     background-color: orange;
-    height: 44px;
+    height: 64px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: relative;
     width: 100%;
+    padding: 0 10% 0 10%;
     z-index: 99;
 }
 
@@ -25,7 +26,7 @@ header {
     width: 100%;
     padding: 0px 335px;
     position: relative;
-    padding-top: 50px;
+    padding-top: 150px;
 }
 
 @media (max-width: 1600px) {
@@ -57,13 +58,19 @@ header {
 }
 
 header .link {
-    margin: 0px 20px;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0;
+    transition: 0.3s;
+}
+
+header .link:hover {
+    background-color: #f7f7f7;
 }
 
 @media (min-width: 321px) and (max-width: 480px) {
     header .link {
         font-size: 1em;
-        margin: 0px 5px;
     }
 }
 
@@ -73,40 +80,21 @@ header .link {
 }
 
 .cart__link {
-    position: absolute;
-    left: 89%;
-    top: 74%;
-    padding: 25px;
-    border-radius: 50%;
-    background: rgba(255, 166, 0, 0.884);
+    background-image: url('https://cdn-icons-png.flaticon.com/512/1170/1170678.png');
+    background-size: 70%;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    background-position: center;
+    background-color: #f7f7f7;
+    padding: 10px 25px !important;
+    border-radius: 10px;
+    margin-right: 5px !important;
 }
 
-@media (max-width: 1024px) {
-    .cart__link {
-        left: 83%;
-        top: 72%;
-    }
+.cart__link:hover {
+    box-shadow: 0px 0px 50px 45px rgba(0,0,0,0.1);
+    background-color: #fff;
 }
-
-@media (max-width: 768px) {
-    .cart__link {
-        left: 81%;
-        top: 80%;
-        padding: 15px;
-    }
-}
-
-.cart__link img {
-    width: 100px;
-}
-
-@media (max-width: 768px) {
-    .cart__link img {
-        width: 80px;
-        margin: 5px;
-    }
-}
-
 
 .cart__items {
     color: black;
@@ -188,7 +176,6 @@ header .link {
 }
 
 .link:hover {
-    transform: scale(1.4);
     color: #374E54;
 }
 
@@ -664,7 +651,7 @@ header .link {
 }
 
 .simple__page {
-    padding: 50px;
+    padding: 100px;
     height: 881px;
     min-height: 925px;
 }
@@ -728,6 +715,12 @@ footer .footer__top .title {
     color: orange;
 }
 
+.socials .title {
+    color: #fff;
+    font-size: 1.2em !important;
+    margin-bottom: 5px;
+}
+
 .footer__bot {
     padding-top: 15px;
     width: 100%;
@@ -784,18 +777,33 @@ footer .footer__top .title {
 
 .form__search {
     position: absolute;
-    right: 3%;
-    top: 6.3%;
+    right: 63%;
+    top: 9.5%;
 }
 
 .search__input {
     position: relative;
     height: 45px;
-    width: 300px;
+    width: 400%;
     padding: 10px 25px;
     border: 1px solid gainsboro;
-    border-radius: 10px;
+    border-radius: 30px;
     margin-right: 0;
+    opacity: 0.8;
+    color: #252525 !important;
+    transition: 0.4s;
+}
+
+.search__input:focus {
+    opacity: 1;
+    color: #252525;
+        box-shadow: 0px 0px 50px 45px rgba(0,0,0,0.1);
+}
+
+.search__input::placeholder {
+    text-align: center;
+    font-size: 1.1em;
+
 }
 
 @media (max-width: 1024px) {
@@ -821,13 +829,11 @@ footer .footer__top .title {
     border-color: orange;
 }
 
-.search__input:hover + .btn__search {
-    background-color: orange;
+.search__input:hover {
     color: #fff;
 }
 
-.search__input:focus + .btn__search {
-    background-color: orange;
+.search__input:focus {
     color: #fff;
 }
 
@@ -835,12 +841,14 @@ footer .footer__top .title {
     height: 45px;
     width: 80px;
     position: absolute;
-    right: 0;
+    right: -300%;
+    top: 0%;
     border: none;
     transition: 0.2s;
     font-weight: 500;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background: none;
 }
 
 .btn__search:hover {
@@ -1180,7 +1188,7 @@ footer .footer__top .title {
 /* Sidebar styles */
 .sidebar {
     position: absolute;
-    top: 5%;
+    top: 8.5%;
     left: 1%;
 }
 

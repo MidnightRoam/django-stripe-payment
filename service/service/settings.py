@@ -114,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
