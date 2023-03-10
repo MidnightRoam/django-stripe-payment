@@ -1,0 +1,7 @@
+<section class="platforms">
+    {% for platform in platforms %}
+    <a href="{{ platform.get_absolute_url }}" class="platform__link">
+        <img src="{{ platform.icon.url }}" alt="1" class="platform__img">
+    </a>
+    {% endfor %}
+</section>

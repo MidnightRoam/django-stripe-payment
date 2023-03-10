@@ -4,28 +4,31 @@
 {% block content %}
 <div class="container products__page">
     {% include 'include/sidebar.html' %}
-    {% for item in items %}
-      <a href="{% url 'item_detail' item.pk %}" class="item__link inset__shadow" style="background-image: url('{{ item.poster.url }}')">
-        <div class="item__card">
-            <p class="item__name">{{ item.name }}</p>
-            <p class="item__description">{{ item.get_short_description }}</p>
-            {% if item.discounts.exists %}
-            <div class="item__price discount">
-                <p class="discount">{{ item.get_discounted_price }}</p>
-                <p class="discount__percent">-{{ item.get_percent_discount }}</p>
+    {% include 'include/platforms_section.html' %}
+    <section class="products">
+        {% for item in items %}
+          <a href="{{ item.get_absolute_url }}" class="item__link inset__shadow" style="background-image: url('{{ item.poster.url }}')">
+            <div class="item__card">
+                <p class="item__name">{{ item.name }}</p>
+                <p class="item__description">{{ item.get_short_description }}</p>
+                {% if item.discounts.exists %}
+                <div class="item__price discount">
+                    <p class="discount">{{ item.get_discounted_price }}</p>
+                    <p class="discount__percent">-{{ item.get_percent_discount }}</p>
+                </div>
+                <p class="item__price old__price">{{ item.get_price }}</p>
+                {% else %}
+                <p class="item__price">{{ item.get_price }}</p>
+                {% endif %}
+                <div class="item__tags">
+                {% for tag in item.tags.all %}
+                    <p class="item__tag">{{ tag }}</p>
+                {% endfor %}
+                </div>
             </div>
-            <p class="item__price old__price">{{ item.get_price }}</p>
-            {% else %}
-            <p class="item__price">{{ item.get_price }}</p>
-            {% endif %}
-            <div class="item__tags">
-            {% for tag in item.tags.all %}
-                <p class="item__tag">{{ tag }}</p>
-            {% endfor %}
-            </div>
-        </div>
-      </a>
-    {% endfor %}
+          </a>
+        {% endfor %}
+    </section>
     {% include 'include/search_bar.html' %}
     <div>
 </div>

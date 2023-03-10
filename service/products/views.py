@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
 
 from .forms import ItemRatingForm
-from .models import Item, Order, Tag, Customer, Favorite, ItemScreenshot, ItemRating
+from .models import Item, Order, Tag, Customer, Favorite, ItemScreenshot, ItemRating, ItemPlatform
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -27,6 +27,7 @@ class IndexPageView(ListView):
         context = super().get_context_data(**kwargs)
         # Выводим только те теги, за которыми закреплен хотя бы 1 продукт
         p = Paginator(Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item')), self.paginate_by)
+        platforms = ItemPlatform.objects.all()
         search_query = self.request.GET.get('q')
         if search_query:
             items = Item.objects \
@@ -37,13 +38,14 @@ class IndexPageView(ListView):
         context.update({
             'items': items,
             'tags': p.page(context['page_obj'].number),
+            'platforms': platforms,
             'title': 'Games',
         })
         return context
 
 
-class TagSortPageView(ListView):
-    """Product sort by tags page view"""
+class TagSortPageListView(ListView):
+    """Return all products sorted by item tags"""
     model = Item
     template_name = 'products/sorted_items.html'
     paginate_by = 20
@@ -53,9 +55,27 @@ class TagSortPageView(ListView):
         p = Paginator(Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item')), self.paginate_by)
         tag = Tag.objects.get(pk=self.kwargs['pk'])
         context.update({
-            'items': Item.objects.filter(tags__pk=self.kwargs['pk']).prefetch_related('tags'),
+            'items': Item.objects.filter(tags__pk=tag.pk).prefetch_related('tags', 'discounts'),
             'tags': p.page(context['page_obj'].number),
             'title': f'{tag} games'
+        })
+        return context
+
+
+class PlatformSortPageListView(ListView):
+    """Return all items sorted by item platform"""
+    model = Item
+    template_name = 'products/sorted_items.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        platform = ItemPlatform.objects.get(slug=self.kwargs['slug'])
+        tags = Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item'))
+        context.update({
+            'items': Item.objects.filter(platform__pk=platform.id).prefetch_related('platform', 'discounts', 'tags'),
+            'platforms': ItemPlatform.objects.all(),
+            'tags': tags,
+            'title': f'{platform.name} games'
         })
         return context
 

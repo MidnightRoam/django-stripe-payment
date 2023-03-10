@@ -10,15 +10,22 @@ from .models import (
     Customer,
     Favorite,
     ItemScreenshot,
-    ItemRating, ItemDiscount
+    ItemRating,
+    ItemDiscount,
+    ItemPlatform
 )
 
-admin.site.site_header = "Game Store administration"
+admin.site.site_header = "Pixel Playground | Administration"
 
 
 class ItemScreenshotInLine(admin.TabularInline):
     """Item screenshots in line admin model"""
     model = ItemScreenshot
+
+
+# class ItemPlatformInLine(admin.TabularInline):
+#     """Item screenshots in line admin model"""
+#     model = Item.platforms.through
 
 
 @admin.register(Item)
@@ -28,6 +35,7 @@ class ItemAdmin(admin.ModelAdmin):
 
     inlines = [
         ItemScreenshotInLine,
+        # ItemPlatformInLine
     ]
 
     class Media:
@@ -73,6 +81,14 @@ class ItemRatingAdmin(admin.ModelAdmin):
 
 
 @admin.register(ItemDiscount)
-class ItemRatingAdmin(admin.ModelAdmin):
+class ItemDiscountAdmin(admin.ModelAdmin):
     """Favorite admin model"""
     pass
+
+
+@admin.register(ItemPlatform)
+class ItemDiscountAdmin(admin.ModelAdmin):
+    """Favorite admin model"""
+    pass
+
+

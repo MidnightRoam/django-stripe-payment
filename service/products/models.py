@@ -1,4 +1,6 @@
+from django.core.validators import FileExtensionValidator
 from django.db.models import UniqueConstraint
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -24,6 +26,7 @@ class Item(models.Model):
     price = models.IntegerField(default=0)  # in cents
     currency = models.CharField(max_length=20, choices=ItemCurrency.choices, default=ItemCurrency.USD)
     tags = models.ManyToManyField('Tag')
+    platform = models.ManyToManyField('ItemPlatform')
     poster = models.ImageField(upload_to='static/vendor/product_images', blank=True)
     status = models.CharField(max_length=20, choices=ItemStatus.choices, default=ItemStatus.new)
     created = models.DateTimeField(editable=False, blank=True, default=timezone.now)
@@ -89,6 +92,7 @@ class ItemScreenshot(models.Model):
 class ItemDiscount(models.Model):
     """Item discount model"""
     class DiscountValue(models.TextChoices):
+        """Discount value choices"""
         ten_percent = 0.10, '10%'
         twenty_percent = 0.20, '20%'
         thirty_percent = 0.30, '30%'
@@ -96,6 +100,7 @@ class ItemDiscount(models.Model):
         eighty_percent = 0.80, '80%'
 
     class DiscountEndDates(models.TextChoices):
+        """Discount end date choices"""
         test = timezone.timedelta(days=1), '1 day'
         days_7 = timezone.timedelta(days=7), '7 days'
         days_14 = timezone.timedelta(days=14), '14 days'
@@ -105,6 +110,33 @@ class ItemDiscount(models.Model):
     start_date = models.DateTimeField(default=timezone.now())
     end_date = models.CharField(max_length=30, choices=DiscountEndDates.choices, default=DiscountEndDates.days_7)
     name = models.CharField(max_length=50, blank=True)
+
+
+class ItemPlatform(models.Model):
+    """Product platform (PC/PS4/PS5/XBOX etc) model"""
+    class ItemPlatformChoice(models.TextChoices):
+        """Product platform choices"""
+        steam = 'Steam',
+        xbox = 'Xbox',
+        rockstar_games = 'Rockstar Games',
+        uplay = 'Uplay',
+        epic_games = 'Epic Games',
+
+    name = models.CharField(max_length=100, choices=ItemPlatformChoice.choices, blank=True)
+    icon = models.FileField(blank=True, null=True, validators=[FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
+    slug = models.SlugField(max_length=100, blank=True)
+
+    def save(self, *args, **kwargs):
+        """Auto set slug field as item platform name"""
+        self.slug = slugify(self.name.replace(' ', '-'))
+        super(ItemPlatform, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        """Return absolute url for each item platform"""
+        return reverse('platform_sort', kwargs={'slug': self.slug})
 
 
 class Tag(models.Model):

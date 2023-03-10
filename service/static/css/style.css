@@ -18,6 +18,18 @@ header {
     z-index: 99;
 }
 
+.header__logo {
+    position: relative;
+}
+
+.header__logo .gamepad {
+    position: absolute;
+    bottom: 10%;
+    right: -12%;
+    width: 40px;
+    transform: rotate(45deg);
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -185,6 +197,7 @@ header .link:hover {
     align-items: center;
     height: 80px;
     padding: 0px 25px;
+    margin-bottom: 30%;
     border-radius: 10px;
     align-self: center;
     color: #fff;
@@ -430,7 +443,7 @@ header .link:hover {
 
 .product-detail__page {
     display: flex !important;
-
+    padding-top: 0px;
 }
 
 @media (max-width: 768px) {
@@ -523,7 +536,7 @@ header .link:hover {
 
 .product__section {
     margin: 0 auto;
-    margin: 50px 0px 50px 0px;
+    margin: 0px 0px 50px 0px;
     border: 1px solid gainsboro;
     border-radius: 10px;
     width: 460px;
@@ -533,6 +546,29 @@ header .link:hover {
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+}
+
+.products {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.platforms {
+    margin: 15px 0px 15px 0px;
+}
+
+.platforms .platform__link {
+    text-decoration: none;
+    margin: 5px;
+}
+
+.platforms .platform__img {
+    transition: 0.2s;
+}
+
+.platforms .platform__img:hover {
+    transform: translate(0%, -10%);
 }
 
 @media (max-width: 1024px) {

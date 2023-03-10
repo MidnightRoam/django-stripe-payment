@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-<div class="container">
+<div class="container products__page">
     {% include 'include/sidebar.html' %}
+    {% include 'include/platforms_section.html' %}
     {% if items %}
+    <section class="products">
         {% for item in items %}
-          <a href="{% url 'item_detail' item.pk %}" class="item__link inset__shadow" style="background-image: url('{{ item.poster.url }}')">
+          <a href="{{ item.get_absolute_url }}" class="item__link inset__shadow" style="background-image: url('{{ item.poster.url }}')">
             <div class="item__card">
                 <p class="item__name">{{ item.name }}</p>
-                <p class="item__description">{{ item.description }}</p>
+                <p class="item__description">{{ item.get_short_description }}</p>
                 {% if item.discounts.exists %}
                 <div class="item__price discount">
                     <p class="discount">{{ item.get_discounted_price }}</p>
@@ -26,9 +28,10 @@
             </div>
           </a>
         {% endfor %}
+    </section>
     {% else %}
     <div class="items__not-found">
-        <h1 class="title bold">Sorry, but we don't have games with this tag yet.</h1>
+        <h1 class="title bold">Sorry, but we don't have any games matching your requirements yet</h1>
     </div>
     {% endif %}
     {% include 'include/search_bar.html' %}
