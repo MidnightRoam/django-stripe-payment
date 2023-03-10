@@ -20,6 +20,11 @@
                 {% else %}
                 <p class="item__price">{{ item.get_price }}</p>
                 {% endif %}
+                <div class="item__platforms">
+                    {% for platform in item.platform.all %}
+                        <img src="{{ platform.icon.url }}" alt="{{ item.name }}-image" class="item__platform">
+                    {% endfor %}
+                </div>
                 <div class="item__tags">
                 {% for tag in item.tags.all %}
                     <p class="item__tag">{{ tag }}</p>

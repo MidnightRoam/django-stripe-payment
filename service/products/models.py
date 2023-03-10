@@ -28,6 +28,7 @@ class Item(models.Model):
     tags = models.ManyToManyField('Tag')
     platform = models.ManyToManyField('ItemPlatform')
     poster = models.ImageField(upload_to='static/vendor/product_images', blank=True)
+    trailer = models.URLField(max_length=200, blank=True)
     status = models.CharField(max_length=20, choices=ItemStatus.choices, default=ItemStatus.new)
     created = models.DateTimeField(editable=False, blank=True, default=timezone.now)
     modified = models.DateTimeField(blank=True, default=timezone.now)

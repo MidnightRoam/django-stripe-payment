@@ -28,6 +28,23 @@ header {
     right: -12%;
     width: 40px;
     transform: rotate(45deg);
+    transition: transform 0.5s ease;
+}
+
+.header__logo:hover .gamepad {
+    animation-name: spin;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    right: -15%;
+    bottom: -15%;
+}
+
+.header__logo:not(:hover) .gamepad {
+    animation-name: spin-back;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
 }
 
 .container {
@@ -258,6 +275,10 @@ header .link:hover {
     box-shadow: none;
 }
 
+.item__link:hover .item__platforms {
+    display: none;
+}
+
 .item__link:hover .item__description  {
     opacity: 1;
 }
@@ -435,6 +456,23 @@ header .link:hover {
     .item__tag {
         font-size: 0.4em !important;
     }
+}
+
+.item__platforms {
+    width: max-content;
+    display: flex;
+    position: absolute;
+    bottom: 5%;
+    border-radius: 10px;
+}
+
+.item__platform {
+    height: 35px;
+    background: gainsboro;
+    margin-right: 5px;
+    padding: 1px;
+    text-align: center;
+    border-radius: 10px;
 }
 
 .product {
@@ -782,11 +820,6 @@ footer .footer__top .title {
     font-weight: 600;
     margin-right: 10px;
     transition: 0.4s;
-}
-
-.logo:hover {
-    transform: scale(1.4) translate(-25px);
-    color: #374E54;
 }
 
 .pagination-section {
@@ -1448,5 +1481,5 @@ footer .footer__top .title {
 }
 
 .hide {
-    display: none;
+    display: none;z``
 }

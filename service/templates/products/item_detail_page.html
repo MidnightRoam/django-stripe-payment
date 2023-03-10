@@ -60,7 +60,10 @@
         </section>
         <section class="product__screenshots">
             {% for screenshot in item.screenshots.all %}
-                <img src="{{ screenshot.image.url }}" alt="{{ screenshot.item.name }}" class="screenshot">
+                <img src="{{ screenshot.image.url }}"
+                     alt="{{ screenshot.item.name }}"
+                     class="screenshot"
+                >
             {% endfor %}
         </section>
     </div>
@@ -98,4 +101,5 @@
         });
     </script>
     <script src="{% static 'js/changeItemFavoriteIcon.js' %}"></script>
+    <script src="{% static 'js/openItemScreenshot.js' %}"></script>
 {% endblock %}

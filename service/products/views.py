@@ -72,7 +72,7 @@ class PlatformSortPageListView(ListView):
         platform = ItemPlatform.objects.get(slug=self.kwargs['slug'])
         tags = Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item'))
         context.update({
-            'items': Item.objects.filter(platform__pk=platform.id).prefetch_related('platform', 'discounts', 'tags'),
+            'items': Item.objects.filter(platform__pk=platform.pk).prefetch_related('platform', 'discounts', 'tags'),
             'platforms': ItemPlatform.objects.all(),
             'tags': tags,
             'title': f'{platform.name} games'
