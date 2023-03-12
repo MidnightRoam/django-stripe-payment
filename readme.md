@@ -1,4 +1,4 @@
-# A few words about the web application
+# A few words about
 ### Online video game store with Stripe payment system connected, written in Python, Django as backend and CSS, JavaScript as frontend part
 #### Functionality implemented so far:
 <ul>
