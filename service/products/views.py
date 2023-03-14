@@ -54,9 +54,11 @@ class TagSortPageListView(ListView):
         context = super().get_context_data(**kwargs)
         p = Paginator(Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item')), self.paginate_by)
         tag = Tag.objects.get(pk=self.kwargs['pk'])
+        platforms = ItemPlatform.objects.all()
         context.update({
             'items': Item.objects.filter(tags__pk=tag.pk).prefetch_related('tags', 'discounts'),
             'tags': p.page(context['page_obj'].number),
+            'platforms': platforms,
             'title': f'{tag} games'
         })
         return context
@@ -233,49 +235,6 @@ class DeleteFromFavoritesView(View):
         item = get_object_or_404(Item, id=item_id)
         favorite = Favorite.objects.delete(user=request.user, item=item)
         return redirect('cart')
-
-
-@csrf_exempt
-def stripe_webhook(request):
-    """Stripe webhook view"""
-    payload = request.body
-    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
-    event = None
-
-    try:
-        event = stripe.Webhook.construct_event(
-            payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
-        )
-    except ValueError as e:
-        # Invalid payload
-        return HttpResponse(status=400)
-    except stripe.error.SignatureVerificationError as e:
-        # Invalid signature
-        return HttpResponse(status=400)
-
-    if event['type'] == 'checkout.session.completed':
-        # Retrieve the session. If you require line items in the response, you may include them by expanding line_items.
-
-        session = stripe.checkout.Session.retrieve(
-            event['data']['object']['id'],
-            expand=['line_items'],
-        )
-
-        customer_email = session['customer_details']['email']
-        item_id = session['metadata']['item_id']
-
-        item = Item.objects.get(id=item_id)
-
-        send_mail(
-            subject='Thank you for your purchase!',
-            message=f'Your order for "{item.name}" has been completed.',
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[customer_email]
-        )
-
-        print(session)
-    # Passed signature verification
-    return HttpResponse(status=200)
 
 
 class ItemRatingDetailView(DetailView):

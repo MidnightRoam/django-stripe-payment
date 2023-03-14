@@ -13,7 +13,6 @@ from .views import (
     DeleteFromFavoritesView,
     ItemRatingDetailView,
     AddReviewView,
-    stripe_webhook,
 )
 
 urlpatterns = [
@@ -30,5 +29,4 @@ urlpatterns = [
     path('success/', SuccessView.as_view(), name='success'),
     path('cancel/', CancelView.as_view(), name='cancel'),
     path('cart/', CartPageView.as_view(), name='cart'),
-    path('webhooks/stripe/', stripe_webhook, name='stripe-webhook'),
 ]

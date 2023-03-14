@@ -121,7 +121,9 @@ header .link:hover {
 }
 
 .cart__link:hover {
-    box-shadow: 0px 0px 50px 45px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0px 0px 19px 3px rgba(0,0,0,0.37);
+    -moz-box-shadow: 0px 0px 19px 3px rgba(0,0,0,0.37);
+    box-shadow: 0px 0px 19px 3px rgba(0,0,0,0.37);
     background-color: #fff;
 }
 
