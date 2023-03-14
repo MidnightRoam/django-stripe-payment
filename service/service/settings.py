@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
     'django_celery_beat',
+    'social_django',
 
     'products.apps.ProductsConfig',
     'accounts.apps.AccountsConfig',
@@ -60,7 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    'social_django.middleware.SocialAuthExceptionMiddleware',
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
@@ -77,6 +78,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
             ],
         },
     },
@@ -172,3 +174,18 @@ CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}'  # URL для хр�
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+
+# social auth custom settings
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'index'
+
+SOCIAL_AUTH_GITHUB_KEY = 'Iv1.2918adebabbc3d20'
+SOCIAL_AUTH_GITHUB_SECRET = '9e8ce31368b19bee62ac185c7aa7173afcb0dc68'

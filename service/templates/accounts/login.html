@@ -27,6 +27,10 @@
             <p class="sub__text">Not a member yet?</p>
             <a class="sub__link" href="{% url 'signup' %}">Sign Up Now!</a>
         </div>
+        <p class="login__title">Or login via</p>
+        <div class="login__socials">
+            <a href="{% url 'social:begin' 'github' %}" class="social__link github"></a>
+        </div>
     </div>
 </div>
 {% endblock %}
