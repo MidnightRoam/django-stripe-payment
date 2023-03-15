@@ -30,8 +30,9 @@ class ItemScreenshotInLine(admin.TabularInline):
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'get_price', 'currency', 'get_tags', 'get_poster', )
+    list_display = ('id', 'name', 'get_price', 'currency', 'get_tags', 'slug',  'get_poster', )
     list_editable = ('currency', )
+    search_fields = ('name', )
 
     inlines = [
         ItemScreenshotInLine,
@@ -59,7 +60,7 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     """Tag admin model"""
-    pass
+    list_display = ('name', 'slug', )
 
 
 @admin.register(Customer)
@@ -89,6 +90,6 @@ class ItemDiscountAdmin(admin.ModelAdmin):
 @admin.register(ItemPlatform)
 class ItemDiscountAdmin(admin.ModelAdmin):
     """Favorite admin model"""
-    pass
+    list_display = ('name', 'slug')
 
 

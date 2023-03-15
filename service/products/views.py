@@ -53,7 +53,7 @@ class TagSortPageListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         p = Paginator(Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item')), self.paginate_by)
-        tag = Tag.objects.get(pk=self.kwargs['pk'])
+        tag = Tag.objects.get(slug=self.kwargs['slug'])
         platforms = ItemPlatform.objects.all()
         context.update({
             'items': Item.objects.filter(tags__pk=tag.pk).prefetch_related('tags', 'discounts'),
@@ -130,7 +130,7 @@ class ProductPageDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         added_to_favorites = Favorite.objects.filter(item=self.object).count()
         product_rating = ItemRating.objects.filter(item=self.object).aggregate(Avg('rate'))
-        title = Item.objects.get(pk=self.kwargs['pk']).name
+        title = Item.objects.get(slug=self.kwargs['slug']).name
         context.update({
             'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
             'title': f'{title}',

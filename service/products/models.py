@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
+from .translate import from_cyrillic_to_latin
+
 
 class Item(models.Model):
     """Product item model"""
@@ -21,17 +23,24 @@ class Item(models.Model):
         new = 'New',
         outdated = 'Outdated',
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, verbose_name='Title')
     description = models.TextField()
     price = models.IntegerField(default=0)  # in cents
     currency = models.CharField(max_length=20, choices=ItemCurrency.choices, default=ItemCurrency.USD)
-    tags = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField('Tag', verbose_name='Genres / tags')
     platform = models.ManyToManyField('ItemPlatform')
     poster = models.ImageField(upload_to='static/vendor/product_images', blank=True)
     trailer = models.URLField(max_length=200, blank=True)
     status = models.CharField(max_length=20, choices=ItemStatus.choices, default=ItemStatus.new)
     created = models.DateTimeField(editable=False, blank=True, default=timezone.now)
     modified = models.DateTimeField(blank=True, default=timezone.now)
+    slug = models.SlugField(max_length=100, editable=False, default='')
+
+    def save(self, *args, **kwargs):
+        """Auto set slug field as item name"""
+        if not self.slug:
+            self.slug = from_cyrillic_to_latin(str(self.name))
+        super(Item, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -73,7 +82,7 @@ class Item(models.Model):
 
     def get_absolute_url(self):
         """Return absolute url for each item"""
-        return reverse('item_detail', kwargs={'pk': self.pk})
+        return reverse('item_detail', kwargs={'slug': self.slug})
 
     def get_short_description(self):
         """Return short description for product card"""
@@ -87,7 +96,7 @@ class Item(models.Model):
 class ItemScreenshot(models.Model):
     """Item screenshots model"""
     product = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='screenshots')
-    image = models.ImageField(upload_to='product_images', blank=True)
+    image = models.ImageField(upload_to='product_images', blank=True, verbose_name='Screenshot')
 
 
 class ItemDiscount(models.Model):
@@ -125,11 +134,12 @@ class ItemPlatform(models.Model):
 
     name = models.CharField(max_length=100, choices=ItemPlatformChoice.choices, blank=True)
     icon = models.FileField(blank=True, null=True, validators=[FileExtensionValidator(['png', 'jpg', 'jpeg', 'svg'])])
-    slug = models.SlugField(max_length=100, blank=True)
+    slug = models.SlugField(max_length=100, blank=True, editable=False)
 
     def save(self, *args, **kwargs):
         """Auto set slug field as item platform name"""
-        self.slug = slugify(self.name.replace(' ', '-'))
+        if not self.slug:
+            self.slug = from_cyrillic_to_latin(str(self.name))
         super(ItemPlatform, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -144,13 +154,20 @@ class Tag(models.Model):
     """Item genre model"""
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
+    slug = models.SlugField(max_length=100, default='', editable=False)
+
+    def save(self, *args, **kwargs):
+        """Auto set slug field as item name"""
+        if not self.slug:
+            self.slug = from_cyrillic_to_latin(str(self.name))
+        super(Tag, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         """Return absolute url for each item tag"""
-        return reverse('items_sort', kwargs={'pk': self.pk})
+        return reverse('items_sort', kwargs={'slug': self.slug})
 
 
 class Customer(models.Model):
