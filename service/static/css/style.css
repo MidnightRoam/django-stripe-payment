@@ -1445,6 +1445,28 @@ footer .footer__top .title {
     width: 13.5%;
     top: 8.5%;
     left: 1%;
+    transition: 0.2s;
+}
+
+.sidebar__hide {
+    width: 9%;
+    left: -5%;
+    top: 15%;
+    transform: rotate(-90deg);
+}
+
+.sidebar__hide .sidebar__content {
+    border: none;
+}
+
+.sidebar__hide .sidebar__content .sidebar__title {
+    opacity: 0;
+}
+
+.sidebar-hide__btn {
+    left: 30% !important;
+    width: 150px !important;
+    top: 50%;
 }
 
 @media (max-width: 1024px) {

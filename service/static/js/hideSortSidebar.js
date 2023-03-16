@@ -8,7 +8,9 @@ function hideSortSidebar() {
         event.preventDefault();
         sortSidebar.classList.toggle('hide');
         hideSortSidebarBtn.classList.toggle('fa-angle-double-down');
+        hideSortSidebarBtn.classList.toggle('sidebar-hide__btn');
         btnReset.classList.toggle('hide');
+        sideBar.classList.toggle('sidebar__hide');
     });
 }
 
