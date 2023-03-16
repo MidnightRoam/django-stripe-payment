@@ -1,7 +1,7 @@
 {% load static %}
 <sidebar class="sidebar sticky" id="side-bar">
     <div class="sidebar__content">
-        <h1 class="sidebar__title">Games by tags</h1>
+        <h1 class="sidebar__title">GAMES</h1>
         <div class="sorting__items" id="sort-sidebar">
             {% for tag in tags %}
             <a href="{{ tag.get_absolute_url }}" class="sort__link">{{ tag }} ({{ tag.product_count }})</a>

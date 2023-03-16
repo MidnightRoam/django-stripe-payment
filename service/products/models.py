@@ -29,7 +29,7 @@ class Item(models.Model):
     currency = models.CharField(max_length=20, choices=ItemCurrency.choices, default=ItemCurrency.USD)
     tags = models.ManyToManyField('Tag', verbose_name='Genres / tags')
     platform = models.ManyToManyField('ItemPlatform')
-    poster = models.ImageField(upload_to='static/vendor/product_images', blank=True)
+    poster = models.ImageField(upload_to='products/product_posters', blank=True)
     trailer = models.URLField(max_length=200, blank=True)
     status = models.CharField(max_length=20, choices=ItemStatus.choices, default=ItemStatus.new)
     created = models.DateTimeField(editable=False, blank=True, default=timezone.now)
@@ -96,7 +96,7 @@ class Item(models.Model):
 class ItemScreenshot(models.Model):
     """Item screenshots model"""
     product = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='screenshots')
-    image = models.ImageField(upload_to='product_images', blank=True, verbose_name='Screenshot')
+    image = models.ImageField(upload_to='products/product_screenshots', blank=True, verbose_name='Screenshot')
 
 
 class ItemDiscount(models.Model):

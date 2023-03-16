@@ -5,6 +5,23 @@
 <div class="container products__page">
     {% include 'include/sidebar.html' %}
     {% include 'include/platforms_section.html' %}
+<!--    <section class="products__controls">-->
+<!--        <form action="" method="get" class="sort__form">-->
+<!--            <div class="sort__platforms">-->
+<!--                {% for platform in platforms %}-->
+<!--                <label for="platform">{{ platform }}</label>-->
+<!--                <input id="platform" type="checkbox" name="platform" value="">-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+<!--            <div class="sort__tags">-->
+<!--                {% for tag in tags %}-->
+<!--                    <label for="tag">{{ tag.name }}</label>-->
+<!--                    <input id="tag" type="checkbox" name="tag" value="">-->
+<!--                {% endfor %}-->
+<!--            </div>-->
+<!--            <input type="submit" value="OK">-->
+<!--        </form>-->
+<!--    </section>-->
     <section class="products">
         {% for item in items %}
           <a href="{{ item.get_absolute_url }}" class="item__link inset__shadow" style="background-image: url('{{ item.poster.url }}')">

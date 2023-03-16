@@ -1,3 +1,19 @@
+#header {
+
+}
+
+#header #site-name a {
+    color: #fff;
+    font-weight: 500;
+}
+
+#user-tools a {
+    font-weight: 600;
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 5px;
+}
+
 .column-name {
     width: 250px;
     font-size: 1em;
@@ -22,5 +38,9 @@
 }
 
 .column-get_poster {
+    font-size: 1em;
+}
+
+.column-slug {
     font-size: 1em;
 }

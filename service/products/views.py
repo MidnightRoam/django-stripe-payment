@@ -32,9 +32,9 @@ class IndexPageView(ListView):
         if search_query:
             items = Item.objects \
                 .filter(Q(name__icontains=search_query) | Q(description__icontains=search_query)) \
-                .prefetch_related('tags')
+                .prefetch_related('tags', 'discounts', 'platform')
         else:
-            items = Item.objects.prefetch_related('tags', 'discounts').all()
+            items = Item.objects.prefetch_related('tags', 'discounts', 'platform').all()
         context.update({
             'items': items,
             'tags': p.page(context['page_obj'].number),
@@ -56,7 +56,7 @@ class TagSortPageListView(ListView):
         tag = Tag.objects.get(slug=self.kwargs['slug'])
         platforms = ItemPlatform.objects.all()
         context.update({
-            'items': Item.objects.filter(tags__pk=tag.pk).prefetch_related('tags', 'discounts'),
+            'items': Item.objects.prefetch_related('tags', 'discounts', 'platform').filter(tags__pk=tag.pk),
             'tags': p.page(context['page_obj'].number),
             'platforms': platforms,
             'title': f'{tag} games'
