@@ -60,10 +60,13 @@
         </section>
         <section class="product__screenshots">
             {% for screenshot in item.screenshots.all %}
-                <img src="{{ screenshot.image.url }}"
-                     alt="{{ screenshot.item.name }}"
-                     class="screenshot"
-                >
+                <div class="popup">
+                    <p class="cross hide" id="popup-close">&#10006;</p>
+                    <img src="{{ screenshot.image.url }}"
+                         alt="{{ screenshot.item.name }}"
+                         class="screenshot"
+                    >
+                </div>
             {% endfor %}
         </section>
     </div>
@@ -100,6 +103,5 @@
             });
         });
     </script>
-    <script src="{% static 'js/changeItemFavoriteIcon.js' %}"></script>
-    <script src="{% static 'js/openItemScreenshot.js' %}"></script>
+    <script src="{% static 'js/ui-components.js' %}"></script>
 {% endblock %}

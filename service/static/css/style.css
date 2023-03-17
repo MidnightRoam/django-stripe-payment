@@ -53,7 +53,7 @@ header {
     flex-wrap: wrap;
     min-height: 969px;
     width: 100%;
-    padding: 0px 17.5%;
+    padding: 0% 17.5%;
     position: relative;
     padding-top: 150px;
 }
@@ -1685,4 +1685,52 @@ footer .footer__top .title {
 
 .hide {
     display: none;z``
+}
+
+.popup-open {
+    position: fixed;
+    top: 0;
+    bottom 0%;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    width: 100% !important;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.popup-open .screenshot {
+    width: 65%;
+    position: fixed;
+    top: 13%;
+    bottom 0%;
+    left: 17%;
+    right: 0;
+}
+
+.popup-open .screenshot:hover {
+    transform: none !important;
+    border-radius: 10px;
+}
+
+.popup-open .cross {
+    display: block;
+    position: absolute;
+    font-size: 2em;
+    font-weight: 600;
+    top: 12%;
+    right: 17%;
+    z-index: 99999;
+    color: #fff;
+    transition: 0.1s;
+}
+
+.popup-open .cross:hover {
+    cursor: pointer;
+    color: rgba(255, 99, 71);
+}
+
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
 }
