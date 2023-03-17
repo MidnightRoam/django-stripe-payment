@@ -11,14 +11,18 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
 
-from .forms import ItemRatingForm
-from .models import Item, Order, Tag, Customer, Favorite, ItemScreenshot, ItemRating, ItemPlatform
+from .models import Item, Tag, Customer, Favorite, ItemScreenshot, ItemPlatform
+from cart.models import Order
+from reviews.models import ItemRating
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class IndexPageView(ListView):
-    """Index page view"""
+    """
+    Output of all products, or output of filtered
+    products by criteria: platform, tag
+    """
     model = Item
     template_name = 'products/index.html'
     paginate_by = 20
@@ -29,55 +33,32 @@ class IndexPageView(ListView):
         p = Paginator(Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item')), self.paginate_by)
         platforms = ItemPlatform.objects.all()
         search_query = self.request.GET.get('q')
-        if search_query:
+        tag = self.kwargs.get('tag_slug')
+        platform = self.kwargs.get('platform_slug')
+        items = Item.objects.prefetch_related('tags', 'discounts', 'platform').all()
+        title = 'Pixel Playground'
+
+        if tag:  # returns a list of products filtered by chosen tag
+            items = Item.objects.prefetch_related('tags', 'discounts', 'platform').filter(tags__slug=tag)
+            title_tag = tag.capitalize()
+            title = f'{title_tag} games'
+
+        if platform:  # returns a list of products filtered by chosen platform
+            items = Item.objects.prefetch_related('tags', 'discounts', 'platform').filter(platform__slug=platform)
+            title_platform = platform.capitalize()
+            title = f'{title_platform} games'
+
+        if search_query:  # returns a list of products filtered by search query
             items = Item.objects \
                 .filter(Q(name__icontains=search_query) | Q(description__icontains=search_query)) \
                 .prefetch_related('tags', 'discounts', 'platform')
-        else:
-            items = Item.objects.prefetch_related('tags', 'discounts', 'platform').all()
+            title = 'Search results'
+
         context.update({
             'items': items,
             'tags': p.page(context['page_obj'].number),
             'platforms': platforms,
-            'title': 'Games',
-        })
-        return context
-
-
-class TagSortPageListView(ListView):
-    """Return all products sorted by item tags"""
-    model = Item
-    template_name = 'products/sorted_items.html'
-    paginate_by = 20
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        p = Paginator(Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item')), self.paginate_by)
-        tag = Tag.objects.get(slug=self.kwargs['slug'])
-        platforms = ItemPlatform.objects.all()
-        context.update({
-            'items': Item.objects.prefetch_related('tags', 'discounts', 'platform').filter(tags__pk=tag.pk),
-            'tags': p.page(context['page_obj'].number),
-            'platforms': platforms,
-            'title': f'{tag} games'
-        })
-        return context
-
-
-class PlatformSortPageListView(ListView):
-    """Return all items sorted by item platform"""
-    model = Item
-    template_name = 'products/sorted_items.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        platform = ItemPlatform.objects.get(slug=self.kwargs['slug'])
-        tags = Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item'))
-        context.update({
-            'items': Item.objects.filter(platform__pk=platform.pk).prefetch_related('platform', 'discounts', 'tags'),
-            'platforms': ItemPlatform.objects.all(),
-            'tags': tags,
-            'title': f'{platform.name} games'
+            'title': title,
         })
         return context
 
@@ -130,7 +111,7 @@ class ProductPageDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         added_to_favorites = Favorite.objects.filter(item=self.object).count()
         product_rating = ItemRating.objects.filter(item=self.object).aggregate(Avg('rate'))
-        title = Item.objects.get(slug=self.kwargs['slug']).name
+        title = Item.objects.get(pk=self.kwargs['pk']).name
         context.update({
             'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
             'title': f'{title}',
@@ -174,48 +155,6 @@ class CreateCheckoutSessionView(View):
         })
 
 
-class CartPageView(LoginRequiredMixin, ListView):
-    """Cart page view"""
-    template_name = 'products/cart_page.html'
-    login_url = reverse_lazy('login')
-
-    def get(self, request, *args, **kwargs):
-        try:
-            customer = request.user.customer
-        except:
-            device = request.COOKIES['device']
-            customer, created = Customer.objects.get_or_create(device=device)
-
-        cart, _ = Order.objects.get_or_create(customer=customer)
-        items = cart.item.all()
-        total_amount = cart.item.aggregate(total_amount=Sum('price') / 100)['total_amount']
-        favorites = Favorite.objects.filter(user=request.user).select_related('item')
-
-        return render(request, 'products/cart_page.html', {
-            'cart': cart,
-            'items': items,
-            'total_amount': total_amount,
-            'favorites': favorites,
-            'title': 'Your cart'
-        })
-
-    def post(self, request, *args, **kwargs):
-        item_id = request.POST.get('item_id')
-        item = get_object_or_404(Item, id=item_id)
-        try:
-            customer = request.user.customer
-        except:
-            device = request.COOKIES['device']
-            customer, created = Customer.objects.get_or_create(device=device)
-
-        cart, _ = Order.objects.get_or_create(customer=customer)
-        cart_item = Item.objects.get(order=cart, id=item.id)
-        cart.item.remove(cart_item)
-        cart.save()
-
-        return redirect('cart')
-
-
 class AddToFavoritesView(LoginRequiredMixin, View):
     """Add product to favorites view"""
     login_url = reverse_lazy('login')
@@ -235,43 +174,3 @@ class DeleteFromFavoritesView(View):
         item = get_object_or_404(Item, id=item_id)
         favorite = Favorite.objects.delete(user=request.user, item=item)
         return redirect('cart')
-
-
-class ItemRatingDetailView(DetailView):
-    """Item rating detail view"""
-    template_name = 'products/reviews_form.html'
-    login_url = reverse_lazy('login')
-
-    def get(self, *args, **kwargs):
-        current_item = Item.objects.get(id=self.kwargs['item_id'])
-        context = {
-            'item': current_item,
-            'title': f'{current_item} Reviews',
-        }
-        return render(self.request, self.template_name, context)
-
-
-class AddReviewView(LoginRequiredMixin, View):
-    """Add review view"""
-    def post(self, request, pk, *args, **kwargs):
-        form = ItemRatingForm(request.POST)
-        item = get_object_or_404(Item, pk=pk)
-        if form.is_valid():
-            # Проверяем, делал ли пользователь ранее отзыв на этот продукт
-            if ItemRating\
-                    .objects\
-                    .filter(user=self.request.user)\
-                    .filter(item_id=item)\
-                    .exists():
-                return redirect('reviews', item_id=item.id)  # Если да, то редирект
-                # на страницу с обзорами этого продукта
-            # Save form data to the database
-            rating = form.save(commit=False)
-            rating.item = item
-            rating.user = request.user
-            rating.rate = form.cleaned_data['rate']
-            rating.text = form.cleaned_data['text']
-            rating.save()
-            return redirect('reviews', item_id=item.id)
-        else:
-            return redirect('index')

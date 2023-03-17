@@ -5,12 +5,10 @@ from django.utils.safestring import mark_safe
 
 from .models import (
     Item,
-    Order,
     Tag,
     Customer,
     Favorite,
     ItemScreenshot,
-    ItemRating,
     ItemDiscount,
     ItemPlatform
 )
@@ -51,11 +49,6 @@ class ItemAdmin(admin.ModelAdmin):
             pass
 
 
-@admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
-    """Order admin model"""
-    list_display = ('id', 'customer', )
-
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
@@ -71,12 +64,6 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(Favorite)
 class FavoriteAdmin(admin.ModelAdmin):
-    """Favorite admin model"""
-    pass
-
-
-@admin.register(ItemRating)
-class ItemRatingAdmin(admin.ModelAdmin):
     """Favorite admin model"""
     pass
 

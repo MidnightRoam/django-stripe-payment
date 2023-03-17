@@ -22,6 +22,7 @@
 <!--            <input type="submit" value="OK">-->
 <!--        </form>-->
 <!--    </section>-->
+    {% if items %}
     <section class="products">
         {% for item in items %}
           <a href="{{ item.get_absolute_url }}" class="item__link inset__shadow" style="background-image: url('{{ item.poster.url }}')">
@@ -51,6 +52,11 @@
           </a>
         {% endfor %}
     </section>
+    {% else %}
+    <div class="items__not-found">
+        <h1 class="title bold">Sorry, but we don't have any games matching your requirements yet</h1>
+    </div>
+    {% endif %}
     {% include 'include/search_bar.html' %}
     <div>
 </div>

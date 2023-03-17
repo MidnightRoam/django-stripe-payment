@@ -209,6 +209,8 @@ header .link:hover {
 
 .products__page {
     margin-bottom: 50px;
+    flex-direction: column;
+    justify-content: start;
 }
 
 .link:hover {
@@ -219,12 +221,18 @@ header .link:hover {
     background-color: orange;
     display: flex;
     align-items: center;
-    height: 80px;
+    height: 60px;
     padding: 0px 25px;
     margin-bottom: 30%;
     border-radius: 10px;
     align-self: center;
     color: #fff;
+    width: 75%;
+}
+
+.items__not-found .title {
+    font-size: 1.5em;
+    color: #252525;
 }
 
 .item__link {
@@ -608,6 +616,7 @@ header .link:hover {
 
 .platforms {
     margin: 15px 0px 15px 0px;
+    align-self: center;
 }
 
 .platforms .platform__link {
@@ -994,7 +1003,6 @@ footer .footer__top .title {
     padding: 100px;
     height: 881px;
     min-height: 925px;
-    border: 1px solid red;
     display: flex;
     justify-content: center;
 }
@@ -1086,6 +1094,13 @@ footer .footer__top .title {
 /* Reviews page styles */
 .reviews__page {
     padding: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.reviews__section {
+    width: 50%;
 }
 
 .reviews__section .title {
@@ -1107,6 +1122,10 @@ footer .footer__top .title {
     border: 1px solid gainsboro;
     padding: 15px;
     border-radius: 10px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom: none;
+    margin-bottom: 0;
 }
 
 .review__card {
@@ -1118,8 +1137,12 @@ footer .footer__top .title {
     margin-top: 10px;
     padding: 20px;
     height: auto;
-    max-width: 800px;
+    width: 100%;
     position: relative;
+}
+
+.review__card .content {
+    width: 100%;
 }
 
 .review__user {
@@ -1133,12 +1156,12 @@ footer .footer__top .title {
     border-radius: 5px;
     padding: 5px 5px;
     font-weight: 600;
-    width: 725px;
+    width: 100%;
     max-width: 70px;
     height: 30px;
     color: #fff;
     position: absolute;
-    left: 86%;
+    left: 86.5%;
     top: 7%;
 }
 
@@ -1157,9 +1180,10 @@ footer .footer__top .title {
 /* Add review form styles */
 .review__form {
     border: 3px solid orange;
-    border-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top: dashed orange;
     padding: 15px;
-    margin-top: 10px;
 }
 
 .review__form .radio__label {

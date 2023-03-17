@@ -9,9 +9,14 @@ class NewsPageListView(ListView):
     template_name = 'news/news_page.html'
     model = Article
 
-    def get_context_data(self,  **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        articles = Article.objects.all()
+        slug = self.kwargs.get('slug')
+        if slug:
+            tag = Tag.objects.get(slug=slug)
+            articles = Article.objects.filter(tags__pk=tag.pk)
+        else:
+            articles = Article.objects.all()
         tags = Tag.objects.all()
         context.update({
             'articles': articles,
@@ -19,3 +24,5 @@ class NewsPageListView(ListView):
             'title': 'News'
         })
         return context
+
+

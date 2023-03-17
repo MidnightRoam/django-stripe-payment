@@ -6,9 +6,9 @@
         <div class="left__side">
             <h1 class="tags__title">News</h1>
             <div class="tags">
-                <a href="" class="tag__link">All</a>
+                <a href="{% url 'news' %}" class="tag__link">All</a>
                 {% for tag in tags %}
-                    <a href="" class="tag__link">{{ tag }}</a>
+                    <a href="{% url 'tags-news' tag.slug %}" class="tag__link">{{ tag }}</a>
                 {% endfor %}
             </div>
         </div>

@@ -1,7 +1,4 @@
 from django.core.validators import FileExtensionValidator
-from django.db.models import UniqueConstraint
-from django.utils.text import slugify
-from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
@@ -82,7 +79,7 @@ class Item(models.Model):
 
     def get_absolute_url(self):
         """Return absolute url for each item"""
-        return reverse('item_detail', kwargs={'slug': self.slug})
+        return reverse('item_detail', kwargs={'pk': self.pk})
 
     def get_short_description(self):
         """Return short description for product card"""
@@ -147,7 +144,7 @@ class ItemPlatform(models.Model):
 
     def get_absolute_url(self):
         """Return absolute url for each item platform"""
-        return reverse('platform_sort', kwargs={'slug': self.slug})
+        return reverse('index', kwargs={'platform_slug': self.slug})
 
 
 class Tag(models.Model):
@@ -167,7 +164,7 @@ class Tag(models.Model):
 
     def get_absolute_url(self):
         """Return absolute url for each item tag"""
-        return reverse('items_sort', kwargs={'slug': self.slug})
+        return reverse('index', kwargs={'tag_slug': self.slug})
 
 
 class Customer(models.Model):
@@ -181,36 +178,9 @@ class Customer(models.Model):
         return self.device
 
 
-class Order(models.Model):
-    """Order items model"""
-    item = models.ManyToManyField(Item)
-    customer = models.OneToOneField(Customer, on_delete=models.CASCADE, default='')
-
-
 class Favorite(models.Model):
     """Favorites items model"""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
 
-
-class ItemRating(models.Model):
-    """Product rating model"""
-    class ItemRatingChoices(models.TextChoices):
-        One = '1', _('1')
-        Two = '2', _('2')
-        Three = '3', _('3')
-        Four = '4', _('4')
-        Five = '5', _('5')
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='reviews')
-    rate = models.CharField(choices=ItemRatingChoices.choices, max_length=10)
-    text = models.TextField(blank=True)
-    created_at = models.DateTimeField(default=timezone.now)
-
-    class Meta:
-        constraints = [
-            UniqueConstraint(fields=('user', 'item'), name='product_user_unique'),
-        ]
-        ordering = ['-created_at']

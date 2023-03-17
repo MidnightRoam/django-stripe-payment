@@ -16,7 +16,7 @@
                         No one has rated yet
                       {% endif %}
                   </p>
-                  <a href="{% url 'reviews' item.pk %}" class="rating__link">Rate</a>
+                  <a href="{% url 'reviews' item.slug %}" class="rating__link">Rate</a>
               </div>
               <p class="product__description">{{ item.description }}</p>
               <div class="item__tags">
@@ -49,14 +49,14 @@
                   </div>
               </div>
           </div>
-                          <div class="product__controls">
-                  <form action="{% url 'item_detail' item.pk %}" method="POST" class="to-cart__form">
-                      {% csrf_token %}
-                      <input class="btn" type="submit" value="Add to Cart">
-                  </form>
-                  <p class="controls__separator">OR</p>
-                  <button type="submit" id="checkout-button" class="btn btn__primary">Buy</button>
-              </div>
+          <div class="product__controls">
+              <form action="{% url 'item_detail' item.pk %}" method="POST" class="to-cart__form">
+                  {% csrf_token %}
+                  <input class="btn" type="submit" value="Add to Cart">
+              </form>
+              <p class="controls__separator">OR</p>
+              <button type="submit" id="checkout-button" class="btn btn__primary">Buy</button>
+          </div>
         </section>
         <section class="product__screenshots">
             {% for screenshot in item.screenshots.all %}

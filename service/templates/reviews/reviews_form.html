@@ -22,7 +22,7 @@
                     <div class="form__control">
                         <p class="title">Rate:</p>
                         <div class="stars__container">
-                            {% for i in '12345'|make_list %}
+                            {% for i in '54321'|make_list %}
                                 <div>
                                     <input type="radio" id="rate{{ i }}" name="rate" value="{{ i }}" class="custom__radio">
                                     <label for="rate{{ i }}" class="radio__label">{{ i }}<img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="{{ i }}-star-rating"></label>
@@ -40,7 +40,7 @@
             {% if item.reviews.all %}
             {% for review in item.reviews.all %}
             <div class="review__card">
-                <div class="">
+                <div class="content">
                     <p class="review__user">{{ review.user }}</p>
                     <p class="review__text">{{ review.text }}</p>
                     <p class="review__date">{{ review.created_at }}</p>
