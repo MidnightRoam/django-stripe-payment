@@ -6,7 +6,14 @@
             <img src="{% static 'vendor/gamepad.png' %}" alt="" class="gamepad">
         </div>
     </div>
-    <div class="navbar__right" id="navbar">
+    <div class="hamb">
+        <div class="hamb__field" id="hamb">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
+    <ul class="navbar__right" id="navbar">
         <a href="{% url 'cart' %}" class="link cart__link"></a>
         <a href="{% url 'index' %}" class="link">Store</a>
         <a href="{% url 'news' %}" class="link">News</a>
@@ -15,5 +22,11 @@
         {% else %}
         <a href="{% url 'login' %}" class="link">Sign In</a>
         {% endif %}
-    </div>
+    </ul>
 </header>
+<div class="popup" id="popup">
+
+</div>
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'js/hamburgerNavbar.js' %}"></script>
+{% endblock %}
