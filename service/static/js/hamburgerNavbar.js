@@ -12,7 +12,6 @@ function hambHandler(e) {
     e.preventDefault();
     popup.classList.toggle("open");
     hamb.classList.toggle("active");
-    body.classList.toggle("noscroll");
     renderPopup();
 }
 
@@ -34,5 +33,4 @@ links.forEach((link) => {
 function closeOnClick() {
     popup.classList.remove("open");
     hamb.classList.remove("active");
-    body.classList.remove("noscroll");
 }

@@ -11,7 +11,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
 
-from .models import Item, Tag, Customer, Favorite, ItemScreenshot, ItemPlatform
+from .models import Item, Tag, Customer, Favorite, ItemScreenshot, ItemPlatform, ItemDLC
 from cart.models import Order
 from reviews.models import ItemRating
 
@@ -112,11 +112,13 @@ class ProductPageDetailView(DetailView):
         added_to_favorites = Favorite.objects.filter(item=self.object).count()
         product_rating = ItemRating.objects.filter(item=self.object).aggregate(Avg('rate'))
         title = Item.objects.get(pk=self.kwargs['pk']).name
+        dlc = ItemDLC.objects.filter(product=self.object)
         context.update({
             'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
             'title': f'{title}',
             'added_to_favorites': added_to_favorites,
-            'product_rating': product_rating
+            'product_rating': product_rating,
+            'dlc': dlc
         })
         return context
 

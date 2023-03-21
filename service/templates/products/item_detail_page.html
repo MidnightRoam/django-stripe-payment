@@ -69,6 +69,11 @@
                 </div>
             {% endfor %}
         </section>
+        <section class="product__dlc">
+          {% for dl in dlc %}
+             {{ dl.name }}
+          {% endfor %}
+        </section>
     </div>
   </div>
     {% csrf_token %}

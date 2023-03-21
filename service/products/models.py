@@ -167,6 +167,14 @@ class Tag(models.Model):
         return reverse('index', kwargs={'tag_slug': self.slug})
 
 
+class ItemDLC(models.Model):
+    """Product DLC model"""
+    name = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    price = models.IntegerField(default=0)  # in cents
+    product = models.ForeignKey(Item, verbose_name='Game', blank=True, on_delete=models.CASCADE)
+
+
 class Customer(models.Model):
     """Customer model"""
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.SET_NULL)

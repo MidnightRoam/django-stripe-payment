@@ -10,7 +10,8 @@ from .models import (
     Favorite,
     ItemScreenshot,
     ItemDiscount,
-    ItemPlatform
+    ItemPlatform,
+    ItemDLC
 )
 
 admin.site.site_header = "Pixel Playground | Administration"
@@ -21,9 +22,10 @@ class ItemScreenshotInLine(admin.TabularInline):
     model = ItemScreenshot
 
 
-# class ItemPlatformInLine(admin.TabularInline):
-#     """Item screenshots in line admin model"""
-#     model = Item.platforms.through
+@admin.register(ItemDLC)
+class ItemDLCAdmin(admin.ModelAdmin):
+    """Item screenshots in line admin model"""
+    model = ItemDLC
 
 
 @admin.register(Item)
@@ -34,7 +36,6 @@ class ItemAdmin(admin.ModelAdmin):
 
     inlines = [
         ItemScreenshotInLine,
-        # ItemPlatformInLine
     ]
 
     class Media:
