@@ -15,12 +15,12 @@ changeItemFavoriteIcon();
 function showPopup() {
     const popupImg = document.querySelectorAll('.popup')
     const screenShot = document.querySelectorAll('.screenshot')
-    const closePopup = document.getElementById("popup-close")
+    const closePopup = document.getElementById("screenshot-close")
 
 
     popupImg.forEach((popup) => {
         popup.addEventListener('click', () => {
-            popup.classList.toggle('popup-open')
+            popup.classList.toggle('screenshot-open')
             closePopup.classList.toggle('hide')
             document.body.classList.toggle("stop-scrolling");
         })

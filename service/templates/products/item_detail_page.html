@@ -2,80 +2,145 @@
 {% load static %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-    <div class="container">
-      <div class="product-detail__page">
-        <section class="product__section">
-          <div class="product">
-              <p class="product__name">{{ item.name }}</p>
-              <div class="product__rating">
-                  <p class="rating">
-                      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828961.png" alt="product-rating">
-                      {% if product_rating.rate__avg %}
-                        {{ product_rating.rate__avg|floatformat }} / 5
+<div class="product-detail__wrapper">
+        <div class="product-detail__page">
+            <section class="product__section">
+            <div class="product__head">
+                <div class="product__poster" style="background-image: url('{{ item.poster.url }}')"></div>
+                <div class="product__info">
+                    <p class="product__title">{{ item.name }}</p>
+                    <div class="product__rating">
+                      <p class="rating">
+                          <img src="https://cdn-icons-png.flaticon.com/512/1828/1828961.png" alt="product-rating">
+                          {% if product_rating.rate__avg %}
+                            {{ product_rating.rate__avg|floatformat }} / 5
+                          {% else %}
+                            No one has rated yet
+                          {% endif %}
+                      </p>
+                      <a href="{% url 'reviews' item.slug %}" class="rating__link">Rate</a>
+                    </div>
+                    <div class="product__price">
+                        <form action="{% url 'item_detail' item.pk %}" method="POST" class="to-cart__form">
+                         {% csrf_token %}
+                        <input class="btn-primary" type="submit" value="To cart">
+                        </form>
+                        <button type="submit" id="checkout-button" class="btn-primary">Buy</button>
+                    {% if item.discounts.exists %}
+                          <div class="product__discount">
+                              <p class="discount">{{ item.get_discounted_price }}</p>
+                              <p class="discount__percent">-{{ item.get_percent_discount }}</p>
+                          </div>
+                          <p class="price old__price">{{ item.get_price }}</p>
                       {% else %}
-                        No one has rated yet
-                      {% endif %}
-                  </p>
-                  <a href="{% url 'reviews' item.slug %}" class="rating__link">Rate</a>
-              </div>
-              <p class="product__description">{{ item.description }}</p>
-              <div class="item__tags">
+                          <div class="product__discount">
+                              <p class="regular-price">{{ item.get_price }}</p>
+                          </div>
+                    {% endif%}
+
+                    </div>
+                    <div class="product__regions">
+                        <div class="languages">
+                            <p class="title">Languages</p>
+                            <p class="language">English</p>
+                        </div>
+                        <div class="regions">
+                            <p class="title">Region of activation</p>
+                            <p class="region">Russia, Ukraine and CIS</p>
+                        </div>
+                        <div class="activation">
+                            <p class="title">Platform</p>
+                            <p class="platform">Steam</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product__likes">
+                <form action="{% url 'add_to_favorites' item.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="item_id" value="{{ item.id }}">
+                <input type="image" id="favorite-img" class="favorite__img" src="https://cdn-icons-png.flaticon.com/512/535/535285.png" />
+                </form>
+                <p class="added_to_favorites">{{ added_to_favorites }} &#x2764;</p>
+            </div>
+            </section>
+            <section class="product__sub-info">
+            <div class="info">
+                <div class="genres">
+                    <p class="name">Genre</p>
+                    <p class="genre">Action, RPG</p>
+                </div>
+                <div class="platforms">
+                    <p class="name">Platforms</p>
+                    <p class="platform">Steam</p>
+                </div>
+                <div class="release">
+                    <p class="name">Release date</p>
+                    <p class="date">25.05.2022</p>
+                </div>
+                <div class="publishers">
+                    <p class="name">Publisher</p>
+                    <p class="publisher">FromSoftware, Inc</p>
+                </div>
+                <div class="developers">
+                    <p class="name">Developer</p>
+                    <p class="developer">FromSoftware</p>
+                </div>
+                <div class="item__tags">
                   {% for tag in item.tags.all %}
                   <p class="product__tag">{{ tag }}</p>
                   {% endfor %}
-              </div>
-              <div class="col">
-                  {% if item.discounts.exists %}
-                  <div class="row">
-                      <div class="product__discount">
-                          <p class="discount">{{ item.get_discounted_price }}</p>
-                          <p class="discount__percent">-{{ item.get_percent_discount }}</p>
-                      </div>
-                      <p class="product__price old__price">{{ item.get_price }}</p>
-                  {% else %}
-                  <div class="row">
-                      <div class="product__discount">
-                          <p class="product__price">{{ item.get_price }}</p>
-                      </div>
-                  {% endif%}
-                  </div>
-                  <div class="row product__likes">
-                      <form action="{% url 'add_to_favorites' item.pk %}" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="item_id" value="{{ item.id }}">
-                        <input type="image" id="favorite-img" class="favorite__img" src="https://cdn-icons-png.flaticon.com/512/535/535285.png" />
-                      </form>
-                      <p class="added_to_favorites">{{ added_to_favorites }} &#x2764;</p>
-                  </div>
-              </div>
-          </div>
-          <div class="product__controls">
-              <form action="{% url 'item_detail' item.pk %}" method="POST" class="to-cart__form">
-                  {% csrf_token %}
-                  <input class="btn" type="submit" value="Add to Cart">
-              </form>
-              <p class="controls__separator">OR</p>
-              <button type="submit" id="checkout-button" class="btn btn__primary">Buy</button>
-          </div>
-        </section>
-        <section class="product__screenshots">
-            {% for screenshot in item.screenshots.all %}
-                <div class="popup">
-                    <p class="cross hide" id="popup-close">&#10006;</p>
-                    <img src="{{ screenshot.image.url }}"
-                         alt="{{ screenshot.item.name }}"
-                         class="screenshot"
-                    >
                 </div>
-            {% endfor %}
-        </section>
-        <section class="product__dlc">
-          {% for dl in dlc %}
-             {{ dl.name }}
-          {% endfor %}
-        </section>
+            </div>
+            <div class="screenshots">
+                {% for screenshot in item.screenshots.all %}
+                    <div class="popup">
+                        <p class="cross hide" id="screenshot-close">&#10006;</p>
+                        <img src="{{ screenshot.image.url }}"
+                             alt="{{ screenshot.item.name }}"
+                             class="screenshot"
+                        >
+                    </div>
+                {% endfor %}
+            </div>
+            </section>
+            <section class="product__about">
+                <div class="tech__requirements">
+                    <div class="minimum">
+                        <div class="title">Minimal tech requirements</div>
+                        <div class="os">
+                            <p class="name">OC</p>
+                            <p class="value">Windows 10</p>
+                        </div>
+                        <div class="processor">
+                            <p class="name">Processor</p>
+                            <p class="value">Intel Core i5-8400 or AMD Ryzen 3 3300X</p>
+                        </div>
+                        <div class="ram">
+                            <p class="name">RAM</p>
+                            <p class="value">12 GB RAM</p>
+                        </div>
+                        <div class="graphics__card">
+                            <p class="name">Graphics Card</p>
+                            <p class="value">NVIDIA GeForce GTX 1060, 3 GB or AMD Radeon RX 580, 4 GB</p>
+                        </div>
+                        <div class="direct-x">
+                            <p class="name">DirectX</p>
+                            <p class="value">Version 12</p>
+                        </div>
+                        <div class="disk__space">
+                            <p class="name">Disk Space</p>
+                            <p class="value">60 GB</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="description">
+                    <h1 class="title">Game is WAITING!</h1>
+                    <p class="text">{{ item.description }}</p>
+                </div>
+            </section>
+        </div>
     </div>
-  </div>
     {% csrf_token %}
 {% endblock %}
 
