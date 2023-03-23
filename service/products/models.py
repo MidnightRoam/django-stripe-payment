@@ -275,6 +275,20 @@ class MinimalSystemRequirements(models.Model):
         super(MinimalSystemRequirements, self).save(*args, **kwargs)
 
 
+class Region(models.Model):
+    """All regions model"""
+    name = models.CharField(max_length=124)
+
+    def __str__(self):
+        return self.name
+
+
+class RegionOfActivation(models.Model):
+    """Game region of activation model"""
+    region = models.ForeignKey(Region, default='0', on_delete=models.CASCADE)
+    game = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='regions')
+
+
 class Customer(models.Model):
     """Customer model"""
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.SET_NULL)

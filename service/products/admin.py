@@ -14,7 +14,9 @@ from .models import (
     ItemDLC,
     Language,
     ItemLocalization,
-    MinimalSystemRequirements
+    MinimalSystemRequirements,
+    RegionOfActivation,
+    Region
 )
 
 admin.site.site_header = "Pixel Playground | Administration"
@@ -37,6 +39,12 @@ class MinimalSystemRequirementsInline(admin.TabularInline):
     extra = 0
 
 
+class RegionOfActivationInline(admin.TabularInline):
+    """MinimalSystemRequirements in line admin model"""
+    model = RegionOfActivation
+    extra = 0
+
+
 @admin.register(ItemDLC)
 class ItemDLCAdmin(admin.ModelAdmin):
     """Item screenshots in line admin model"""
@@ -53,6 +61,7 @@ class ItemAdmin(admin.ModelAdmin):
         ItemScreenshotInline,
         ItemLocalizationInline,
         MinimalSystemRequirementsInline,
+        RegionOfActivationInline
     ]
 
     class Media:
@@ -98,5 +107,10 @@ class ItemDiscountAdmin(admin.ModelAdmin):
 
 
 @admin.register(Language)
+class LanguageAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Region)
 class LanguageAdmin(admin.ModelAdmin):
     pass

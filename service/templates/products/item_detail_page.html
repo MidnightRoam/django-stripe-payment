@@ -49,7 +49,9 @@
                         </div>
                         <div class="regions">
                             <p class="title">Region of activation</p>
-                            <p class="region">Russia, Ukraine and CIS</p>
+                            {% for activation in item.regions.all %}
+                            <p class="region">{{ activation.region }}</p>
+                            {% endfor %}
                         </div>
                         <div class="activation">
                             <p class="title">Platform</p>

@@ -758,7 +758,7 @@ header .link:hover {
 }
 
 .product__sub-info .screenshots .screenshot:hover {
-    cursor: pointer;
+    cursor: zoom-in;
 }
 
 .product__about {
@@ -800,25 +800,36 @@ header .link:hover {
 .minimum div {
     display: flex;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 .minimum .os .name {
-    width: 130px;
+    width: 100px;
     color: grey;
+    margin-right: 10px;
+}
+
+.minimum .processor {
+    display: flex;
 }
 
 .minimum .processor .name {
     width: 130px;
+    margin-right: 10px;
+    align-self: center;
     color: grey;
 }
 
 .minimum .ram .name {
-    width: 130px;
+    width: 100px;
     color: grey;
+    margin-right: 10px;
 }
 
 .minimum .graphics__card .name {
-    width: 190px;
+    width: 120px;
+    margin-right: 10px;
+    align-self: center;
     color: grey;
 }
 
@@ -827,8 +838,9 @@ header .link:hover {
 }
 
 .minimum .direct-x .name {
-    width: 130px;
+    width: 100px;
     color: grey;
+    margin-right: 10px;
 }
 
 .minimum .disk__space {
@@ -836,8 +848,9 @@ header .link:hover {
 }
 
 .minimum .disk__space .name {
-    width: 130px;
+    width: 100px;
     color: grey;
+    margin-right: 10px;
 }
 
 
@@ -1918,6 +1931,10 @@ footer .footer__top .title {
     width: 100% !important;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
+}
+
+.screenshot-open:hover .screenshot{
+    cursor: pointer !important;
 }
 
 .screenshot-open .screenshot {
