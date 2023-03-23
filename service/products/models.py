@@ -21,6 +21,7 @@ class Item(models.Model):
         outdated = 'Outdated',
 
     name = models.CharField(max_length=100, verbose_name='Title')
+    tagline = models.CharField(max_length=150, verbose_name='Tagline', default='Game is waiting!')
     description = models.TextField()
     price = models.IntegerField(default=0)  # in cents
     currency = models.CharField(max_length=20, choices=ItemCurrency.choices, default=ItemCurrency.USD)
@@ -88,6 +89,11 @@ class Item(models.Model):
             return short_description + '..'
         else:
             return short_description + '...'
+
+    def get_tagline(self):
+        """Return tagline in uppercase"""
+        tagline = str(self.tagline)
+        return tagline.upper()
 
 
 class ItemScreenshot(models.Model):
@@ -173,6 +179,52 @@ class ItemDLC(models.Model):
     description = models.TextField(blank=True)
     price = models.IntegerField(default=0)  # in cents
     product = models.ForeignKey(Item, verbose_name='Game', blank=True, on_delete=models.CASCADE)
+
+
+class Language(models.Model):
+    """Language model"""
+    class LanguageChoice(models.TextChoices):
+        english = 'English'
+        russian = 'Russian'
+        german = 'German'
+        spanish = 'Spanish'
+        french = 'French'
+        italian = 'Italian'
+        japanese = 'Japanese'
+        korean = 'Korean'
+        chinese = 'Chinese'
+
+    name = models.CharField(choices=LanguageChoice.choices, default=LanguageChoice.english, max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class ItemLocalization(models.Model):
+    """Product localization model"""
+    language = models.ForeignKey(Language, verbose_name='Language', blank=True, on_delete=models.CASCADE)
+    interface = models.BooleanField(default=0, verbose_name='Interface')
+    subtitles = models.BooleanField(default=0, verbose_name='Subtitles')
+    voice_acting = models.BooleanField(default=0, verbose_name='Voice acting')
+    game = models.ForeignKey('Item', on_delete=models.CASCADE, default=0, related_name='languages')
+
+    def __str__(self):
+        return self.language.name
+
+    def get_language_option(self):
+        """
+        Returns formatted string with language and option
+        (subtitles or voice acting or only interface localizated)
+        """
+        options = []
+        if self.interface:
+            options.append('interface')
+        if self.subtitles:
+            options.append('subtitles')
+        if self.voice_acting:
+            options.append('voice')
+        result_options = ', '.join(options)
+        return f'{result_options}'
 
 
 class Customer(models.Model):

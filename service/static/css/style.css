@@ -625,8 +625,15 @@ header .link:hover {
     font-weight: 600;
 }
 
+.product__regions .languages .language__option {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: grey;
+}
+
 .product__regions .regions {
     margin-left: 10%;
+    width: 270px;
 }
 
 .product__regions .regions .title {
@@ -958,7 +965,7 @@ header .link:hover {
     color: #252525;
     font-weight: 600;
     border-radius: 5px;
-    padding: 5px;
+    padding: 4.5px;
 }
 
 .to-cart__form .btn {
@@ -1929,7 +1936,7 @@ footer .footer__top .title {
 .screenshot-open .cross {
     display: block;
     position: absolute;
-    font-size: 2em;
+    font-size: 2vw;
     font-weight: 600;
     top: 10%;
     right: 16%;

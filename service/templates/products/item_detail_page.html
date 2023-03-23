@@ -42,7 +42,10 @@
                     <div class="product__regions">
                         <div class="languages">
                             <p class="title">Languages</p>
-                            <p class="language">English</p>
+                            {% for language in item.languages.all %}
+                            <p class="language">{{ language }}</p>
+                            <p class="language__option">{{ language.get_language_option }}</p>
+                            {% endfor %}
                         </div>
                         <div class="regions">
                             <p class="title">Region of activation</p>
@@ -135,7 +138,7 @@
                     </div>
                 </div>
                 <div class="description">
-                    <h1 class="title">Game is WAITING!</h1>
+                    <h1 class="title">{{ item.get_tagline }}</h1>
                     <p class="text">{{ item.description }}</p>
                 </div>
             </section>

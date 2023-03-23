@@ -11,15 +11,22 @@ from .models import (
     ItemScreenshot,
     ItemDiscount,
     ItemPlatform,
-    ItemDLC
+    ItemDLC,
+    Language,
+    ItemLocalization,
 )
 
 admin.site.site_header = "Pixel Playground | Administration"
 
 
-class ItemScreenshotInLine(admin.TabularInline):
+class ItemScreenshotInline(admin.TabularInline):
     """Item screenshots in line admin model"""
     model = ItemScreenshot
+
+
+class ItemLocalizationInline(admin.TabularInline):
+    """Item localization in line admin model"""
+    model = ItemLocalization
 
 
 @admin.register(ItemDLC)
@@ -35,7 +42,8 @@ class ItemAdmin(admin.ModelAdmin):
     search_fields = ('name', )
 
     inlines = [
-        ItemScreenshotInLine,
+        ItemScreenshotInline,
+        ItemLocalizationInline
     ]
 
     class Media:
@@ -81,3 +89,6 @@ class ItemDiscountAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
 
 
+@admin.register(Language)
+class LanguageAdmin(admin.ModelAdmin):
+    pass
