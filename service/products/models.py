@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 from .translate import from_cyrillic_to_latin
 
@@ -184,6 +185,7 @@ class ItemDLC(models.Model):
 class Language(models.Model):
     """Language model"""
     class LanguageChoice(models.TextChoices):
+        """name field choices"""
         english = 'English'
         russian = 'Russian'
         german = 'German'
@@ -225,6 +227,52 @@ class ItemLocalization(models.Model):
             options.append('voice')
         result_options = ', '.join(options)
         return f'{result_options}'
+
+
+class MinimalSystemRequirements(models.Model):
+    """Minimal game system requirements model"""
+    class RamChoices(models.IntegerChoices):
+        """ram field choices"""
+        one = 1, _('1')
+        two = 2, _('2')
+        four = 4, _('4')
+        six = 6, _('6')
+        eight = 8, _('8')
+        twelve = 12, _('12')
+        sixteen = 16, _('16')
+
+    class DirectxChoices(models.TextChoices):
+        """directx field choices"""
+        version_12 = 'Version 12',
+        version_11 = 'Version 11'
+        version_10 = 'Version 10'
+        version_9 = 'Version 9'
+        version_8 = 'Version 8'
+
+    os = models.CharField(max_length=50, default='Windows 10', verbose_name='OS')
+    processor = models.CharField(max_length=60, default='Intel', verbose_name='Processor')
+    graphics_card = models.CharField(max_length=150, default='NVIDIA or AMD', verbose_name='Graphics card')
+    ram = models.IntegerField(max_length=150, choices=RamChoices.choices, default=RamChoices.four, verbose_name='RAM')
+    directx = models.CharField(max_length=50,
+                               choices=DirectxChoices.choices,
+                               default=DirectxChoices.version_11,
+                               verbose_name='DirectX'
+                               )
+    disk_space = models.PositiveSmallIntegerField(max_length=3, default='20')
+    game = models.ForeignKey(Item, on_delete=models.CASCADE, default=0, related_name='minimal_system_requirements')
+
+    def save(self, *args, **kwargs):
+        """Replace some symbols in text if they exist"""
+        replace_symbols = ['®', '™']
+        processor = self.processor
+        graphics_card = self.graphics_card
+        for i in processor:
+            if i in replace_symbols:
+                self.processor = processor.replace(i, '')
+        for i in graphics_card:
+            if i in replace_symbols:
+                self.graphics_card = graphics_card.replace(i, '')
+        super(MinimalSystemRequirements, self).save(*args, **kwargs)
 
 
 class Customer(models.Model):

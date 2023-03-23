@@ -110,31 +110,33 @@
             <section class="product__about">
                 <div class="tech__requirements">
                     <div class="minimum">
-                        <div class="title">Minimal tech requirements</div>
+                        {% for minimal in item.minimal_system_requirements.all %}
+                        <div class="title">Minimal system requirements</div>
                         <div class="os">
                             <p class="name">OC</p>
-                            <p class="value">Windows 10</p>
+                            <p class="value">{{ minimal.os }}</p>
                         </div>
                         <div class="processor">
                             <p class="name">Processor</p>
-                            <p class="value">Intel Core i5-8400 or AMD Ryzen 3 3300X</p>
+                            <p class="value">{{ minimal.processor }}</p>
                         </div>
                         <div class="ram">
                             <p class="name">RAM</p>
-                            <p class="value">12 GB RAM</p>
+                            <p class="value">{{ minimal.ram }} GB RAM</p>
                         </div>
                         <div class="graphics__card">
                             <p class="name">Graphics Card</p>
-                            <p class="value">NVIDIA GeForce GTX 1060, 3 GB or AMD Radeon RX 580, 4 GB</p>
+                            <p class="value">{{ minimal.graphics_card }}</p>
                         </div>
                         <div class="direct-x">
                             <p class="name">DirectX</p>
-                            <p class="value">Version 12</p>
+                            <p class="value">{{ minimal.directx }}</p>
                         </div>
                         <div class="disk__space">
                             <p class="name">Disk Space</p>
-                            <p class="value">60 GB</p>
+                            <p class="value">{{ minimal.disk_space }} GB</p>
                         </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="description">

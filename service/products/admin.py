@@ -14,6 +14,7 @@ from .models import (
     ItemDLC,
     Language,
     ItemLocalization,
+    MinimalSystemRequirements
 )
 
 admin.site.site_header = "Pixel Playground | Administration"
@@ -27,6 +28,13 @@ class ItemScreenshotInline(admin.TabularInline):
 class ItemLocalizationInline(admin.TabularInline):
     """Item localization in line admin model"""
     model = ItemLocalization
+    extra = 0
+
+
+class MinimalSystemRequirementsInline(admin.TabularInline):
+    """MinimalSystemRequirements in line admin model"""
+    model = MinimalSystemRequirements
+    extra = 0
 
 
 @admin.register(ItemDLC)
@@ -43,7 +51,8 @@ class ItemAdmin(admin.ModelAdmin):
 
     inlines = [
         ItemScreenshotInline,
-        ItemLocalizationInline
+        ItemLocalizationInline,
+        MinimalSystemRequirementsInline,
     ]
 
     class Media:
@@ -56,7 +65,6 @@ class ItemAdmin(admin.ModelAdmin):
             return mark_safe(f"<img src={obj.poster.url} width='50' height='auto' object-fit='cover'")
         else:
             pass
-
 
 
 @admin.register(Tag)

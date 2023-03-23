@@ -752,6 +752,7 @@ header .link:hover {
 
 .product__sub-info .screenshots .screenshot {
     width: 300px;
+    height: 170px;
     border-radius: 10px;
     margin-left: 10px;
 }
@@ -784,7 +785,7 @@ header .link:hover {
 .tech__requirements {
     background-color: rgba(0, 0, 0, 0.8);
     width: 38%;
-    height: 250px;
+    height: auto;
     padding: 20px;
     color: #fff;
     border-radius: 10px;
@@ -1921,6 +1922,7 @@ footer .footer__top .title {
 
 .screenshot-open .screenshot {
     width: 65% !important;
+    height: auto !important;
     position: fixed;
     top: 13%;
     bottom 0%;
