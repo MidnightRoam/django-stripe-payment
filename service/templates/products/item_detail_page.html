@@ -29,9 +29,9 @@
                     {% if item.discounts.exists %}
                           <div class="product__discount">
                               <p class="discount">{{ item.get_discounted_price }}</p>
-                              <p class="discount__percent">-{{ item.get_percent_discount }}</p>
                           </div>
-                          <p class="price old__price">{{ item.get_price }}</p>
+                          <p class="old__price">{{ item.get_price }}</p>
+                          <p class="discount__percent">-{{ item.get_percent_discount }}</p>
                       {% else %}
                           <div class="product__discount">
                               <p class="regular-price">{{ item.get_price }}</p>
@@ -55,7 +55,9 @@
                         </div>
                         <div class="activation">
                             <p class="title">Platform</p>
-                            <p class="platform">Steam</p>
+                            {% for platform in item.platform.all %}
+                            <a href="{% url 'index' platform.slug %}" class="platform">{{ platform }}</a>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

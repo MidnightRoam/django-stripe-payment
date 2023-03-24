@@ -112,5 +112,5 @@ class LanguageAdmin(admin.ModelAdmin):
 
 
 @admin.register(Region)
-class LanguageAdmin(admin.ModelAdmin):
+class RegionAdmin(admin.ModelAdmin):
     pass

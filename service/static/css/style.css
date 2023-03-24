@@ -597,7 +597,7 @@ header .link:hover {
 
 .product__price .btn-primary {
     border-radius: 10px;
-    background-color: orange;
+    background-color: #fbbb43;
     color: #252525;
     border: none;
     font-weight: 600;
@@ -647,15 +647,25 @@ header .link:hover {
 
 .product__regions .activation {
     margin-left: 10%;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
 }
 
 .product__regions .activation .platform {
-    margin-top: 8px;
     font-weight: 600;
+    text-decoration: none;
+    color: #252525;
+    margin-left: 0px;
+}
+
+.product__regions .activation .platform:hover {
+    color: orange;
 }
 
 .product__regions .activation .title {
     font-size: 1em;
+    margin-bottom: 8px;
 }
 
 
@@ -918,28 +928,37 @@ header .link:hover {
 }
 
 .product__discount .discount {
+    font-size: 2em;
+    font-weight: 600;
+    background-color: #fff;
+    margin-left: 10px;
+}
+
+/*
+.discount {
     padding: 5px;
     border: 1px solid #252525;
     border-radius: 10px;
     font-size: 1.5em;
     font-weight: 600;
 }
-
-.product__discount .discount__percent {
-    position: absolute;
-    bottom: 69%;
-    left: 75%;
-    background-color: orange;
-    border-radius: 50%;
-    padding: 5px 2px;
+*/
+.product__price .discount__percent {
+    background-color: #fbbb43;
+    border-radius: 10px;
+    padding: 5px;
     font-weight: 600;
     font-size: 0.9em !important;
 }
 
-.product__discount .old__price {
-    font-weight: 500;
+.product__price .old__price {
+    font-weight: 600;
     margin: 0;
+    background-color: #fff;
+    color: lightgrey;
+    font-size: 2em;
 }
+
 
 .product__controls {
     display: flex;
