@@ -6,6 +6,7 @@ class Publisher(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, editable=False, default='')
+    image = models.ImageField(upload_to='game_studios/publishers_images', blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -21,6 +22,7 @@ class Developer(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     slug = models.SlugField(max_length=255, editable=False, default='')
+    image = models.ImageField(upload_to='game_studios/developers_images', blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:

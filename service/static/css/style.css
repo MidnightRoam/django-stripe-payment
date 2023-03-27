@@ -8,7 +8,7 @@
 
 @media (max-width: 768px) {
     * {
-        font-size: 12px;
+        font-size: 14px;
     }
 }
 
@@ -517,6 +517,17 @@ header .link:hover {
     position: relative;
 }
 
+.item__sold-out {
+    background-color: #f3f4f5;
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: 600;
+    color: #252525;
+}
+
 /* Product detail page styles */
 .product-detail__wrapper {
     display: flex;
@@ -957,15 +968,6 @@ header .link:hover {
     margin-left: 10px;
 }
 
-/*
-.discount {
-    padding: 5px;
-    border: 1px solid #252525;
-    border-radius: 10px;
-    font-size: 1.5em;
-    font-weight: 600;
-}
-*/
 .product__price .discount__percent {
     background-color: #fbbb43;
     border-radius: 10px;
@@ -1000,7 +1002,6 @@ header .link:hover {
     flex-direction: row;
     align-items: center;
     margin-top: 10px;
-
 }
 
 .product__rating img {
@@ -1022,6 +1023,15 @@ header .link:hover {
     font-weight: 600;
     border-radius: 5px;
     padding: 4.5px;
+}
+
+.product__amount {
+    margin: 10px 0px 0px 20px;
+}
+
+.product__amount .value {
+    font-weight: 600;
+    font-size: 1.1em;
 }
 
 .to-cart__form .btn {
@@ -1767,6 +1777,27 @@ footer .footer__top .title {
     padding: 10px;
     font-weight: 500;
 }
+/* Publisher detail page styles */
+.publisher__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.publisher__img {
+    height: 150px;
+}
+
+.publisher__title {
+    margin-top: 10px;
+}
+
+.publisher__description {
+    margin-top: 5px;
+    width: 50%;
+    text-align: justify;
+}
+
 
 /* Sidebar styles */
 .sidebar {
@@ -1780,8 +1811,6 @@ footer .footer__top .title {
     background-color: #fff;
     border-radius: 10px;
 }
-
-
 
 .sidebar .sidebar__open {
     position: absolute;
@@ -1844,6 +1873,13 @@ footer .footer__top .title {
     background-color: gainsboro;
     flex: 1 1 50px;
     font-size: 1em;
+}
+
+@media (max-width: 768px) {
+    .sort__link {
+        flex: 1 1 35px;
+        font-size: 1.1em;
+    }
 }
 
 .sidebar__btn {
@@ -1934,6 +1970,12 @@ footer .footer__top .title {
 .disabled {
     position: relative;
     border: 3px solid gainsboro;
+}
+
+.disable {
+    cursor: not-allowed;
+    background-color: gainsboro !important;
+    border-color: gainsboro !important;
 }
 
 .disabled .title__danger {

@@ -53,8 +53,8 @@ class ItemDLCAdmin(admin.ModelAdmin):
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'get_price', 'currency', 'get_tags', 'slug',  'get_poster', )
-    list_editable = ('currency', )
+    list_display = ('id', 'name', 'get_price', 'currency', 'amount', 'slug',  'get_poster', )
+    list_editable = ('currency', 'amount')
     search_fields = ('name', )
 
     inlines = [
@@ -63,6 +63,27 @@ class ItemAdmin(admin.ModelAdmin):
         MinimalSystemRequirementsInline,
         RegionOfActivationInline,
     ]
+
+    # fieldsets = (
+    #     ('Product info', {
+    #         'fields': (('name', 'tagline'), 'description')
+    #     }),
+    #     ('Product price', {
+    #         'fields': (('price', 'currency'), 'amount')
+    #     }),
+    #     ('Product tags and platform of activation', {
+    #         'fields': ('tags', 'platform')
+    #     })),
+    # )
+    #
+    # fieldsets = (
+    #     ('Standard info', {
+    #         'fields': (('name')
+    #     }),
+    #     ('Address info', {
+    #         'fields': ('address', ('city', 'zip'))
+    #     }),
+    # )
 
     class Media:
         css = {

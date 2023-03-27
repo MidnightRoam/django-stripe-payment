@@ -20,12 +20,25 @@
                       </p>
                       <a href="{% url 'reviews' item.slug %}" class="rating__link">Rate</a>
                     </div>
+                    <ul class="product__amount">
+                       <li class="value">{{ item.get_product_in_stock }}</li>
+                    </ul>
                     <div class="product__price">
                         <form action="{% url 'item_detail' item.pk %}" method="POST" class="to-cart__form">
                          {% csrf_token %}
-                        <input class="btn-primary cart" type="submit" value=" ">
+                        <input
+                                class="btn-primary cart {% if item.amount < 1 %}disable{% endif %}"
+                                {% if not item.amount %} disabled {% endif %}
+                                type="submit" value=" "
+                        >
                         </form>
-                        <button type="submit" id="checkout-button" class="btn-primary">BUY</button>
+                        <button
+                                type="submit"
+                                id="checkout-button"
+                                class="btn-primary {% if item.amount < 1 %}disable{% endif %}"
+                                {% if not item.amount %} disabled {% endif %}
+                        >
+                            BUY</button>
                     {% if item.discounts.exists %}
                           <div class="product__discount">
                               <p class="discount">{{ item.get_discounted_price }}</p>

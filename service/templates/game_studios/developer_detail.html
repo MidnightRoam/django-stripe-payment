@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{{ developer }}
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="publisher__card">
+    {% if developer.image %}
+    <img src="{{ developer.image.url }}" alt="" class="publisher__img">
+    {% endif %}
+    <h1 class="publisher__title">{{ developer.name }}</h1>
+    <p class="publisher__description">{{ developer.description }}</p>
+    </div>
+</div>
+{% endblock %}

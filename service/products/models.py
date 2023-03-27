@@ -38,6 +38,7 @@ class Item(models.Model):
     created = models.DateTimeField(editable=False, blank=True, default=timezone.now)
     modified = models.DateTimeField(blank=True, default=timezone.now)
     slug = models.SlugField(max_length=100, editable=False, default='')
+    amount = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         """Auto set slug field as item name"""
@@ -104,6 +105,18 @@ class Item(models.Model):
         """Return string with all game platforms"""
         lst = self.platform.name
         return lst
+
+    def get_product_in_stock(self):
+        """
+        Return string
+        'In stock' - if amount of product > 1
+        of
+        'SOLD OUT' - if amount of product < 1
+        """
+        result = 'In stock'
+        if self.amount < 1:
+            result = 'SOLD OUT'
+        return result
 
 
 class ItemScreenshot(models.Model):

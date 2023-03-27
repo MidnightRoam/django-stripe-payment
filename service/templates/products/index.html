@@ -25,10 +25,16 @@
     {% if items %}
     <section class="products">
         {% for item in items %}
-          <a href="{{ item.get_absolute_url }}" class="item__link inset__shadow" style="background-image: url('{{ item.poster.url }}')">
+          <a href="{{ item.get_absolute_url }}"
+             class="item__link inset__shadow"
+             style="background-image: url('{{ item.poster.url }}')"
+          >
             <div class="item__card">
                 <p class="item__name">{{ item.name }}</p>
                 <p class="item__description">{{ item.get_short_description }}</p>
+                {% if item.amount < 1 %}
+                    <p class="item__sold-out">SOLD OUT</p>
+                {% else %}
                 {% if item.discounts.exists %}
                 <div class="item__price discount">
                     <p class="discount">{{ item.get_discounted_price }}</p>
@@ -37,6 +43,7 @@
                 <p class="item__price old__price">{{ item.get_price }}</p>
                 {% else %}
                 <p class="item__price">{{ item.get_price }}</p>
+                {% endif %}
                 {% endif %}
                 <div class="item__platforms">
                     {% for platform in item.platform.all %}
