@@ -7,6 +7,8 @@ from django.utils.translation import gettext_lazy as _
 
 from .translate import from_cyrillic_to_latin
 
+from game_studios.models import Publisher, Developer
+
 
 class Item(models.Model):
     """Product item model"""
@@ -28,6 +30,8 @@ class Item(models.Model):
     currency = models.CharField(max_length=20, choices=ItemCurrency.choices, default=ItemCurrency.USD)
     tags = models.ManyToManyField('Tag', verbose_name='Genres / tags')
     platform = models.ManyToManyField('ItemPlatform')
+    publisher = models.ManyToManyField(Publisher)
+    developer = models.ManyToManyField(Developer)
     poster = models.ImageField(upload_to='products/product_posters', blank=True)
     trailer = models.URLField(max_length=200, blank=True)
     status = models.CharField(max_length=20, choices=ItemStatus.choices, default=ItemStatus.new)
@@ -95,6 +99,11 @@ class Item(models.Model):
         """Return tagline in uppercase"""
         tagline = str(self.tagline)
         return tagline.upper()
+
+    def get_platforms(self):
+        """Return string with all game platforms"""
+        lst = self.platform.name
+        return lst
 
 
 class ItemScreenshot(models.Model):

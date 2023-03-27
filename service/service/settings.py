@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'news.apps.NewsConfig',
     'reviews.apps.ReviewsConfig',
     'cart.apps.CartConfig',
+    'game_studios.apps.GameStudiosConfig'
 ]
 
 MIDDLEWARE = [

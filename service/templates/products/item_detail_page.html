@@ -23,9 +23,9 @@
                     <div class="product__price">
                         <form action="{% url 'item_detail' item.pk %}" method="POST" class="to-cart__form">
                          {% csrf_token %}
-                        <input class="btn-primary" type="submit" value="To cart">
+                        <input class="btn-primary cart" type="submit" value=" ">
                         </form>
-                        <button type="submit" id="checkout-button" class="btn-primary">Buy</button>
+                        <button type="submit" id="checkout-button" class="btn-primary">BUY</button>
                     {% if item.discounts.exists %}
                           <div class="product__discount">
                               <p class="discount">{{ item.get_discounted_price }}</p>
@@ -75,11 +75,15 @@
             <div class="info">
                 <div class="genres">
                     <p class="name">Genre</p>
-                    <p class="genre">Action, RPG</p>
+                    <p class="genre">. . .</p>
                 </div>
                 <div class="platforms">
                     <p class="name">Platforms</p>
-                    <p class="platform">Steam</p>
+                    <p class="platform">
+                    {% for platform in item.platform.all %}
+                        {{ platform }}
+                     {% endfor %}
+                    </p>
                 </div>
                 <div class="release">
                     <p class="name">Release date</p>
@@ -87,11 +91,15 @@
                 </div>
                 <div class="publishers">
                     <p class="name">Publisher</p>
-                    <p class="publisher">FromSoftware, Inc</p>
+                    {% for publisher in item.publisher.all %}
+                    <a href="{% url 'publisher' publisher.slug %}" class="publisher">{{ publisher }}</a>
+                    {% endfor %}
                 </div>
                 <div class="developers">
                     <p class="name">Developer</p>
-                    <p class="developer">FromSoftware</p>
+                    {% for developer in item.developer.all %}
+                    <a href="{% url 'developer' developer.slug %}" class="developer">{{ developer }}</a>
+                    {% endfor %}
                 </div>
                 <div class="item__tags">
                   {% for tag in item.tags.all %}

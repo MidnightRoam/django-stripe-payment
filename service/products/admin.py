@@ -61,7 +61,7 @@ class ItemAdmin(admin.ModelAdmin):
         ItemScreenshotInline,
         ItemLocalizationInline,
         MinimalSystemRequirementsInline,
-        RegionOfActivationInline
+        RegionOfActivationInline,
     ]
 
     class Media:
@@ -96,21 +96,23 @@ class FavoriteAdmin(admin.ModelAdmin):
 
 @admin.register(ItemDiscount)
 class ItemDiscountAdmin(admin.ModelAdmin):
-    """Favorite admin model"""
+    """Game discount admin model"""
     pass
 
 
 @admin.register(ItemPlatform)
-class ItemDiscountAdmin(admin.ModelAdmin):
-    """Favorite admin model"""
+class ItemPlatformAdmin(admin.ModelAdmin):
+    """Game platform admin model"""
     list_display = ('name', 'slug')
 
 
 @admin.register(Language)
 class LanguageAdmin(admin.ModelAdmin):
+    """Game language admin model"""
     pass
 
 
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
+    """Game region of activation admin model"""
     pass

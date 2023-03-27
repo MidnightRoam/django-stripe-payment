@@ -13,7 +13,7 @@
 }
 
 header {
-    background-color: orange;
+    background-color: #fbbb43;
     height: 64px;
     display: flex;
     justify-content: space-between;
@@ -173,7 +173,7 @@ header .link:hover {
 .favorite__list .favorite__link {
     margin: 10px;
     padding: 10px;
-    border: 1px solid orange;
+    border: 1px solid #fbbb43;
     text-decoration: none;
     border-radius: 10px;
     color: #252525;
@@ -182,7 +182,7 @@ header .link:hover {
 }
 
 .favorite__link:hover {
-    background-color: orange;
+    background-color: #fbbb43;
     color: #252525;
 }
 
@@ -220,7 +220,7 @@ header .link:hover {
 }
 
 .items__not-found {
-    background-color: orange;
+    background-color: #fbbb43;
     display: flex;
     align-items: center;
     height: 60px;
@@ -306,7 +306,7 @@ header .link:hover {
     background-image: none !important;
     color: #fff;
     border: none;
-    background-color: orange;
+    background-color: #fbbb43;
     box-shadow: none;
 }
 
@@ -416,7 +416,7 @@ header .link:hover {
     margin: 10px;
     font-weight: 500;
     position: absolute;
-    background-color: rgba(255,165,0, 0.8);
+    background-color: #fbbb43;
     border-radius: 10px;
     padding: 7px;
     top: 82.5%;
@@ -586,13 +586,11 @@ header .link:hover {
 }
 
 .product__price .regular-price {
-    width: 100%;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    font-weight: 500;
+    font-size: 2em;
+    font-weight: 600;
+    background-color: #fff;
+    margin-left: 10px;
+
 }
 
 .product__price .btn-primary {
@@ -603,12 +601,21 @@ header .link:hover {
     font-weight: 600;
     padding: 11px 15px;
     transition: 0.2s;
-    border: 1px solid orange;
+    border: 1px solid #fbbb43;
 }
 
 .product__price .btn-primary:hover {
     background-color: #fff;
 }
+
+.product__price .cart {
+    background-image: url('https://cdn-icons-png.flaticon.com/512/1170/1170678.png');
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+}
+
 
 .product__regions {
     display: flex;
@@ -638,6 +645,7 @@ header .link:hover {
 
 .product__regions .regions .title {
     font-size: 1em;
+    font-weight: 400;
 }
 
 .product__regions .regions .region {
@@ -656,16 +664,18 @@ header .link:hover {
     font-weight: 600;
     text-decoration: none;
     color: #252525;
-    margin-left: 0px;
+    margin: 0px;
 }
 
 .product__regions .activation .platform:hover {
-    color: orange;
+    color: #fbbb43;
+    text-decoration: underline;
 }
 
 .product__regions .activation .title {
     font-size: 1em;
     margin-bottom: 8px;
+    font-weight: 400;
 }
 
 
@@ -690,7 +700,7 @@ header .link:hover {
 }
 
 .genres .genre {
-    color: orange;
+    color: #fbbb43;
     font-weight: 600;
 }
 
@@ -701,6 +711,7 @@ header .link:hover {
 .info .platforms {
     display: flex;
     margin-top: 0;
+    width: 100%;
 }
 
 .info .item__tags {
@@ -712,7 +723,7 @@ header .link:hover {
 
 .platforms .platform {
     font-weight: 600;
-    width: 220px;
+    width: 150px;
 }
 
 .release {
@@ -734,6 +745,12 @@ header .link:hover {
 .publishers .publisher {
     color: orange;
     font-weight: 600;
+    margin: 0;
+    text-decoration: none;
+}
+
+.publishers .publisher:hover {
+    text-decoration: underline;
 }
 
 .publishers .name {
@@ -751,6 +768,12 @@ header .link:hover {
 .developers .developer {
     color: orange;
     font-weight: 600;
+    margin: 0;
+    text-decoration: none;
+}
+
+.developers .developer:hover {
+    text-decoration: underline;
 }
 
 .product__sub-info .screenshots {
@@ -871,7 +894,7 @@ header .link:hover {
     border-radius: 10px;
     font-size: 1em !important;
     font-weight: 600;
-    background: orange;
+    background: #fbbb43;
     color: #fff;
     margin-left: 10px;
 }
@@ -986,7 +1009,7 @@ header .link:hover {
 }
 
 .rating {
-    background: orange;
+    background: #fbbb43;
     padding: 5px;
     font-size: 0.9em !important;
     font-weight: 600;
@@ -994,7 +1017,7 @@ header .link:hover {
 }
 
 .rating__link {
-    background: orange;
+    background: #fbbb43;
     color: #252525;
     font-weight: 600;
     border-radius: 5px;
@@ -1005,7 +1028,6 @@ header .link:hover {
     transition: 0.3s;
     width: 205px;
     margin-bottom: 0px;
-    background-color: orange;
     color: #fff;
     margin-bottom: 25px;
 }
@@ -1186,7 +1208,7 @@ footer .footer__top .title {
 }
 
 .pagination-link {
-    background-color: orange;
+    background-color: #fbbb43;
     color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
@@ -1272,7 +1294,7 @@ footer .footer__top .title {
 }
 
 .btn__search:hover {
-    background-color: orange;
+    background-color: #fbbb43;
     color: #fff;
 }
 
@@ -1550,7 +1572,7 @@ footer .footer__top .title {
 
 .cart__price {
     padding: 15px 10px 10px 10px;
-    background-color: orange;
+    background-color: #fbbb43;
     color: #fff;
     font-weight: 600;
     border-radius: 10px;
@@ -1768,7 +1790,7 @@ footer .footer__top .title {
     writing-mode: vertical-lr;
     font-size: 2em;
     text-align: center;
-    background-color: orange;
+    background-color: #fbbb43;
     color: #fff;
     border-radius: 5px;
     padding: 5px;
@@ -1809,7 +1831,7 @@ footer .footer__top .title {
     margin: 2px;
     padding: 5px;
     width: 100%;
-    background-color: orange;
+    background-color: #fbbb43;
     color: #fff;
     font-weight: 600;
     text-decoration: none;
@@ -1826,7 +1848,7 @@ footer .footer__top .title {
 
 .sidebar__btn {
     position: absolute;
-    background-color: orange;
+    background-color: #fbbb43;
     border-radius: 8px;
     color: #fff;
     font-weight: 600;
@@ -1921,7 +1943,7 @@ footer .footer__top .title {
     width: 60%;
     font-size: 1.5em;
     font-weight: 500;
-    background-color: orange;
+    background-color: #fbbb43;
     padding: 10px;
     opacity: 1;
     text-align: center;
