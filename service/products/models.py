@@ -254,7 +254,7 @@ class ItemLocalization(models.Model):
 class MinimalSystemRequirements(models.Model):
     """Minimal game system requirements model"""
     class RamChoices(models.IntegerChoices):
-        """ram field choices"""
+        """memory (ram) field choices"""
         one = 1, _('1')
         two = 2, _('2')
         four = 4, _('4')
@@ -288,12 +288,12 @@ class MinimalSystemRequirements(models.Model):
         replace_symbols = ['®', '™']
         processor = self.processor
         graphics_card = self.graphics_card
-        for i in processor:
-            if i in replace_symbols:
-                self.processor = processor.replace(i, '')
-        for i in graphics_card:
-            if i in replace_symbols:
-                self.graphics_card = graphics_card.replace(i, '')
+        for symbol in processor:
+            if symbol in replace_symbols:
+                self.processor = processor.replace(symbol, '')
+        for symbol in graphics_card:
+            if symbol in replace_symbols:
+                self.graphics_card = graphics_card.replace(symbol, '')
         super(MinimalSystemRequirements, self).save(*args, **kwargs)
 
 

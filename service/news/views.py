@@ -14,9 +14,9 @@ class NewsPageListView(ListView):
         slug = self.kwargs.get('slug')
         if slug:
             tag = Tag.objects.get(slug=slug)
-            articles = Article.objects.filter(tags__pk=tag.pk)
+            articles = Article.objects.filter(tags__pk=tag.pk).order_by('-id')
         else:
-            articles = Article.objects.all()
+            articles = Article.objects.all().order_by('-id')
         tags = Tag.objects.all()
         context.update({
             'articles': articles,

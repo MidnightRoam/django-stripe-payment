@@ -241,7 +241,6 @@ header .link:hover {
     text-decoration: none;
     color: #252525;
     margin: 1%;
-    border: 1px solid gainsboro;
     width: 350px;
     height: 350px;
     padding: 20px;
@@ -518,12 +517,16 @@ header .link:hover {
 }
 
 .item__sold-out {
-    background-color: #f3f4f5;
+    background-color: gainsboro;
     position: absolute;
-    bottom: 5%;
-    right: 5%;
+    bottom: 0%;
+    right: 0%;
     padding: 5px;
-    border-radius: 5px;
+    width: 100%;
+    height: 32px;
+    text-align: right;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     font-weight: 600;
     color: #252525;
 }
@@ -553,7 +556,7 @@ header .link:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 1920px;
+    width: 100%;
     max-width: 70%;
     margin-bottom: 40px;
 }
@@ -693,7 +696,7 @@ header .link:hover {
 .product__sub-info {
     display: flex;
     justify-content: space-between;
-    width: 1920px;
+    width: 100%;
     max-width: 70%;
 }
 
@@ -807,10 +810,16 @@ header .link:hover {
 
 .product__about {
     margin-top: 50px;
-    width: 1920px;
+    width: 100%;
     max-width: 70%;
     display: flex;
     justify-content: space-between;
+}
+
+@media (max-width: 1024px) {
+    .product__about {
+        flex-direction: column;
+    }
 }
 
 .product__about .description {
@@ -833,6 +842,12 @@ header .link:hover {
     padding: 20px;
     color: #fff;
     border-radius: 10px;
+}
+
+@media (max-width: 1024px) {
+    .tech__requirements {
+        width: 60%;
+    }
 }
 
 .minimum .title {
@@ -1316,7 +1331,7 @@ footer .footer__top .title {
 .news__page {
     background-color: #dedfe1;
     padding: 100px;
-    height: 881px;
+    height: auto;
     min-height: 925px;
     display: flex;
     justify-content: center;
@@ -1325,6 +1340,7 @@ footer .footer__top .title {
 .news__page .content {
     background-color: #f3f4f5;
     width: 80%;
+    height: auto;
     display: flex;
     justify-content: space-between;
     padding: 1%;
@@ -1360,7 +1376,8 @@ footer .footer__top .title {
 }
 
 .news__page .content .right__side {
-    width: 80%;
+    width: 1105px;
+    max-width: 100%;
 }
 
 .content .left__side .tags__title {
@@ -1383,10 +1400,21 @@ footer .footer__top .title {
 
 .articles .card {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin: 1%;
     padding-bottom: 1%;
     border-bottom: 1px solid gainsboro;
+    width: inherit;
+}
+
+.articles .card .main {
+    display: flex;
+    flex-direction: column;
+}
+
+.articles .card .article__image {
+    width: 200px;
+    border-radius: 10px;
 }
 
 .articles .card p, a {
@@ -1398,6 +1426,9 @@ footer .footer__top .title {
     color: #252525;
     font-weight: 600;
     font-size: 1.1em;
+    margin: 10px;
+    height: 50%;
+    width: 100%;
 }
 
 .articles .card .article__link:hover {
@@ -1405,6 +1436,12 @@ footer .footer__top .title {
     color: orange;
 }
 
+.articles .card .article__created {
+    margin: 10px;
+    width: 100%;
+    font-size: 0.9em;
+    color: grey;
+}
 
 /* Reviews page styles */
 .reviews__page {
@@ -2068,8 +2105,10 @@ footer .footer__top .title {
         align-items: center;
     }
     .hamb__field {
-        padding: 10px 20px;
+        padding: 4px 8px;
+        border-radius: 10px;
         cursor: pointer;
+        border: 1px solid #fff;
     }
     .bar {
         display: block;

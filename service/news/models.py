@@ -7,9 +7,9 @@ class Article(models.Model):
     """News article model"""
     title = models.CharField(max_length=200)
     url = models.URLField(unique=True)
-    short_description = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='articles/')
-    tags = models.ManyToManyField('Tag', verbose_name='Tags')
+    short_description = models.CharField(max_length=200, blank=True)
+    image = models.TextField()
+    tags = models.ManyToManyField('Tag', verbose_name='Tags', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(default='', editable=False)
 

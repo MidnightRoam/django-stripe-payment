@@ -66,24 +66,20 @@ class ItemAdmin(admin.ModelAdmin):
 
     # fieldsets = (
     #     ('Product info', {
-    #         'fields': (('name', 'tagline'), 'description')
+    #         'fields': (('name', 'tagline',), 'description', 'poster', 'trailer')
     #     }),
     #     ('Product price', {
-    #         'fields': (('price', 'currency'), 'amount')
+    #         'fields': (('price', 'currency',), 'amount')
     #     }),
     #     ('Product tags and platform of activation', {
-    #         'fields': ('tags', 'platform')
+    #         'fields': ('tags', 'platform',)
+    #     }),
+    #     ('Publisher & Developer', {
+    #         'fields': ('publisher', 'developer')
+    #     }),
+    #     ('Game content', {
+    #         'fields': ('screenshots', )
     #     })),
-    # )
-    #
-    # fieldsets = (
-    #     ('Standard info', {
-    #         'fields': (('name')
-    #     }),
-    #     ('Address info', {
-    #         'fields': ('address', ('city', 'zip'))
-    #     }),
-    # )
 
     class Media:
         css = {

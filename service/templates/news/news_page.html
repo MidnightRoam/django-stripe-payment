@@ -17,8 +17,11 @@
             <div class="articles">
                 {% for article in articles %}
                 <div class="card">
-                    <a href="{{ article.url }}" target="_blank" class="article__link">{{ article.title }}</a>
-                    <p>{{ article.short_description }}</p>
+                    <img src="{{ article.image }}" alt="{{ article.title }}-image" class="article__image">
+                    <div class="main">
+                        <a href="{{ article.url }}" target="_blank" class="article__link">{{ article.title }}</a>
+                        <p class="article__created">{{ article.created_at|date:"SHORT_DATE_FORMAT"}}</p>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
