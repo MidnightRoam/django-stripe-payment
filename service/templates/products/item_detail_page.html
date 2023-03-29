@@ -13,7 +13,7 @@
                       <p class="rating">
                           <img src="https://cdn-icons-png.flaticon.com/512/1828/1828961.png" alt="product-rating">
                           {% if product_rating.rate__avg %}
-                            {{ product_rating.rate__avg|floatformat }} / 5
+                            {{ product_rating.rate__avg|floatformat }}
                           {% else %}
                             No one has rated yet
                           {% endif %}
@@ -54,11 +54,16 @@
                     </div>
                     <div class="product__regions">
                         <div class="languages">
-                            <p class="title">Languages</p>
-                            {% for language in item.languages.all %}
-                            <p class="language">{{ language }}</p>
-                            <p class="language__option">{{ language.get_language_option }}</p>
-                            {% endfor %}
+                            <div class="select" id="languages">
+                                <p class="title">Languages</p>
+                                <p class="caret" id="caret"></p>
+                            </div>
+                            <div class="dropdown" id="languages-dropdown">
+                                {% for language in item.languages.all %}
+                                <p class="language">{{ language }}</p>
+                                <p class="language__option">{{ language.get_language_option }}</p>
+                                {% endfor %}
+                            </div>
                         </div>
                         <div class="regions">
                             <p class="title">Region of activation</p>

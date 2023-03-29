@@ -13,6 +13,7 @@ function changeItemFavoriteIcon() {
 changeItemFavoriteIcon();
 
 function showPopup() {
+    // Show game screenshot in full size
     const popupImg = document.querySelectorAll('.popup')
     const screenShot = document.querySelectorAll('.screenshot')
     const closePopup = document.getElementById("screenshot-close")
@@ -33,4 +34,18 @@ function showPopup() {
 }
 
 showPopup();
+
+function dropdownGameLanguages() {
+    // Show game localization languages dropdown menu
+    const gameLanguages = document.getElementById("languages");
+    const dropdown = document.getElementById("languages-dropdown");
+    const caret = document.getElementById("caret");
+
+    gameLanguages.addEventListener('click', () => {
+        dropdown.classList.toggle('dropdown-show');
+        caret.classList.toggle('rotate');
+    })
+}
+
+dropdownGameLanguages()
 
