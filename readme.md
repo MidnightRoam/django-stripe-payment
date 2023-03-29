@@ -12,6 +12,7 @@
     <li>Display of the average product rating based on user reviews</li>
     <li>Adding a User Review to a Product</li>
     <li>Registration of new users</li>
+    <li>AND MORE, MORE NEW FEATURES</li>
 </ul>
 
 # Deployed application address
