@@ -12,7 +12,7 @@ function changeItemFavoriteIcon() {
 
 changeItemFavoriteIcon();
 
-function showPopup() {
+function showScreenshotPopup() {
     // Show game screenshot in full size
     const popupImg = document.querySelectorAll('.popup')
     const screenShot = document.querySelectorAll('.screenshot')
@@ -28,12 +28,11 @@ function showPopup() {
 
         closePopup.addEventListener('click', () => {
             popup.classList.remove('popup-close')
-            console.log('закрыто')
         })
     })
 }
 
-showPopup();
+showScreenshotPopup();
 
 function dropdownGameLanguages() {
     // Show game localization languages dropdown menu
@@ -48,4 +47,35 @@ function dropdownGameLanguages() {
 }
 
 dropdownGameLanguages()
+
+
+function sliderGameScreenshots() {
+    // Slider for game screenshots on the game detail page
+    const left = document.getElementById("left")
+    const right = document.getElementById("right")
+    const screenshots = document.querySelectorAll(".screenshot")
+    let offset = 0
+
+    left.addEventListener('click', () => {
+    if (offset >= 0) return
+        offset += 100;
+        screenshots.forEach(screenshot => {
+          screenshot.style.left = `${offset}%`;
+        });
+        console.log('right')
+    });
+
+    right.addEventListener('click', () => {
+    if (offset <= -(100 * (screenshots.length - 1))) {
+        offset = 100;
+    };
+        offset -= 100;
+        screenshots.forEach(screenshot => {
+          screenshot.style.left = `${offset}%`;
+        });
+        console.log('left')
+    });
+}
+
+sliderGameScreenshots()
 

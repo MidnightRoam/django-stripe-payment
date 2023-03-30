@@ -1,6 +1,11 @@
 from django.db import models
+import jsonfield
 
 from products.translate import from_cyrillic_to_latin
+
+
+def default_urls():
+    return {'stopgame': ""}
 
 
 class Article(models.Model):
@@ -33,3 +38,16 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Error(models.Model):
+    """Parsing error model"""
+    timestamp = models.DateField(auto_now_add=True)
+    data = jsonfield.JSONField()
+
+
+class Url(models.Model):
+    """Article tag url model"""
+    tags = models.ManyToManyField('Tag', verbose_name='Tags', blank=True)
+    url_data = jsonfield.JSONField(default=default_urls)
+
