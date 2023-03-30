@@ -21,7 +21,7 @@ class CartPageView(LoginRequiredMixin, ListView):
             customer, created = Customer.objects.get_or_create(device=device)
 
         cart, _ = Order.objects.get_or_create(customer=customer)
-        items = cart.item.all()
+        items = cart.item.all().prefetch_related('languages')
         total_amount = cart.item.aggregate(total_amount=Sum('price') / 100)['total_amount']
         favorites = Favorite.objects.filter(user=request.user).select_related('item')
 

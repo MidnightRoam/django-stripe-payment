@@ -1,46 +1,46 @@
 {% extends 'base.html' %}
 {% block title %} {{ title }} {% endblock %}
 {% block content %}
-<div class="simple__page">
-    {% if items %}
-    <div>
-        <h1 class="title cart__title">Total products: {{ items|length }}</h1>
-        <div class="cart__card">
-            {% for item in items %}
-            <div class="cart__items">
-                <p class="cart__item">{{ item }}</p>
-                <div class="cart__price">{{ item.get_discounted_price }}
-                    <form method="post" action="{% url 'cart' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="item_id" value="{{ item.id }}">
-                        <button type="submit" class="btn__cross">&#9587;</button>
-                    </form>
-                </div>
-            </div>
-            {% endfor %}
-            <button type="submit" id="checkout-button" class="btn btn__primary">Buy</button>
-        </div>
-        <h1 class="title cart__title">Total amount: ${{ total_amount }}</h1>
-    </div>
-    <div>
-    <h1 class="title">Your favorite list</h1>
-    <div class="favorite__list">
-        {% for fav_item in favorites %}
-                <a href="{% url 'index' %}" class="favorite__link">
-                    {{ fav_item.item }}
-                </a>
-                <form method="post" action="{% url 'cart' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="item_id" value="{{ item.id }}">
-                    <button type="submit" class="btn__cross">&#9587;</button>
-                </form>
-        {% endfor %}
-    </div>
-    {% else %}
-    <h1 class="title bold">Your cart is empty, order something and come back!</h1>
-    {% endif %}
-    </div>
-</div>
+<!--<div class="simple__page">-->
+<!--    {% if items %}-->
+<!--    <div>-->
+<!--        <h1 class="title cart__title">Total products: {{ items|length }}</h1>-->
+<!--        <div class="cart__card">-->
+<!--            {% for item in items %}-->
+<!--            <div class="cart__items">-->
+<!--                <p class="cart__item">{{ item }}</p>-->
+<!--                <div class="cart__price">{{ item.get_discounted_price }}-->
+<!--                    <form method="post" action="{% url 'cart' %}">-->
+<!--                        {% csrf_token %}-->
+<!--                        <input type="hidden" name="item_id" value="{{ item.id }}">-->
+<!--                        <button type="submit" class="btn__cross">&#9587;</button>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            {% endfor %}-->
+<!--            <button type="submit" id="checkout-button" class="btn btn__primary">Buy</button>-->
+<!--        </div>-->
+<!--        <h1 class="title cart__title">Total amount: ${{ total_amount }}</h1>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--    <h1 class="title">Your favorite list</h1>-->
+<!--    <div class="favorite__list">-->
+<!--        {% for fav_item in favorites %}-->
+<!--                <a href="{% url 'index' %}" class="favorite__link">-->
+<!--                    {{ fav_item.item }}-->
+<!--                </a>-->
+<!--                <form method="post" action="{% url 'cart' %}">-->
+<!--                    {% csrf_token %}-->
+<!--                    <input type="hidden" name="item_id" value="{{ item.id }}">-->
+<!--                    <button type="submit" class="btn__cross">&#9587;</button>-->
+<!--                </form>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+<!--    {% else %}-->
+<!--    <h1 class="title bold">Your cart is empty, order something and come back!</h1>-->
+<!--    {% endif %}-->
+<!--    </div>-->
+<!--</div>-->
 
 <!--    <div class="simple__page">-->
 <!--        <div class="left__side">-->
@@ -71,4 +71,55 @@
 <!--            </div>-->
 <!--        </div>-->
 <!--    </div>-->
+<div class="container">
+    <div class="cart__content">
+        <div class="left__side">
+            <div class="head">
+                <h1 class="title">MY ORDER</h1>
+                <p class="count">{{ items|length }}</p>
+            </div>
+            <section class="order__items">
+                {% for item in items %}
+                <div class="item">
+                    <img src="{{ item.poster.url }}" alt="{{ item.name }}-poster" class="poster">
+                    <div class="item__info">
+                        <div class="head">
+                            <h1 class="title">{{ item.name }}</h1>
+                            <form method="post" action="{% url 'cart' %}">
+                                 {% csrf_token %}
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <button type="submit" class="btn__cross">&#9587;</button>
+                            </form>
+                        </div>
+                        <p class="price">{{ item.get_discounted_price }}</p>
+                        <div class="game__activation">
+                            <div class="region">
+                                <p>Region of activation:</p>
+                                {% for region in item.regions.all %}
+                                <p class="value">Russia, Ukraine and CIS</p>
+                                {% endfor %}
+                            </div>
+                            <div class="platform">
+                                <p>Platform of activation:</p>
+                                <p class="value">Steam</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+        </div>
+        <div class="right__side">
+            <section class="cart__total">
+                <div class="main">
+                    <h1 class="title">total</h1>
+                    <a href="" class="btn-primary">take order</a>
+                </div>
+                <div class="price">
+                    <h1 class="title">${{ total_amount }}</h1>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
 {% endblock %}
