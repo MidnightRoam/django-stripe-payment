@@ -33,7 +33,7 @@ To start a project
 
     docker-compose up
 
-### That's all you need to getting started
+#### That's all you need to getting started
 
 
 ## Start without Docker:
@@ -53,4 +53,4 @@ To start a project
     python manage.py migrate
     python manage.py runserver
 
-### That's all you need to getting started without Docker
+#### That's all you need to getting started without Docker
