@@ -9,6 +9,7 @@ from .models import (
     Customer,
     Favorite,
     ItemScreenshot,
+    GameTrailer,
     ItemDiscount,
     ItemPlatform,
     ItemDLC,
@@ -16,7 +17,7 @@ from .models import (
     ItemLocalization,
     MinimalSystemRequirements,
     RegionOfActivation,
-    Region
+    Region,
 )
 
 admin.site.site_header = "Pixel Playground | Administration"
@@ -25,6 +26,12 @@ admin.site.site_header = "Pixel Playground | Administration"
 class ItemScreenshotInline(admin.TabularInline):
     """Item screenshots in line admin model"""
     model = ItemScreenshot
+
+
+class GameTrailerInline(admin.TabularInline):
+    """Game trailers in line admin model"""
+    model = GameTrailer
+    extra = 0
 
 
 class ItemLocalizationInline(admin.TabularInline):
@@ -62,6 +69,7 @@ class ItemAdmin(admin.ModelAdmin):
         ItemLocalizationInline,
         MinimalSystemRequirementsInline,
         RegionOfActivationInline,
+        GameTrailerInline,
     ]
 
     # fieldsets = (
@@ -133,3 +141,9 @@ class LanguageAdmin(admin.ModelAdmin):
 class RegionAdmin(admin.ModelAdmin):
     """Game region of activation admin model"""
     pass
+
+
+@admin.register(GameTrailer)
+class RegionAdmin(admin.ModelAdmin):
+    """Game region of activation admin model"""
+    list_display = ('url', )

@@ -127,21 +127,31 @@
             </div>
             <div class="media__content">
                 <div class="head">
-                <p class="title">SCREENSHOTS</p>
-                <div class="slider__controls">
-                    <p id="left" class="fa fa-arrow-left"></p>
-                    <p id="right" class="fa fa-arrow-right"></p>
+                    <div class="switchers">
+                        <p class="title active__bar" id="screenshots-bar">SCREENSHOTS</p>
+                        <p class="title" id="trailer-bar">TRAILER</p>
+                    </div>
+                    <div class="slider__controls">
+                        <p id="left" class="fa fa-arrow-left"></p>
+                        <p id="right" class="fa fa-arrow-right"></p>
+                    </div>
                 </div>
-                </div>
-                <div class="screenshots">
+                <div class="screenshots active" id="screenshots">
                     {% for screenshot in item.screenshots.all %}
-                        <div class="popup">
+                        <div class="popup s">
                             <p class="cross hide" id="screenshot-close">&#10006;</p>
                             <img src="{{ screenshot.image.url }}"
                                  alt="{{ screenshot.item.name }}"
                                  class="screenshot"
                             >
                         </div>
+                    {% endfor %}
+                </div>
+                <div class="trailers" id="trailer-popup">
+                    {% for trailer in item.trailers.all %}
+                    <div class="popup">
+                        <iframe src="{{ trailer.url }}" class="game__trailer"></iframe>
+                    </div>
                     {% endfor %}
                 </div>
             </div>

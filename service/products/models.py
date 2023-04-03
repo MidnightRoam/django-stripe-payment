@@ -33,7 +33,6 @@ class Item(models.Model):
     publisher = models.ManyToManyField(Publisher)
     developer = models.ManyToManyField(Developer)
     poster = models.ImageField(upload_to='products/product_posters', blank=True)
-    trailer = models.URLField(max_length=200, blank=True)
     status = models.CharField(max_length=20, choices=ItemStatus.choices, default=ItemStatus.new)
     created = models.DateTimeField(editable=False, blank=True, default=timezone.now)
     modified = models.DateTimeField(blank=True, default=timezone.now)
@@ -120,9 +119,28 @@ class Item(models.Model):
 
 
 class ItemScreenshot(models.Model):
-    """Item screenshots model"""
+    """Game screenshots model"""
     product = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='screenshots')
     image = models.ImageField(upload_to='products/product_screenshots', blank=True, verbose_name='Screenshot')
+
+
+class GameTrailer(models.Model):
+    """Game trailers model"""
+    url = models.URLField(blank=True)
+    product = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='trailers')
+
+    def save(self, *args, **kwargs):
+        """Auto set url field for game trailer"""
+        # if not self.pk and not self.url:
+        url = str(self.url)
+        replacer = 'https://youtu.be/'
+        if replacer in url:
+            url = url.replace(replacer, '')
+            result_url = f'https://www.youtube.com/embed/{url}'
+            self.url = result_url
+            super().save(*args, **kwargs)
+        else:
+            super().save(*args, **kwargs)
 
 
 class ItemDiscount(models.Model):

@@ -79,3 +79,57 @@ function sliderGameScreenshots() {
 
 sliderGameScreenshots()
 
+function sliderGameTrailers() {
+    // Slider for game screenshots on the game detail page
+    const left = document.getElementById("left")
+    const right = document.getElementById("right")
+    const screenshots = document.querySelectorAll(".game__trailer")
+    let offset = 0
+
+    left.addEventListener('click', () => {
+    if (offset >= 0) return
+        offset += 100;
+        screenshots.forEach(screenshot => {
+          screenshot.style.left = `${offset}%`;
+        });
+        console.log('right')
+    });
+
+    right.addEventListener('click', () => {
+    if (offset <= -(100 * (screenshots.length - 1))) {
+        offset = 100;
+    };
+        offset -= 100;
+        screenshots.forEach(screenshot => {
+          screenshot.style.left = `${offset}%`;
+        });
+        console.log('left')
+    });
+}
+
+sliderGameTrailers()
+
+
+function switchGameScreenshotOrTrailer() {
+    const screenshotsBar = document.getElementById('screenshots-bar');
+    const trailerBar = document.getElementById('trailer-bar');
+    const screenshots = document.getElementById('screenshots');
+    const trailerPopup = document.getElementById('trailer-popup');
+
+    screenshotsBar.addEventListener('click', () => {
+        screenshots.classList.add('active');
+        screenshotsBar.classList.add('active__bar');
+        trailerBar.classList.remove('active__bar');
+        trailerPopup.classList.remove('active')
+    })
+
+    trailerBar.addEventListener('click', () => {
+        screenshots.classList.remove('active');
+        screenshotsBar.classList.remove('active__bar');
+        trailerBar.classList.add('active__bar');
+        trailerPopup.classList.add('active')
+    })
+}
+
+switchGameScreenshotOrTrailer()
+

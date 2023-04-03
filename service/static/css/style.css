@@ -856,23 +856,51 @@ header .link:hover {
     margin-bottom: 15px;
 }
 
+.media__content .head .switchers {
+    display: flex;
+    align-items: center;
+}
+
 .media__content .head .title {
     font-size: 1em;
     font-weight: 600;
-    border: 2.5px solid #fbbb43;
-    background-color: rgba(90, 68, 32, 0.9);
-    color: #fff;
+    color: #252525;
     padding: 7px 10px;
+    transition: 0.3s;
     border-radius: 10px;
+    border: 2.5px solid #fff;
+}
+
+.media__content .head .active__bar {
+    background-color: rgba(90, 68, 32, 0.9);
+    border-color: #fbbb43;
+    color: #fff;
 }
 
 .media__content .head .title:hover {
     cursor: pointer;
 }
 
+.media__content .active {
+    display: flex !important;
+}
+
+.media__content .trailers {
+    display: none;
+    width: 1300px;
+}
+
+.media__content .trailers .game__trailer {
+    border-radius: 10px;
+    width: 700px;
+    height: 395px;
+    border: none;
+    margin-right: 30px;
+}
+
 .product__sub-info .screenshots {
     width: 100%;
-    display: flex;
+    display: none;
     overflow: hidden;
     transition: 0.3s;
     left: 0;
@@ -893,10 +921,6 @@ header .link:hover {
     justify-content: center;
     font-weight: 600;
     transition: 0.2s;
-}
-
-.no {
-    color: grey;
 }
 
 .product__sub-info .slider__controls p:hover {
