@@ -5,24 +5,63 @@
 <div class="container products__page">
     {% include 'include/sidebar.html' %}
     {% include 'include/platforms_section.html' %}
-<!--    <section class="products__controls">-->
-<!--        <form action="" method="get" class="sort__form">-->
-<!--            <div class="sort__platforms">-->
-<!--                {% for platform in platforms %}-->
-<!--                <label for="platform">{{ platform }}</label>-->
-<!--                <input id="platform" type="checkbox" name="platform" value="">-->
-<!--                {% endfor %}-->
-<!--            </div>-->
-<!--            <div class="sort__tags">-->
-<!--                {% for tag in tags %}-->
-<!--                    <label for="tag">{{ tag.name }}</label>-->
-<!--                    <input id="tag" type="checkbox" name="tag" value="">-->
-<!--                {% endfor %}-->
-<!--            </div>-->
-<!--            <input type="submit" value="OK">-->
-<!--        </form>-->
-<!--    </section>-->
     {% if items %}
+    <aside class="popup__catalog" id="items-catalog">
+        <section class="genres">
+            <h1 class="title">GENRES</h1>
+            <ul class="list">
+                {% for genre in genres %}
+                     <li class="genre">
+                         <a href="" class="link">
+                             {{ genre.name }}
+                         </a>
+                     </li>
+                {% endfor %}
+                <li class="total">
+                    <a href="" class="link">
+                        All games -
+                        {{ total_genres }}
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <section class="publishers">
+            <h1 class="title">PUBLISHERS</h1>
+            <ul class="list">
+                {% for publisher in publishers %}
+                     <li class="publisher">
+                         <a href="{{ publisher.get_absolute_url }}" class="link">
+                             {{ publisher }}
+                         </a>
+                     </li>
+                {% endfor %}
+                <li class="total">
+                    <a href="" class="link">
+                        All publishers -
+                        {{ total_publishers }}
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <section class="developers">
+            <h1 class="title">DEVELOPERS</h1>
+            <ul class="list">
+                {% for developer in developers %}
+                     <li class="developer">
+                         <a href="{{ developer.get_absolute_url }}" class="link">
+                             {{ developer }}
+                         </a>
+                     </li>
+                {% endfor %}
+                <li class="total">
+                    <a href="" class="link">
+                        All developers -
+                        {{ total_developers }}
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
     <section class="products">
         {% for item in items %}
           <a href="{{ item.get_absolute_url }}"
@@ -68,4 +107,7 @@
     <div>
 </div>
 </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/IndexPage-UI.js' %}"></script>
 {% endblock %}

@@ -201,7 +201,7 @@ class Tag(models.Model):
     slug = models.SlugField(max_length=100, default='', editable=False)
 
     def save(self, *args, **kwargs):
-        """Auto set slug field as item name"""
+        """Auto set slug field as tag name"""
         if not self.slug:
             self.slug = from_cyrillic_to_latin(str(self.name))
         super(Tag, self).save(*args, **kwargs)
@@ -212,6 +212,20 @@ class Tag(models.Model):
     def get_absolute_url(self):
         """Return absolute url for each item tag"""
         return reverse('index', kwargs={'tag_slug': self.slug})
+
+
+class Genre(models.Model):
+    """Game genre model"""
+    name = models.CharField(max_length=124)
+    description = models.TextField(blank=True)
+    slug = models.SlugField(max_length=124, default='', editable=False)
+
+    def save(self, *args, **kwargs):
+        """Auto set slug field as genre name"""
+        if not self.slug:
+            slug = str(self.name).replace(' ', '_').lower()
+            self.slug = slug
+        super(Genre, self).save(*args, **kwargs)
 
 
 class ItemDLC(models.Model):

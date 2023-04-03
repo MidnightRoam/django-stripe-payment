@@ -11,7 +11,8 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
 
-from .models import Item, Tag, Customer, Favorite, ItemScreenshot, ItemPlatform, ItemDLC
+from .models import Item, Tag, Customer, Favorite, ItemScreenshot, ItemPlatform, ItemDLC, Genre
+from game_studios.models import Developer, Publisher
 from cart.models import Order
 from reviews.models import ItemRating
 
@@ -36,6 +37,12 @@ class IndexPageView(ListView):
         tag = self.kwargs.get('tag_slug')
         platform = self.kwargs.get('platform_slug')
         items = Item.objects.prefetch_related('tags', 'discounts', 'platform').all()
+        developers = Developer.objects.all()
+        total_developers = Developer.objects.all().count()
+        publishers = Publisher.objects.all()
+        total_publishers = Publisher.objects.all().count()
+        genres = Genre.objects.all()
+        total_games = Item.objects.all().count()
         title = 'Pixel Playground'
 
         if tag:  # returns a list of products filtered by chosen tag
@@ -56,6 +63,12 @@ class IndexPageView(ListView):
 
         context.update({
             'items': items,
+            'developers': developers,
+            'publishers': publishers,
+            'total_developers': total_developers,
+            'total_publishers': total_publishers,
+            'genres': genres,
+            'total_genres': total_games,
             'tags': p.page(context['page_obj'].number),
             'platforms': platforms,
             'title': title,

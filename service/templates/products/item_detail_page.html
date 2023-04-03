@@ -132,13 +132,13 @@
                         <p class="title" id="trailer-bar">TRAILER</p>
                     </div>
                     <div class="slider__controls">
-                        <p id="left" class="fa fa-arrow-left"></p>
-                        <p id="right" class="fa fa-arrow-right"></p>
+                        <p id="left" class="fa fa-arrow-left control"></p>
+                        <p id="right" class="fa fa-arrow-right control"></p>
                     </div>
                 </div>
                 <div class="screenshots active" id="screenshots">
                     {% for screenshot in item.screenshots.all %}
-                        <div class="popup s">
+                        <div class="popup">
                             <p class="cross hide" id="screenshot-close">&#10006;</p>
                             <img src="{{ screenshot.image.url }}"
                                  alt="{{ screenshot.item.name }}"

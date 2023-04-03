@@ -531,6 +531,130 @@ header .link:hover {
     color: #252525;
 }
 
+/* Game catalog popup styles */
+.popup__catalog {
+    position: fixed;
+    height: 100%;
+    width: 80.8%;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 99;
+    display: none;
+    padding-top: 170px;
+}
+
+.products__page .active {
+    display: flex;
+    justify-content: space-evenly;
+    color: #fff;
+}
+
+.popup__catalog .title {
+    font-weight: 600;
+    color: gainsboro;
+    font-size: 1em;
+    margin-bottom: 40px;
+}
+
+.popup__catalog .list .total {
+    margin-top: 20px;
+}
+
+.popup__catalog .list .total .link {
+    color: orange;
+    margin-left: 0;
+    font-size: 0.9em !important;
+    text-transform: none;
+}
+
+.popup__catalog .genres {
+    color: #fff;
+    transition: 0s;
+}
+
+.popup__catalog .genres .link:hover {
+    color: orange;
+
+}
+
+.popup__catalog .genres .list {
+    list-style-type: none;
+    text-transform: uppercase;
+}
+
+.popup__catalog .genres .list .genre {
+    margin-bottom: 25px;
+}
+
+.popup__catalog .genres .list .link {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+    transition: 0s;
+    margin-bottom: 25px;
+    margin-left: 0px;
+}
+
+.popup__catalog .genres .list .link:hover {
+    text-decoration: underline;
+}
+
+.popup__catalog .publishers {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup__catalog .publishers .list {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    text-transform: uppercase;
+}
+
+.popup__catalog .publishers .publisher {
+    margin-bottom: 25px;
+}
+
+.popup__catalog .publishers .publisher .link {
+    font-size: 1.1em;
+    color: #fff;
+    margin-left: 0;
+    transition: 0s;
+    margin-bottom: 25px;
+}
+
+.popup__catalog .publishers .publisher .link:hover {
+    color: orange;
+}
+
+.popup__catalog .developers {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup__catalog .developers .list {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    text-transform: uppercase;
+}
+
+.popup__catalog .developers .developer {
+    margin-bottom: 25px;
+}
+
+.popup__catalog .developers .developer .link {
+    font-size: 1.1em;
+    color: #fff;
+    margin-left: 0;
+    transition: 0s;
+}
+
+.popup__catalog .developers .developer .link:hover {
+    color: orange;
+}
+
 /* Product detail page styles */
 .product-detail__wrapper {
     display: flex;
@@ -910,7 +1034,7 @@ header .link:hover {
     display: flex;
 }
 
-.product__sub-info .slider__controls p {
+.product__sub-info .slider__controls .control {
     border: 3px solid #252525;
     padding: 20px;
     width: 30px;
@@ -923,9 +1047,11 @@ header .link:hover {
     transition: 0.2s;
 }
 
-.product__sub-info .slider__controls p:hover {
+.product__sub-info .slider__controls .control:hover {
     font-size: 1.5em;
     cursor: pointer;
+    color: orange;
+    border-color: orange;
 }
 
 .product__sub-info .slider__controls p:nth-child(2) {
@@ -975,17 +1101,11 @@ header .link:hover {
 
 .tech__requirements {
     background-color: rgba(0, 0, 0, 0.8);
-    width: 38%;
+    width: 510px;
     height: auto;
     padding: 20px;
     color: #fff;
     border-radius: 10px;
-}
-
-@media (max-width: 1024px) {
-    .tech__requirements {
-        width: 60%;
-    }
 }
 
 .minimum .title {
@@ -1000,10 +1120,14 @@ header .link:hover {
     width: 100%;
 }
 
+.minimum .name {
+    min-width: 135px;
+}
+
 .minimum .os .name {
-    width: 100px;
     color: grey;
     margin-right: 10px;
+    text-align: left;
 }
 
 .minimum .processor {
@@ -1011,20 +1135,17 @@ header .link:hover {
 }
 
 .minimum .processor .name {
-    width: 130px;
     margin-right: 10px;
     align-self: center;
     color: grey;
 }
 
 .minimum .ram .name {
-    width: 100px;
     color: grey;
     margin-right: 10px;
 }
 
 .minimum .graphics__card .name {
-    width: 120px;
     margin-right: 10px;
     align-self: center;
     color: grey;
@@ -1035,7 +1156,6 @@ header .link:hover {
 }
 
 .minimum .direct-x .name {
-    width: 100px;
     color: grey;
     margin-right: 10px;
 }
@@ -1045,7 +1165,6 @@ header .link:hover {
 }
 
 .minimum .disk__space .name {
-    width: 100px;
     color: grey;
     margin-right: 10px;
 }
@@ -1391,6 +1510,31 @@ footer .footer__top .title {
     right: 24%;
     top: 9.5%;
     width: 52%;
+    z-index: 100;
+}
+
+.form__search .btn-primary {
+    position: absolute;
+    top: 1.5%;
+    left: -170px;
+    background-color: gainsboro;
+    font-weight: 500;
+    border: 2px solid gainsboro;
+    height: 45px;
+    border-radius: 20px;
+    padding: 0px 10px;
+    transition: 0.3s;
+}
+
+.form__search .btn-active {
+    background-color: #fbbb43;
+    border-color: #fbbb43;
+
+}
+
+.form__search .btn-primary:hover {
+    background-color: #fbbb43;
+    border-color: #fbbb43;
 }
 
 @media (max-width: 768px) {

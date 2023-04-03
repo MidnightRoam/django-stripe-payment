@@ -6,6 +6,7 @@ from django.utils.safestring import mark_safe
 from .models import (
     Item,
     Tag,
+    Genre,
     Customer,
     Favorite,
     ItemScreenshot,
@@ -103,7 +104,13 @@ class ItemAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    """Tag admin model"""
+    """Game tag admin model"""
+    list_display = ('name', 'slug', )
+
+
+@admin.register(Genre)
+class GenreAdmin(admin.ModelAdmin):
+    """Game genre admin model"""
     list_display = ('name', 'slug', )
 
 
@@ -141,9 +148,3 @@ class LanguageAdmin(admin.ModelAdmin):
 class RegionAdmin(admin.ModelAdmin):
     """Game region of activation admin model"""
     pass
-
-
-@admin.register(GameTrailer)
-class RegionAdmin(admin.ModelAdmin):
-    """Game region of activation admin model"""
-    list_display = ('url', )

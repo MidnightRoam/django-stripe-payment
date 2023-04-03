@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Publisher(models.Model):
@@ -12,6 +13,10 @@ class Publisher(models.Model):
         if not self.slug:
             self.slug = self.name.replace(' ', '_').lower()
         super(Publisher, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        """Return absolute url for each publisher"""
+        return reverse('publisher', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name
@@ -28,6 +33,10 @@ class Developer(models.Model):
         if not self.slug:
             self.slug = self.name.replace(' ', '_').lower()
         super(Developer, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        """Return absolute url for each developer"""
+        return reverse('developer', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.name
