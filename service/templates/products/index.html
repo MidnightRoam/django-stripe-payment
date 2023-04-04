@@ -5,14 +5,13 @@
 <div class="container products__page">
     {% include 'include/sidebar.html' %}
     {% include 'include/platforms_section.html' %}
-    {% if items %}
     <aside class="popup__catalog" id="items-catalog">
         <section class="genres">
             <h1 class="title">GENRES</h1>
             <ul class="list">
                 {% for genre in genres %}
                      <li class="genre">
-                         <a href="" class="link">
+                         <a href="{% url 'index' genre.slug %}" class="link">
                              {{ genre.name }}
                          </a>
                      </li>
@@ -62,6 +61,7 @@
             </ul>
         </section>
     </aside>
+    {% if items %}
     <section class="products">
         {% for item in items %}
           <a href="{{ item.get_absolute_url }}"

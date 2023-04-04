@@ -37,12 +37,12 @@ class IndexPageView(ListView):
         tag = self.kwargs.get('tag_slug')
         platform = self.kwargs.get('platform_slug')
         items = Item.objects.prefetch_related('tags', 'discounts', 'platform').all()
-        developers = Developer.objects.all()
-        total_developers = Developer.objects.all().count()
-        publishers = Publisher.objects.all()
-        total_publishers = Publisher.objects.all().count()
-        genres = Genre.objects.all()
-        total_games = Item.objects.all().count()
+        developers = Developer.objects.values('name', 'slug')
+        total_developers = Developer.objects.values('id').count()
+        publishers = Publisher.objects.values('name', 'slug')
+        total_publishers = Publisher.objects.values('id').count()
+        genres = Genre.objects.values('name', 'slug')
+        total_games = Item.objects.values('id').count()
         title = 'Pixel Playground'
 
         if tag:  # returns a list of products filtered by chosen tag

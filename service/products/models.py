@@ -28,7 +28,8 @@ class Item(models.Model):
     description = models.TextField()
     price = models.IntegerField(default=0)  # in cents
     currency = models.CharField(max_length=20, choices=ItemCurrency.choices, default=ItemCurrency.USD)
-    tags = models.ManyToManyField('Tag', verbose_name='Genres / tags')
+    tags = models.ManyToManyField('Tag', verbose_name='Game tags')
+    genre = models.ManyToManyField('Genre', verbose_name='Game genres')
     platform = models.ManyToManyField('ItemPlatform')
     publisher = models.ManyToManyField(Publisher)
     developer = models.ManyToManyField(Developer)
@@ -82,6 +83,10 @@ class Item(models.Model):
     def get_tags(self):
         """Return formatted string with all item tags"""
         return ", ".join([tag.name for tag in self.tags.all()])
+
+    def get_genres(self):
+        """Return formatted string with all game genres"""
+        return ", ".join([genre.name for genre in self.genre.all()])
 
     def get_absolute_url(self):
         """Return absolute url for each item"""
@@ -226,6 +231,9 @@ class Genre(models.Model):
             slug = str(self.name).replace(' ', '_').lower()
             self.slug = slug
         super(Genre, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 
 
 class ItemDLC(models.Model):

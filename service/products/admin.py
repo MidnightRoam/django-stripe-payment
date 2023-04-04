@@ -53,6 +53,12 @@ class RegionOfActivationInline(admin.TabularInline):
     extra = 0
 
 
+# class GenreInline(admin.TabularInline):
+#     """MinimalSystemRequirements in line admin model"""
+#     model = Genre
+#     extra = 0
+
+
 @admin.register(ItemDLC)
 class ItemDLCAdmin(admin.ModelAdmin):
     """Item screenshots in line admin model"""
