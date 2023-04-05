@@ -19,7 +19,27 @@ from reviews.models import ItemRating
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-class IndexPageView(ListView):
+class DevelopersPublishers:
+    """Game developers and publishers"""
+
+    def get_developers(self):
+        """Return a list of developers"""
+        return Developer.objects.values('name', 'slug')
+
+    def get_publishers(self):
+        """Return a list of publishers"""
+        return Publisher.objects.values('name', 'slug')
+
+    def total_developers(self):
+        """Return a number of developers"""
+        return Developer.objects.values('id').count()
+
+    def total_publishers(self):
+        """Return a number of publishers"""
+        return Publisher.objects.values('id').count()
+
+
+class IndexPageView(DevelopersPublishers, ListView):
     """
     Output of all products, or output of filtered
     products by criteria: platform, tag
@@ -37,11 +57,7 @@ class IndexPageView(ListView):
         tag = self.kwargs.get('tag_slug')
         platform = self.kwargs.get('platform_slug')
         items = Item.objects.prefetch_related('tags', 'discounts', 'platform').all()
-        developers = Developer.objects.values('name', 'slug')
-        total_developers = Developer.objects.values('id').count()
-        publishers = Publisher.objects.values('name', 'slug')
-        total_publishers = Publisher.objects.values('id').count()
-        genres = Genre.objects.values('name', 'slug')
+        genres = Genre.objects.all()
         total_games = Item.objects.values('id').count()
         title = 'Pixel Playground'
 
@@ -63,10 +79,6 @@ class IndexPageView(ListView):
 
         context.update({
             'items': items,
-            'developers': developers,
-            'publishers': publishers,
-            'total_developers': total_developers,
-            'total_publishers': total_publishers,
             'genres': genres,
             'total_genres': total_games,
             'tags': p.page(context['page_obj'].number),
@@ -189,3 +201,32 @@ class DeleteFromFavoritesView(View):
         item = get_object_or_404(Item, id=item_id)
         favorite = Favorite.objects.delete(user=request.user, item=item)
         return redirect('cart')
+
+
+class JsonFilterGamesView(ListView):
+    """Filter games in json"""
+    def get_queryset(self):
+        queryset = Item.objects.filter(
+            Q(tags__in=self.request.GET.getlist("tag")) |
+            Q(developer__in=self.request.GET.getlist("developer"))
+        )
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        queryset = list(self.get_queryset())
+        return JsonResponse({'items': queryset}, safe=False)
+
+
+# class FilterGamesListView(ListView):
+#     template_name = 'products/index.html'
+#
+#     """Filter games"""
+#     def get_queryset(self):
+#         items = Item.objects.filter(
+#             Q(developer__in=self.request.GET.getlist("developer")) |
+#             Q(publisher__in=self.request.GET.getlist("publisher")) |
+#             Q(tags__in=self.request.GET.getlist("tag")) |
+#             Q(name__in=self.request.GET.getlist("name"))
+#         )
+#         return items
+

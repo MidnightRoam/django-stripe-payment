@@ -8,11 +8,13 @@ from .views import (
     IndexPageView,
     AddToFavoritesView,
     DeleteFromFavoritesView,
+    JsonFilterGamesView,
 )
 
 urlpatterns = [
     path('', IndexPageView.as_view(), name='index'),
     path('games/<slug:tag_slug>/', IndexPageView.as_view(), name='index'),
+    path('games/<slug:genre_slug>/', IndexPageView.as_view(), name='index'),
     path('platforms/<slug:platform_slug>/', IndexPageView.as_view(), name='index'),
     path('game/<int:pk>/', ProductPageDetailView.as_view(), name='item_detail'),
     path('buy/<int:pk>/', CreateCheckoutSessionView.as_view(), name='buy'),
@@ -21,4 +23,6 @@ urlpatterns = [
     path('search/', IndexPageView.as_view(), name='search'),
     path('success/', SuccessView.as_view(), name='success'),
     path('cancel/', CancelView.as_view(), name='cancel'),
+    path('json-filter/', JsonFilterGamesView.as_view(), name='json_filter'),
+    # path('filter/', FilterGamesListView.as_view(), name='filter'),
 ]

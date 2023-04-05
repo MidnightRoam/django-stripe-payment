@@ -19,6 +19,7 @@ from .models import (
     MinimalSystemRequirements,
     RegionOfActivation,
     Region,
+    Addon
 )
 
 admin.site.site_header = "Pixel Playground | Administration"
@@ -59,10 +60,10 @@ class RegionOfActivationInline(admin.TabularInline):
 #     extra = 0
 
 
-@admin.register(ItemDLC)
+@admin.register(Addon)
 class ItemDLCAdmin(admin.ModelAdmin):
     """Item screenshots in line admin model"""
-    model = ItemDLC
+    pass
 
 
 @admin.register(Item)

@@ -1,4 +1,5 @@
 from django.core.validators import FileExtensionValidator
+from django.db.models.fields import related
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
@@ -23,6 +24,11 @@ class Item(models.Model):
         new = 'New',
         outdated = 'Outdated',
 
+    class ItemType(models.TextChoices):
+        """Game type choices"""
+        game = 'Game',
+        addon = 'DLC'
+
     name = models.CharField(max_length=100, verbose_name='Title')
     tagline = models.CharField(max_length=150, verbose_name='Tagline', default='Game is waiting!')
     description = models.TextField()
@@ -39,11 +45,17 @@ class Item(models.Model):
     modified = models.DateTimeField(blank=True, default=timezone.now)
     slug = models.SlugField(max_length=100, editable=False, default='')
     amount = models.IntegerField(default=0)
+    type = models.CharField(max_length=15, choices=ItemType.choices, default=ItemType.game)
 
     def save(self, *args, **kwargs):
         """Auto set slug field as item name"""
+        bad_symbols = ['.', ',', ':', '!', '@', '?']
+        result_slug = ''
         if not self.slug:
-            self.slug = from_cyrillic_to_latin(str(self.name))
+            for i in self.name:
+                if i not in bad_symbols:
+                    result_slug += i
+            self.slug = from_cyrillic_to_latin(str(result_slug))
         super(Item, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -121,6 +133,11 @@ class Item(models.Model):
         if self.amount < 1:
             result = 'SOLD OUT'
         return result
+
+
+class Addon(Item):
+    """Game DLC model"""
+    game = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='addons')
 
 
 class ItemScreenshot(models.Model):
@@ -231,6 +248,10 @@ class Genre(models.Model):
             slug = str(self.name).replace(' ', '_').lower()
             self.slug = slug
         super(Genre, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        """Return absolute url for each game genre"""
+        return reverse('index', kwargs={'genre_slug': self.slug})
 
     def __str__(self):
         return self.name

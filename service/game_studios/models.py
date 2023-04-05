@@ -10,8 +10,13 @@ class Publisher(models.Model):
     image = models.ImageField(upload_to='game_studios/publishers_images', blank=True)
 
     def save(self, *args, **kwargs):
+        bad_symbols = ['.', ',', ':', '!', '@', '?']
+        result_slug = ''
         if not self.slug:
-            self.slug = self.name.replace(' ', '_').lower()
+            for i in self.name:
+                if i not in bad_symbols:
+                    result_slug += i
+            self.slug = result_slug.replace(' ', '_').lower()
         super(Publisher, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

@@ -56,6 +56,7 @@ header {
 .container {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     flex-wrap: wrap;
     min-height: 969px;
     width: 100%;
@@ -355,6 +356,10 @@ header .link:hover {
     color: #252525;
 }
 
+.item__link:hover .item__sold-out {
+    background-color: inherit;
+}
+
 @media (max-width: 1024px) {
     .item__link:hover .item__price {
         left: 65%;
@@ -505,7 +510,7 @@ header .link:hover {
 
 .item__platform {
     height: 30px;
-    background: gainsboro;
+    background: rgba(239, 239, 240, 0.8);
     margin-right: 5px;
     padding: 1px;
     text-align: center;
@@ -517,7 +522,7 @@ header .link:hover {
 }
 
 .item__sold-out {
-    background-color: gainsboro;
+    background-color: rgba(239, 239, 240, 0.8);
     position: absolute;
     bottom: 0%;
     right: 0%;
@@ -529,6 +534,85 @@ header .link:hover {
     border-bottom-right-radius: 8px;
     font-weight: 600;
     color: #252525;
+    transition: 0.3s;
+}
+/* Filtering section styles */
+.form__filtering {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 43px;
+    margin: 50px 0px 20px 0px;
+    overflow: hidden;
+    transition: 0.2s;
+}
+
+.form__active {
+    height: 120px !important;
+    margin-bottom: 50px;
+}
+
+.form__filtering .main__content {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+
+.form__filtering .main__content .right {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    justify-content: space-between;
+}
+
+.form__filtering .btn-primary {
+    background-color: #fbbb43;
+    border: none;
+    border-radius: 10px;
+    width: 120px;
+    padding: 7px 7px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.form__filtering .btn-primary:hover {
+    background-color: gainsboro;
+    cursor: pointer;
+}
+
+.form__filtering .btn-title {
+    color: #252525;
+    background: none;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.form__filtering .select__main {
+    background-color: #fbbb43;
+    border-color: orange !important;
+    border-radius: 10px;
+    padding: 0px 5px;
+}
+
+.form__filtering .select {
+    padding: 10px;
+    font-weight: 500;
+    border: none;
+    border-bottom: 2.5px solid #252525;
+    margin-right: 15px;
+    width: 200px;
+    font-weight: 600;
+    transition: 0.3s;
+    outline: none;
+}
+
+.form__filtering .select:focus{
+    border-radius: 0%;
 }
 
 /* Game catalog popup styles */
@@ -753,7 +837,7 @@ header .link:hover {
     background-size: 60%;
     background-repeat: no-repeat;
     background-position: center;
-    width: 50px;
+    width: 45px;
 }
 
 
@@ -1869,11 +1953,12 @@ footer .footer__top .title {
 }
 
 /* Cart page styles */
-
 .cart__content {
     display: flex;
     justify-content: space-between;
+    align-self: start;
     width: 100%;
+    min-height: 900px;
 }
 
 .cart__content .left__side {
@@ -2191,6 +2276,7 @@ footer .footer__top .title {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 900px;
 }
 
 .publisher__img {
