@@ -1,18 +1,50 @@
 # A few words about
 ### Online video game store with Stripe payment system connected, written in Python, Django as backend and CSS, JavaScript as frontend part
-#### Functionality implemented so far:
+#### Что было реализовано на данный момент:
+#### Приложения:
 <ul>
-    <li>Search for products from the database</li>
-    <li>Sort products by tags</li>
-    <li>Buying goods through API Stripe using sessions</li>
-    <li>Adding an item to the cart</li>
-    <li>Adding a product to favorites</li>
-    <li>Display screenshots of the product and its tags on the product page</li>
-    <li>Display the number of users who added a particular product to favorites</li>
-    <li>Display of the average product rating based on user reviews</li>
-    <li>Adding a User Review to a Product</li>
-    <li>Registration of new users</li>
-    <li>AND MORE, MORE NEW FEATURES</li>
+    <li>Продукты</li>
+    <li>Пользователи</li>
+    <li>Корзина</li>
+    <li>Новости</li>
+    <li>Отзывы</li>
+    <li>Издатели и разработчики</li>
+</ul>
+
+#### Функционал:
+<ul>
+    <li>Покупка товаров через Stripe API, используя сессии</li>
+    <li>Поиск товаров по базе данных</li>
+    <li>Фильтрация по тэгам и платформам активации продукта</li>
+    <li>Авторизация и регистрация пользователя, включая регистрацию и вход через GitHub</li>
+    <li>Новости, которые добавляются в базу данных через парсинг новостных сайтов</li>
+    <li>Вывод скриншотов, трейлеров и всей полной информации на странице товара</li>
+    <li>Отзывы об товаре</li>
+    <li>Расчет и вывод среднего рейтинга продукта</li>
+    <li>Возможность добавления товара в избранное или корзину и вывод количества людей, добавившие товар в избранное</li>
+    <li>Скидочный функционал</li>
+    <li>Информация об локализации товара, его системные требования</li>
+    И многое другое...
+</ul>
+
+#### Другое
+<ul>
+    <li>Дизайн</li>
+    <li>Верстка</li>
+</ul>
+
+#### Инструменты разработки
+<ul>
+    <li>Python</li>
+    <li>Django</li>
+    <li>HTML</li>
+    <li>CSS</li>
+    <li>JavaScript</li>
+    <li>Docker</li>
+    <li>Celery</li>
+    <li>Redis</li>
+    <li>Stripe API</li>
+    И другие...
 </ul>
 
 # Deployed application address
