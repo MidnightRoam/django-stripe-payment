@@ -133,3 +133,57 @@ function switchGameScreenshotOrTrailer() {
 
 switchGameScreenshotOrTrailer()
 
+
+function switchGameSubInfoFields() {
+    const switchers = document.querySelectorAll('.about__link');
+    const productDescription = document.getElementById('product-description');
+    const productRequirements = document.getElementById('product-requirements');
+    const productSubInfo = document.getElementById('product-sub-info');
+
+    switchers.forEach((switcher) => {
+        switcher.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchers.forEach((siblingSwitcher) => {
+                if (siblingSwitcher !== switcher) {
+                    siblingSwitcher.classList.remove('active');
+                }
+            })
+
+            switcher.classList.add('active');
+
+            if (switcher.textContent === 'ABOUT GAME') {
+                productRequirements.classList.add('hide');
+                productDescription.classList.remove('hide');
+            } else if (switcher.textContent === 'SYSTEM REQUIREMENTS') {
+                productRequirements.classList.remove('hide');
+                productDescription.classList.add('hide');
+            }
+
+            if (switcher.textContent != 'ABOUT GAME') {
+                productSubInfo.classList.add('rounded');
+            } else {
+                productSubInfo.classList.remove('rounded');
+            }
+        });
+    });
+}
+
+switchGameSubInfoFields();
+
+
+function openFullGameTechRequirements() {
+    const minimalReqs = document.getElementById('minimal-reqs');
+    const recommendedReqs = document.getElementById('recommended-reqs');
+
+
+    minimalReqs.addEventListener('click', () => {
+        minimalReqs.classList.toggle('active');
+    })
+
+    recommendedReqs.addEventListener('click', () => {
+        recommendedReqs.classList.toggle('active');
+    })
+}
+
+openFullGameTechRequirements();
+

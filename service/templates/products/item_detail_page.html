@@ -12,18 +12,19 @@
                      {% else %}
                      style="background-color: gainsboro"
                      {% endif %}
-                ></div>
+                >
+                <div class="rating">
+                    {% if product_rating.rate__avg %}
+                        {{ product_rating.rate__avg|floatformat }}
+                        <p class="title">Pixel PL.</p>
+                    {% else %}
+                        <p class="title">Not enough reviews</p>
+                    {% endif %}
+                </div>
+                </div>
                 <div class="product__info">
                     <p class="product__title">{{ item.name }}</p>
                     <div class="product__rating">
-                      <p class="rating">
-                          <img src="https://cdn-icons-png.flaticon.com/512/1828/1828961.png" alt="product-rating">
-                          {% if product_rating.rate__avg %}
-                            {{ product_rating.rate__avg|floatformat }}
-                          {% else %}
-                            No one has rated yet
-                          {% endif %}
-                      </p>
                           <a href="{% url 'reviews' item.slug %}" class="rating__link">Rate</a>
                     </div>
                     <ul class="product__amount">
@@ -179,41 +180,121 @@
             </div>
             </section>
             <section class="product__about">
-                <div class="tech__requirements">
-                    <div class="minimum">
-                            {% for minimal in item.minimal_system_requirements.all %}
-                            <div class="title">Minimal system requirements</div>
-                            <div class="os">
-                                <p class="name">OC</p>
-                                <p class="value">{{ minimal.os }}</p>
-                            </div>
-                            <div class="processor">
-                                <p class="name">Processor</p>
-                                <p class="value">{{ minimal.processor }}</p>
-                            </div>
-                            <div class="ram">
-                                <p class="name">RAM</p>
-                                <p class="value">{{ minimal.ram }} GB RAM</p>
-                            </div>
-                            <div class="graphics__card">
-                                <p class="name">Graphics Card</p>
-                                <p class="value">{{ minimal.graphics_card }}</p>
-                            </div>
-                            <div class="direct-x">
-                                <p class="name">DirectX</p>
-                                <p class="value">{{ minimal.directx }}</p>
-                            </div>
-                            <div class="disk__space">
-                                <p class="name">Disk Space</p>
-                                <p class="value">{{ minimal.disk_space }} GB</p>
-                            </div>
-                            {% endfor %}
+                <nav class="about__navigation">
+                    <div class="left">
+                        <a href="" class="link active">Related games</a>
                     </div>
-                </div>
-                <div class="description">
-                    <h1 class="title">{{ item.get_tagline }}</h1>
-                    <p class="text">{{ item.description }}</p>
-                </div>
+                    <div class="right">
+                        <a href="" class="about__link active">ABOUT GAME</a>
+                        <a href="" class="about__link">SYSTEM REQUIREMENTS</a>
+                    </div>
+                </nav>
+                <section class="main">
+                    <div class="other__products">
+                        <div class="addons">
+                        {% for addon in item.parent_game.all %}
+                            <a href="{{ addon.get_absolute_url }}"
+                               class="addon__link"
+                               {% if addon.poster.url %}
+                               style="background-image: url('{{ addon.poster.url }}')"
+                               {% else %}
+                               style="background-image: url('{{ item.poster.url }}')"
+                               {% endif %}
+                            >
+                                <div class="addon">
+                                    <p class="title">{{ addon.name }}</p>
+                                    <div class="price">
+                                        <p class="value">{{ addon.get_discounted_price }}</p>
+                                        {% if addon.discounts.exists %}
+                                        <p class="discount">{{ addon.get_percent_discount }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <form action="{% url 'item_detail' addon.pk %}" method="POST" class="to-cart__form">
+                                 {% csrf_token %}
+                                <input
+                                        class="btn-primary {% if addon.amount < 1 %}disable{% endif %}"
+                                        {% if not item.amount %} disabled {% endif %}
+                                        type="submit" value="TO CART"
+                                >
+                                </form>
+                            </a>
+                        {% endfor %}
+                        </div>
+                    </div>
+                    <div class="sub-info" id="product-sub-info">
+                        <div class="description" id="product-description">
+                            <h1 class="title">{{ item.get_tagline }}</h1>
+                            <p class="text">{{ item.description }}</p>
+                        </div>
+                        <div class="tech__requirements hide" id="product-requirements">
+                        <div class="requirements active" id="minimal-reqs">
+                                {% for minimal in item.minimal_system_requirements.all %}
+                                <div class="head">
+                                    <p class="title">Minimal system requirements</p>
+                                    <p class="caret"></p>
+                                </div>
+                                <div class="os">
+                                    <p class="name">OC</p>
+                                    <p class="value">{{ minimal.os }}</p>
+                                </div>
+                                <div class="processor">
+                                    <p class="name">Processor</p>
+                                    <p class="value">{{ minimal.processor }}</p>
+                                </div>
+                                <div class="ram">
+                                    <p class="name">RAM</p>
+                                    <p class="value">{{ minimal.ram }} GB RAM</p>
+                                </div>
+                                <div class="graphics__card">
+                                    <p class="name">Graphics Card</p>
+                                    <p class="value">{{ minimal.graphics_card }}</p>
+                                </div>
+                                <div class="direct-x">
+                                    <p class="name">DirectX</p>
+                                    <p class="value">{{ minimal.directx }}</p>
+                                </div>
+                                <div class="disk__space">
+                                    <p class="name">Disk Space</p>
+                                    <p class="value">{{ minimal.disk_space }} GB</p>
+                                </div>
+                                {% endfor %}
+                        </div>
+                        <div class="requirements" id="recommended-reqs">
+                                {% for minimal in item.minimal_system_requirements.all %}
+                                <div class="head">
+                                    <p class="title">Recommended system requirements</p>
+                                    <p class="caret"></p>
+                                </div>
+                                <div class="os">
+                                    <p class="name">OC</p>
+                                    <p class="value">{{ minimal.os }}</p>
+                                </div>
+                                <div class="processor">
+                                    <p class="name">Processor</p>
+                                    <p class="value">{{ minimal.processor }}</p>
+                                </div>
+                                <div class="ram">
+                                    <p class="name">RAM</p>
+                                    <p class="value">{{ minimal.ram }} GB RAM</p>
+                                </div>
+                                <div class="graphics__card">
+                                    <p class="name">Graphics Card</p>
+                                    <p class="value">{{ minimal.graphics_card }}</p>
+                                </div>
+                                <div class="direct-x">
+                                    <p class="name">DirectX</p>
+                                    <p class="value">{{ minimal.directx }}</p>
+                                </div>
+                                <div class="disk__space">
+                                    <p class="name">Disk Space</p>
+                                    <p class="value">{{ minimal.disk_space }} GB</p>
+                                </div>
+                                {% endfor %}
+                        </div>
+                    </div>
+                    </div>
+                </section>
             </section>
         </div>
     </div>

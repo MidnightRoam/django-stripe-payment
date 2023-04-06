@@ -866,7 +866,7 @@ header .link:hover {
     background-color: lightgrey;
 }
 
-.product__regions .languages .select .caret {
+.caret {
     width: 0;
     height: 0;
     border-left: 5px solid transparent;
@@ -875,7 +875,7 @@ header .link:hover {
     transition: 0.3s;
 }
 
-.product__regions .languages .select .rotate {
+.rotate {
     transform: rotate(180deg);
 }
 
@@ -979,7 +979,7 @@ header .link:hover {
 }
 
 .genres .genre {
-    color: #fbbb43;
+    color: orange;
     font-weight: 600;
 }
 
@@ -1096,6 +1096,7 @@ header .link:hover {
 .media__content .trailers {
     display: none;
     width: 1300px;
+    height: 399px;
 }
 
 .media__content .trailers .game__trailer {
@@ -1158,10 +1159,108 @@ header .link:hover {
 
 .product__about {
     margin-top: 50px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product__about .other__products {
+    width: 400px;
+    height: 300px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.other__products .addons {
     width: 100%;
-    max-width: 70%;
+    height: 100%;
     display: flex;
     justify-content: space-between;
+    overflow: hidden;
+}
+
+.other__products .addon__link {
+    width: 193px;
+    height: auto;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    -webkit-box-shadow: inset 0px -102px 15px -18px rgba(0,0,0,0.91);
+    -moz-box-shadow: inset 0px -102px 15px -18px rgba(0,0,0,0.91);
+    box-shadow: inset 0px -102px 15px -18px rgba(0,0,0,0.91);
+    text-decoration: none;
+    position: relative;
+}
+
+.addon__link .to-cart__form {
+    position: absolute;
+    bottom: 40%;
+    left: 28%;
+}
+
+.addon__link .to-cart__form .btn-primary {
+    background-color: #fbbb43;
+    color: #252525;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-weight: 600;
+    display: none;
+}
+
+.addon__link .to-cart__form .btn-primary:hover {
+    background-color: #fff;
+}
+
+.addon__link .addon {
+    height: 100%;
+    width: 193px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: start;
+    padding: 10px;
+    transition: 0.1s;
+}
+.other__products .addon__link:hover .btn-primary {
+    display: block;
+}
+
+.other__products .addon__link:hover .addon {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.addon__link .addon .title {
+    color: #fff;
+    font-size: 1em;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 15px;
+    justify-self: start;
+}
+
+.addon__link .addon .price {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.addon .price .value {
+    color: #fff;
+    font-weight: 600;
+}
+
+.addon .price .discount {
+    background-color: #fbbb43;
+    color: #252525;
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-weight: 600;
 }
 
 @media (max-width: 1024px) {
@@ -1170,8 +1269,22 @@ header .link:hover {
     }
 }
 
+.product__about .sub-info {
+    width: 71%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 40px;
+    border-radius: 10px;
+    border-top-left-radius: 0px;
+    color: #fff;
+
+}
+
+.product__about .hide {
+    display: none;
+}
+
 .product__about .description {
-    width: 60%;
 }
 
 .product__about .description .title {
@@ -1183,72 +1296,163 @@ header .link:hover {
     text-align: justify;
 }
 
-.tech__requirements {
-    background-color: rgba(0, 0, 0, 0.8);
-    width: 510px;
+.product__about .about__navigation {
+    background: #fff;
+    display: flex;
+}
+
+.product__about .about__navigation .left {
+    width: 455px;
     height: auto;
-    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+
+.about__navigation .left .link {
+    color: #252525 !important;
+    width: 32%;
+    min-height: 45px;
+    border-radius: 10px;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+    font-size: 1em;
+}
+
+.about__navigation .left .active {
+    background-color: #fbbb43 !important;
+}
+
+.product__about .about__navigation .right {
+    width: 73.2%;
+    display: flex;
+    align-items: center;
+}
+
+.product__about .about__navigation .about__link {
+    color: #252525;
+    font-size: 1em;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 15px;
+    margin: 0;
+}
+
+.product__about .about__navigation .active {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: none;
+    color: #fbbb43;
+}
+
+.product__about .main {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product__about .main .rounded {
+    border-radius: 10px;
+}
+
+.tech__requirements {
+    width: 100%;
+    height: auto;
     color: #fff;
     border-radius: 10px;
 }
 
-.minimum .title {
-    margin-bottom: 10px;
-    font-weight: 500;
-    font-size: 1em;
+.tech__requirements .active {
+    height: 220px !important;
+    transition: 0.4s;
 }
 
-.minimum div {
+.tech__requirements .active .head .caret {
+    transform: rotate(180deg);
+}
+
+.tech__requirements .requirements {
+    height: 35px;
+    overflow: hidden;
+    transition: 0.3s;
+    margin-bottom: 20px;
+}
+
+.tech__requirements .requirements:nth-child(1) {
+    border-bottom: 1px solid grey;
+}
+
+.requirements .head {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.requirements .head .caret {
+    border-top-color: #fbbb43;
+}
+
+.requirements .title {
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 1.2em;
+}
+
+.requirements div {
     display: flex;
     margin-bottom: 10px;
     width: 100%;
 }
 
-.minimum .name {
+.requirements .name {
     min-width: 135px;
 }
 
-.minimum .os .name {
+.requirements .os .name {
     color: grey;
     margin-right: 10px;
     text-align: left;
 }
 
-.minimum .processor {
+.requirements .processor {
     display: flex;
 }
 
-.minimum .processor .name {
+.requirements .processor .name {
     margin-right: 10px;
     align-self: center;
     color: grey;
 }
 
-.minimum .ram .name {
+.requirements .ram .name {
     color: grey;
     margin-right: 10px;
 }
 
-.minimum .graphics__card .name {
+.requirements .graphics__card .name {
     margin-right: 10px;
     align-self: center;
     color: grey;
 }
 
-.minimum .direct-x {
+.requirements .direct-x {
     display: flex;
 }
 
-.minimum .direct-x .name {
+.requirements .direct-x .name {
     color: grey;
     margin-right: 10px;
 }
 
-.minimum .disk__space {
+.requirements .disk__space {
     display: flex;
 }
 
-.minimum .disk__space .name {
+.requirements .disk__space .name {
     color: grey;
     margin-right: 10px;
 }
@@ -1360,17 +1564,34 @@ header .link:hover {
     margin-top: 10px;
 }
 
-.product__rating img {
+.product__poster img {
     width: 10px;
     height: 10px;
 }
 
 .rating {
-    background: #fbbb43;
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
     padding: 5px;
-    font-size: 0.9em !important;
+    font-size: 1.5em !important;
     font-weight: 600;
     border-radius: 5px;
+    position: relative;
+    width: 22%;
+    height: 15%;
+    left: 76%;
+    top: 1.5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating .title {
+    font-size: 0.5em !important;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
 }
 
 .rating__link {
@@ -2055,6 +2276,17 @@ footer .footer__top .title {
     justify-content: space-between;
 }
 
+.order__items .item .item__info .title {
+    text-decoration: none;
+    font-size: 1.9em;
+    text-transform: uppercase;
+    color: #252525;
+}
+
+.order__items .item .item__info .title:hover {
+    text-decoration: underline;
+}
+
 .item .item__info .head {
     display: flex;
     justify-content: space-between;
@@ -2072,11 +2304,6 @@ footer .footer__top .title {
 
 .item .head .btn__cross:hover {
     background-color: #fbbb43;
-}
-
-.order__items .item .item__info .title {
-    font-size: 2em;
-    text-transform: uppercase;
 }
 
 .order__items .item .item__info .price {

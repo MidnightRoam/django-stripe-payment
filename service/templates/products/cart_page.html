@@ -84,7 +84,9 @@
                     <img src="{{ item.poster.url }}" alt="{{ item.name }}-poster" class="poster">
                     <div class="item__info">
                         <div class="head">
-                            <h1 class="title">{{ item.name }}</h1>
+                            <a href="{{ item.get_absolute_url }}" class="title">
+                                {{ item.name }}
+                            </a>
                             <form method="post" action="{% url 'cart' %}">
                                  {% csrf_token %}
                                 <input type="hidden" name="item_id" value="{{ item.id }}">
