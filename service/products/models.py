@@ -26,8 +26,8 @@ class Item(models.Model):
 
     class ItemType(models.TextChoices):
         """Game type choices"""
-        game = 'Game',
-        addon = 'DLC'
+        game = 'Game', _('Original game')
+        addon = 'DLC', _('DLC')
 
     name = models.CharField(max_length=100, verbose_name='Title')
     tagline = models.CharField(max_length=150, verbose_name='Tagline', default='Game is waiting!')
@@ -46,6 +46,7 @@ class Item(models.Model):
     slug = models.SlugField(max_length=100, editable=False, default='')
     amount = models.IntegerField(default=0)
     type = models.CharField(max_length=15, choices=ItemType.choices, default=ItemType.game)
+    parent_game = models.ManyToManyField('self', null=True, blank=True, verbose_name="Parent game (if it's a DLC)")
 
     def save(self, *args, **kwargs):
         """Auto set slug field as item name"""
@@ -133,11 +134,6 @@ class Item(models.Model):
         if self.amount < 1:
             result = 'SOLD OUT'
         return result
-
-
-class Addon(Item):
-    """Game DLC model"""
-    game = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='addons')
 
 
 class ItemScreenshot(models.Model):

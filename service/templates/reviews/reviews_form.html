@@ -9,7 +9,11 @@
         <section class="reviews__section">
             <div class="reviews__game">
                 <p class="title">{{ item }} reviews</p>
+                {% if item.poster %}
                 <img src="{{ item.poster.url }}" alt="{{ item }}-poster" class="poster">
+                {% else %}
+                <img src="" alt="{{ item }}-poster" class="poster">
+                {% endif %}
             </div>
             {% if user.is_authenticated %}
             <div class="review__form">

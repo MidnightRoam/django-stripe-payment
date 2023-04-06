@@ -116,7 +116,11 @@
                     <a href="" class="btn-primary">take order</a>
                 </div>
                 <div class="price">
+                    {% if total_amount %}
                     <h1 class="title">${{ total_amount }}</h1>
+                    {% else %}
+                    <h1 class="title">$0</h1>
+                    {% endif %}
                 </div>
             </section>
         </div>

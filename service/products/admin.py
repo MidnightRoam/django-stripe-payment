@@ -19,7 +19,6 @@ from .models import (
     MinimalSystemRequirements,
     RegionOfActivation,
     Region,
-    Addon
 )
 
 admin.site.site_header = "Pixel Playground | Administration"
@@ -60,15 +59,9 @@ class RegionOfActivationInline(admin.TabularInline):
 #     extra = 0
 
 
-@admin.register(Addon)
-class ItemDLCAdmin(admin.ModelAdmin):
-    """Item screenshots in line admin model"""
-    pass
-
-
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'get_price', 'currency', 'amount', 'slug',  'get_poster', )
+    list_display = ('id', 'name', 'get_price', 'currency', 'amount', 'type', 'slug',  'get_poster', )
     list_editable = ('currency', 'amount')
     search_fields = ('name', )
 

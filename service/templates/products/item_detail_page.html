@@ -6,7 +6,13 @@
         <div class="product-detail__page">
             <section class="product__section">
             <div class="product__head">
-                <div class="product__poster" style="background-image: url('{{ item.poster.url }}')"></div>
+                <div class="product__poster"
+                     {% if item.poster %}
+                     style="background-image: url('{{ item.poster.url }}')"
+                     {% else %}
+                     style="background-color: gainsboro"
+                     {% endif %}
+                ></div>
                 <div class="product__info">
                     <p class="product__title">{{ item.name }}</p>
                     <div class="product__rating">
@@ -18,7 +24,7 @@
                             No one has rated yet
                           {% endif %}
                       </p>
-                      <a href="{% url 'reviews' item.slug %}" class="rating__link">Rate</a>
+                          <a href="{% url 'reviews' item.slug %}" class="rating__link">Rate</a>
                     </div>
                     <ul class="product__amount">
                        <li class="value">{{ item.get_product_in_stock }}</li>
@@ -139,15 +145,29 @@
                     </div>
                 </div>
                 <div class="screenshots active" id="screenshots">
-                    {% for screenshot in item.screenshots.all %}
-                        <div class="popup">
-                            <p class="cross hide" id="screenshot-close">&#10006;</p>
-                            <img src="{{ screenshot.image.url }}"
-                                 alt="{{ screenshot.item.name }}"
-                                 class="screenshot"
-                            >
-                        </div>
-                    {% endfor %}
+                    {% if item.screenshots.all %}
+                        {% for screenshot in item.screenshots.all %}
+                            <div class="popup">
+                                <p class="cross hide" id="screenshot-close">&#10006;</p>
+                                <img src="{{ screenshot.image.url }}"
+                                     alt="{{ screenshot.item.name }}"
+                                     class="screenshot"
+                                >
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {% for addon in item.parent_game.all %}
+                            {% for screenshot in addon.screenshots.all %}
+                            <div class="popup">
+                                <p class="cross hide" id="screenshot-close">&#10006;</p>
+                                <img src="{{ screenshot.image.url }}"
+                                     alt="{{ screenshot.item.name }}"
+                                     class="screenshot"
+                                >
+                            </div>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 <div class="trailers" id="trailer-popup">
                     {% for trailer in item.trailers.all %}
@@ -161,33 +181,33 @@
             <section class="product__about">
                 <div class="tech__requirements">
                     <div class="minimum">
-                        {% for minimal in item.minimal_system_requirements.all %}
-                        <div class="title">Minimal system requirements</div>
-                        <div class="os">
-                            <p class="name">OC</p>
-                            <p class="value">{{ minimal.os }}</p>
-                        </div>
-                        <div class="processor">
-                            <p class="name">Processor</p>
-                            <p class="value">{{ minimal.processor }}</p>
-                        </div>
-                        <div class="ram">
-                            <p class="name">RAM</p>
-                            <p class="value">{{ minimal.ram }} GB RAM</p>
-                        </div>
-                        <div class="graphics__card">
-                            <p class="name">Graphics Card</p>
-                            <p class="value">{{ minimal.graphics_card }}</p>
-                        </div>
-                        <div class="direct-x">
-                            <p class="name">DirectX</p>
-                            <p class="value">{{ minimal.directx }}</p>
-                        </div>
-                        <div class="disk__space">
-                            <p class="name">Disk Space</p>
-                            <p class="value">{{ minimal.disk_space }} GB</p>
-                        </div>
-                        {% endfor %}
+                            {% for minimal in item.minimal_system_requirements.all %}
+                            <div class="title">Minimal system requirements</div>
+                            <div class="os">
+                                <p class="name">OC</p>
+                                <p class="value">{{ minimal.os }}</p>
+                            </div>
+                            <div class="processor">
+                                <p class="name">Processor</p>
+                                <p class="value">{{ minimal.processor }}</p>
+                            </div>
+                            <div class="ram">
+                                <p class="name">RAM</p>
+                                <p class="value">{{ minimal.ram }} GB RAM</p>
+                            </div>
+                            <div class="graphics__card">
+                                <p class="name">Graphics Card</p>
+                                <p class="value">{{ minimal.graphics_card }}</p>
+                            </div>
+                            <div class="direct-x">
+                                <p class="name">DirectX</p>
+                                <p class="value">{{ minimal.directx }}</p>
+                            </div>
+                            <div class="disk__space">
+                                <p class="name">Disk Space</p>
+                                <p class="value">{{ minimal.disk_space }} GB</p>
+                            </div>
+                            {% endfor %}
                     </div>
                 </div>
                 <div class="description">
