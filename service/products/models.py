@@ -47,6 +47,7 @@ class Item(models.Model):
     amount = models.IntegerField(default=0)
     type = models.CharField(max_length=15, choices=ItemType.choices, default=ItemType.game)
     parent_game = models.ManyToManyField('self', null=True, blank=True, verbose_name="Parent game (if it's a DLC)")
+    series_games = models.ManyToManyField('self', null=True, blank=True, verbose_name="Series game")
 
     def save(self, *args, **kwargs):
         """Auto set slug field as item name"""
@@ -62,11 +63,11 @@ class Item(models.Model):
     def __str__(self):
         return self.name
 
-    def get_price(self):
+    def get_price(self) -> str:
         """Return converted price from cents to dollars"""
         return self.currency + "{0:.2f}".format(self.price / 100)
 
-    def get_discounted_price(self):
+    def get_discounted_price(self) -> str:
         """Return converted price from cents to dollars including discount"""
         discount = self.discounts.filter(end_date__gte=timezone.now()).last()
         if discount:
@@ -87,17 +88,17 @@ class Item(models.Model):
             price_in_cents = self.price
         return price_in_cents
 
-    def get_percent_discount(self):
+    def get_percent_discount(self) -> str:
         """Return percent discount"""
         discount = self.discounts.filter(end_date__gte=timezone.now()).last()
         if discount:
             return "{:.0%}".format(float(discount.value))
 
-    def get_tags(self):
+    def get_tags(self) -> str:
         """Return formatted string with all item tags"""
         return ", ".join([tag.name for tag in self.tags.all()])
 
-    def get_genres(self):
+    def get_genres(self) -> str:
         """Return formatted string with all game genres"""
         return ", ".join([genre.name for genre in self.genre.all()])
 
@@ -105,7 +106,7 @@ class Item(models.Model):
         """Return absolute url for each item"""
         return reverse('item_detail', kwargs={'pk': self.pk})
 
-    def get_short_description(self):
+    def get_short_description(self) -> str:
         """Return short description for product card"""
         short_description = self.description[:220]
         if short_description.endswith('.'):
@@ -113,17 +114,17 @@ class Item(models.Model):
         else:
             return short_description + '...'
 
-    def get_tagline(self):
+    def get_tagline(self) -> str:
         """Return tagline in uppercase"""
         tagline = str(self.tagline)
         return tagline.upper()
 
-    def get_platforms(self):
+    def get_platforms(self) -> str:
         """Return string with all game platforms"""
         lst = self.platform.name
         return lst
 
-    def get_product_in_stock(self):
+    def get_product_in_stock(self) -> str:
         """
         Return string
         'In stock' - if amount of product > 1
@@ -292,7 +293,7 @@ class ItemLocalization(models.Model):
     def __str__(self):
         return self.language.name
 
-    def get_language_option(self):
+    def get_language_option(self) -> str:
         """
         Returns formatted string with language and option
         (subtitles or voice acting or only interface localizated)
