@@ -112,10 +112,11 @@
             </section>
         </div>
         <div class="right__side">
-            <section class="cart__total">
+            <form action="" class="cart__total" method="POST">
+                {% csrf_token %}
                 <div class="main">
                     <h1 class="title">total</h1>
-                    <a href="" class="btn-primary">take order</a>
+                    <button class="btn-primary" disabled type="submit" id="checkout-button">take order</button>
                 </div>
                 <div class="price">
                     {% if total_amount %}
@@ -124,8 +125,36 @@
                     <h1 class="title">$0</h1>
                     {% endif %}
                 </div>
-            </section>
+            </form>
         </div>
     </div>
 </div>
 {% endblock %}
+    <script type="text/javascript">
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+        var checkoutButton = document.getElementById("checkout-button");
+        checkoutButton.addEventListener("click", function () {
+          fetch("{% url 'create-checkout' %}", {
+            method: "POST",
+            headers: {
+                'X-CSRFToken': csrftoken
+            }
+          })
+            .then(function (response) {
+              return response.json();
+            })
+            .then(function (session) {
+              return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(function (result) {
+              if (result.error) {
+                alert(result.error.message);
+              }
+            })
+            .catch(function (error) {
+              console.error("Payment error:", error);
+            });
+        });
+    </script>

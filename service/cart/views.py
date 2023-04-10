@@ -1,8 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import ListView
+import stripe
 
 from .models import Order
 from products.models import Customer, Favorite, Item
@@ -48,3 +51,45 @@ class CartPageView(LoginRequiredMixin, ListView):
         cart.save()
 
         return redirect('cart')
+
+
+class CreateCheckoutSessionView(View):
+    """Create cart checkout session view"""
+    domain = 'http://127.0.0.1:8000/'
+
+    def post(self, request, *args, **kwargs):
+        try:
+            customer = request.user.customer
+        except:
+            device = request.COOKIES['device']
+            customer, created = Customer.objects.get_or_create(device=device)
+        line_items = []
+        cart = Order.objects.get_or_create(customer=customer)
+        DOMAIN = self.domain
+        for item_id, amount in cart.items():
+            item = Item.objects.get(pk=item_id)
+            price = Item.get_price_stripe()
+            line_items.append({
+                {
+                    'price_data': {
+                        'currency': 'usd',
+                        'unit_amount': price,
+                        'product_data': {
+                            'name': item.name,
+                            'description': item.description
+                        }
+                    },
+                    'quantity': 1,
+                },
+            })
+
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=line_items,
+            mode='payment',
+            success_url=DOMAIN + 'success/',
+            cancel_url=DOMAIN + 'cancel/',
+        )
+        return JsonResponse({
+            'id': checkout_session.id
+        })

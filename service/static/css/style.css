@@ -1172,12 +1172,33 @@ header .link:hover {
     margin-top: 10px;
 }
 
+.other__products .active {
+    display: flex !important;
+}
+
 .other__products .addons {
     width: 100%;
     height: 100%;
-    display: flex;
+    display: none;
     justify-content: space-between;
     overflow: hidden;
+}
+
+.other__products .addons .addons__not-found {
+    border: 1px solid gainsboro;
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    background-color: gainsboro;
+}
+
+.addons__not-found .title {
+    font-size: 1em;
+    font-weight: 600;
+    color: grey;
 }
 
 .other__products .addon__link {
@@ -1380,6 +1401,10 @@ header .link:hover {
     overflow: hidden;
     transition: 0.3s;
     margin-bottom: 20px;
+}
+
+.requirements .not-found .title {
+    color: gainsboro;
 }
 
 .tech__requirements .requirements:nth-child(1) {
@@ -2124,6 +2149,7 @@ footer .footer__top .title {
     border-bottom-right-radius: 10px;
     border-top: dashed orange;
     padding: 15px;
+    width: 100%;
 }
 
 .review__form .radio__label {
@@ -2147,8 +2173,9 @@ footer .footer__top .title {
 .review__textarea {
     border: 2px solid gainsboro;
     padding: 15px;
-    transition: 0.1s;
     width: 100%;
+    max-width: 100%;
+    min-width: 100%;
     margin: 10px 0px;
 }
 
@@ -2161,7 +2188,7 @@ footer .footer__top .title {
     border: 2px solid orange;
 }
 
-.custom__radio {
+.stars__container .custom__radio {
   width: 20px;
   height: 20px;
   accent-color: grey;
@@ -2240,6 +2267,7 @@ footer .footer__top .title {
     margin-left: 0;
     border-radius: 10px;
     transition: 0.4s;
+    border: none;
 }
 
 .cart__total .main .btn-primary:hover {

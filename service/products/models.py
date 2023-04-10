@@ -254,14 +254,6 @@ class Genre(models.Model):
         return self.name
 
 
-class ItemDLC(models.Model):
-    """Product DLC model"""
-    name = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
-    price = models.IntegerField(default=0)  # in cents
-    product = models.ForeignKey(Item, verbose_name='Game', blank=True, on_delete=models.CASCADE)
-
-
 class Language(models.Model):
     """Language model"""
     class LanguageChoice(models.TextChoices):

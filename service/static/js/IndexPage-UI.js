@@ -11,3 +11,16 @@ function openGameCatalog() {
 }
 
 openGameCatalog();
+
+
+function openFullFilteringForm() {
+    const buttonOpen = document.getElementById('open-filter-form');
+    const filteringForm = document.getElementById('filtering-form');
+
+    buttonOpen.addEventListener('click', (e) => {
+        e.preventDefault();
+        filteringForm.classList.toggle('form__active');
+    })
+}
+
+openFullFilteringForm();

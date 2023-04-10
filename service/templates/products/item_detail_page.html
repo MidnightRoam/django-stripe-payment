@@ -182,7 +182,8 @@
             <section class="product__about">
                 <nav class="about__navigation">
                     <div class="left">
-                        <a href="" class="link active">Related games</a>
+                        <a href="" class="link active others__switcher">Related games</a>
+                        <a href="" class="link others__switcher">Series games</a>
                     </div>
                     <div class="right">
                         <a href="" class="about__link active">ABOUT GAME</a>
@@ -191,7 +192,8 @@
                 </nav>
                 <section class="main">
                     <div class="other__products">
-                        <div class="addons">
+                        <div class="addons active">
+                        {% if item.parent_game.all %}
                         {% for addon in item.parent_game.all %}
                             <a href="{{ addon.get_absolute_url }}"
                                class="addon__link"
@@ -220,6 +222,41 @@
                                 </form>
                             </a>
                         {% endfor %}
+                        {% else %}
+                            <section class="addons__not-found">
+                                <h2 class="title">This game doesn't have any DLC yet</h2>
+                            </section>
+                        {% endif %}
+                        </div>
+                        <div class="series__games">
+<!--                        {% for addon in item.parent_game.all %}-->
+<!--                            <a href="{{ addon.get_absolute_url }}"-->
+<!--                               class="addon__link"-->
+<!--                               {% if addon.poster.url %}-->
+<!--                               style="background-image: url('{{ addon.poster.url }}')"-->
+<!--                               {% else %}-->
+<!--                               style="background-image: url('{{ item.poster.url }}')"-->
+<!--                               {% endif %}-->
+<!--                            >-->
+<!--                                <div class="addon">-->
+<!--                                    <p class="title">ЬБУБ</p>-->
+<!--                                    <div class="price">-->
+<!--                                        <p class="value">{{ addon.get_discounted_price }}</p>-->
+<!--                                        {% if addon.discounts.exists %}-->
+<!--                                        <p class="discount">{{ addon.get_percent_discount }}</p>-->
+<!--                                        {% endif %}-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <form action="{% url 'item_detail' addon.pk %}" method="POST" class="to-cart__form">-->
+<!--                                 {% csrf_token %}-->
+<!--                                <input-->
+<!--                                        class="btn-primary {% if addon.amount < 1 %}disable{% endif %}"-->
+<!--                                        {% if not item.amount %} disabled {% endif %}-->
+<!--                                        type="submit" value="TO CART"-->
+<!--                                >-->
+<!--                                </form>-->
+<!--                            </a>-->
+<!--                        {% endfor %}-->
                         </div>
                     </div>
                     <div class="sub-info" id="product-sub-info">
@@ -229,6 +266,7 @@
                         </div>
                         <div class="tech__requirements hide" id="product-requirements">
                         <div class="requirements active" id="minimal-reqs">
+                            {% if item.minimal_system_requirements.all %}
                                 {% for minimal in item.minimal_system_requirements.all %}
                                 <div class="head">
                                     <p class="title">Minimal system requirements</p>
@@ -259,8 +297,14 @@
                                     <p class="value">{{ minimal.disk_space }} GB</p>
                                 </div>
                                 {% endfor %}
+                            {% else %}
+                                <div class="not-found">
+                                    <h1 class="title">This game has no minimal system requirements yet</h1>
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="requirements" id="recommended-reqs">
+                            {% if item.minimal_system_requirements.all %}
                                 {% for minimal in item.minimal_system_requirements.all %}
                                 <div class="head">
                                     <p class="title">Recommended system requirements</p>
@@ -291,6 +335,11 @@
                                     <p class="value">{{ minimal.disk_space }} GB</p>
                                 </div>
                                 {% endfor %}
+                            {% else %}
+                                <div class="not-found">
+                                    <h1 class="title">This game has no recommended system requirements yet</h1>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                     </div>

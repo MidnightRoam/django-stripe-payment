@@ -13,7 +13,6 @@ from .models import (
     GameTrailer,
     ItemDiscount,
     ItemPlatform,
-    ItemDLC,
     Language,
     ItemLocalization,
     MinimalSystemRequirements,
@@ -51,12 +50,6 @@ class RegionOfActivationInline(admin.TabularInline):
     """MinimalSystemRequirements in line admin model"""
     model = RegionOfActivation
     extra = 0
-
-
-# class GenreInline(admin.TabularInline):
-#     """MinimalSystemRequirements in line admin model"""
-#     model = Genre
-#     extra = 0
 
 
 @admin.register(Item)

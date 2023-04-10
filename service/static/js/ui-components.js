@@ -187,3 +187,21 @@ function openFullGameTechRequirements() {
 
 openFullGameTechRequirements();
 
+
+function switchOtherProductsSections() {
+    const switchers = document.querySelectorAll('.others__switcher');
+
+    switchers.forEach((switcher) => {
+        switcher.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchers.forEach((siblingSwitcher) => {
+                if (siblingSwitcher !== switcher) {
+                    siblingSwitcher.classList.remove('active');
+                }
+            })
+            switcher.classList.add('active');
+        })
+    })
+}
+
+switchOtherProductsSections();

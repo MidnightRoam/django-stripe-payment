@@ -29,7 +29,14 @@
                             {% for i in '54321'|make_list %}
                                 <div>
                                     <input type="radio" id="rate{{ i }}" name="rate" value="{{ i }}" class="custom__radio">
-                                    <label for="rate{{ i }}" class="radio__label">{{ i }}<img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="{{ i }}-star-rating"></label>
+                                    <label for="rate{{ i }}"
+                                           class="radio__label"
+                                    >{{ i }}
+                                        <img
+                                                src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png"
+                                                alt="{{ i }}-star-rating"
+                                    >
+                                    </label>
                                 </div>
                             {% endfor %}
                         </div>
