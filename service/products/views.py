@@ -53,13 +53,14 @@ class IndexPageView(DevelopersPublishers, ListView):
         # Выводим только те теги, за которыми закреплен хотя бы 1 продукт
         p = Paginator(Tag.objects.exclude(item__isnull=True).annotate(product_count=Count('item')), self.paginate_by)
         platforms = ItemPlatform.objects.all()
-        search_query = self.request.GET.get('q')
-        tag = self.kwargs.get('tag_slug')
-        platform = self.kwargs.get('platform_slug')
         items = Item.objects.prefetch_related('tags', 'discounts', 'platform').all()
         genres = Genre.objects.all()
         total_games = Item.objects.values('id').count()
         title = 'Pixel Playground'
+
+        search_query = self.request.GET.get('q')
+        tag = self.kwargs.get('tag_slug')
+        platform = self.kwargs.get('platform_slug')
 
         if tag:  # returns a list of products filtered by chosen tag
             items = Item.objects.prefetch_related('tags', 'discounts', 'platform').filter(tags__slug=tag)
@@ -137,11 +138,13 @@ class ProductPageDetailView(DetailView):
         added_to_favorites = Favorite.objects.filter(item=self.object).count()
         product_rating = ItemRating.objects.filter(item=self.object).aggregate(Avg('rate'))
         title = self.object.name
+        children = self.object.get_children()
         context.update({
             'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
             'title': f'{title}',
             'added_to_favorites': added_to_favorites,
             'product_rating': product_rating,
+            'children': children
         })
         return context
 

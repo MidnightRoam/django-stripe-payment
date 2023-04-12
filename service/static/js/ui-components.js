@@ -20,15 +20,18 @@ function showScreenshotPopup() {
 
 
     popupImg.forEach((popup) => {
-        popup.addEventListener('click', () => {
-            popup.classList.toggle('screenshot-open')
-            closePopup.classList.toggle('hide')
-            document.body.classList.toggle("stop-scrolling");
-        })
-
-        closePopup.addEventListener('click', () => {
-            popup.classList.remove('popup-close')
-        })
+        if (popup) {
+            popup.addEventListener('click', () => {
+                popup.classList.toggle('screenshot-open')
+                closePopup.classList.toggle('hide')
+                document.body.classList.toggle("stop-scrolling");
+            })
+        }
+        if (closePopup) {
+            closePopup.addEventListener('click', () => {
+                popup.classList.remove('popup-close')
+            })
+        }
     })
 }
 

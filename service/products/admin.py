@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.forms import TextInput
 from django.db import models
 from django.utils.safestring import mark_safe
+from mptt.admin import MPTTModelAdmin, DraggableMPTTAdmin
+from django_mptt_admin.admin import DjangoMpttAdmin
 
 from .models import (
     Item,
@@ -52,11 +54,12 @@ class RegionOfActivationInline(admin.TabularInline):
     extra = 0
 
 
-@admin.register(Item)
-class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'get_price', 'currency', 'amount', 'type', 'slug',  'get_poster', )
+class ItemAdmin(DjangoMpttAdmin):
+    list_display = ('id', 'name', 'get_price', 'currency', 'amount', 'type', 'slug',  'poster_is_exist', )
+    list_display_links = ('name', 'id')
     list_editable = ('currency', 'amount')
     search_fields = ('name', )
+    list_filter = ('amount', 'type')
 
     inlines = [
         ItemScreenshotInline,
@@ -93,6 +96,15 @@ class ItemAdmin(admin.ModelAdmin):
             return mark_safe(f"<img src={obj.poster.url} width='50' height='auto' object-fit='cover'")
         else:
             pass
+
+    def poster_is_exist(self, obj=None):
+        if obj.poster:
+            return "Poster is exist"
+        else:
+            return "Poster is not exist"
+
+
+admin.site.register(Item, ItemAdmin)
 
 
 @admin.register(Tag)

@@ -5,13 +5,14 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from mptt.models import MPTTModel, TreeForeignKey
 
 from .translate import from_cyrillic_to_latin
 
 from game_studios.models import Publisher, Developer
 
 
-class Item(models.Model):
+class Item(MPTTModel):
     """Product item model"""
     class ItemCurrency(models.TextChoices):
         """Product currency choices"""
@@ -46,8 +47,16 @@ class Item(models.Model):
     slug = models.SlugField(max_length=100, editable=False, default='')
     amount = models.IntegerField(default=0)
     type = models.CharField(max_length=15, choices=ItemType.choices, default=ItemType.game)
-    parent_game = models.ManyToManyField('self', null=True, blank=True, verbose_name="Parent game (if it's a DLC)")
+    parent = TreeForeignKey('self',
+                            on_delete=models.CASCADE,
+                            null=True,
+                            blank=True,
+                            verbose_name="Parent game (if it's a DLC)",
+                            related_name='children')
     series_games = models.ManyToManyField('self', null=True, blank=True, verbose_name="Series game")
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
 
     def save(self, *args, **kwargs):
         """Auto set slug field as item name"""

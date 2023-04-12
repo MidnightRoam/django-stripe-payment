@@ -1,0 +1,444 @@
+[
+  {
+    "model": "products.item",
+    "pk": 6,
+    "fields": {
+      "name": "Call of Duty: Modern Warfare II",
+      "tagline": "Game is coming",
+      "description": "Call of Duty: Modern Warfare II is a 2022 first-person shooter game developed by Infinity Ward and published by Activision. It is a sequel to the 2019 reboot, and serves as the nineteenth installment in the overall Call of Duty series.",
+      "price": 6999,
+      "currency": "$",
+      "poster": "products/product_posters/image_2023-02-16_155353814.jpg",
+      "status": "New",
+      "created": "2023-02-27T14:40:30.332Z",
+      "modified": "2023-02-27T14:40:30Z",
+      "slug": "call-of-duty-modern-warfare-ii",
+      "amount": 5,
+      "type": "Game",
+      "tags": [
+        2,
+        3,
+        6,
+        7,
+        8
+      ],
+      "genre": [
+        5,
+        9
+      ],
+      "platform": [
+        2
+      ],
+      "publisher": [
+        3
+      ],
+      "developer": [
+        6
+      ],
+      "parent_game": [],
+      "series_games": []
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 7,
+    "fields": {
+      "name": "Battlefield 2042 Premium",
+      "tagline": "Game is coming",
+      "description": "Battlefield 2042 marks the return to the iconic all-out warfare of the franchise. Adapt and overcome dynamically-changing battlegrounds with the help of your squad and a cutting-edge arsenal. With support for 128 players*, prepare for unprecedented scale on vast environments.",
+      "price": 6999,
+      "currency": "$",
+      "poster": "products/product_posters/image_2023-03-16_124651230_a93Ossi.jpg",
+      "status": "New",
+      "created": "2023-02-27T14:40:30.332Z",
+      "modified": "2023-02-27T14:40:30Z",
+      "slug": "battlefield-2042-premium",
+      "amount": 0,
+      "type": "Game",
+      "tags": [
+        2,
+        3,
+        7,
+        8
+      ],
+      "genre": [
+        5,
+        9
+      ],
+      "platform": [
+        3
+      ],
+      "publisher": [
+        1
+      ],
+      "developer": [
+        5
+      ],
+      "parent_game": [],
+      "series_games": []
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 8,
+    "fields": {
+      "name": "The Witcher 3",
+      "tagline": "Game is coming",
+      "description": "The Witcher 3: Wild Hunt is an action role-playing game with a third-person perspective. Players control Geralt of Rivia, a monster slayer known as a Witcher. Geralt walks, runs, rolls and dodges, and (for the first time in the series) jumps, climbs and swims.",
+      "price": 6999,
+      "currency": "$",
+      "poster": "products/product_posters/image_2023-02-16_165032853.jpg",
+      "status": "New",
+      "created": "2023-02-27T14:40:30.332Z",
+      "modified": "2023-02-27T14:40:30Z",
+      "slug": "the-witcher-3",
+      "amount": 5,
+      "type": "Game",
+      "tags": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "genre": [
+        8
+      ],
+      "platform": [
+        2,
+        7
+      ],
+      "publisher": [
+        4
+      ],
+      "developer": [
+        3
+      ],
+      "parent_game": [
+        21
+      ],
+      "series_games": []
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 9,
+    "fields": {
+      "name": "Battlefield 2042",
+      "tagline": "Game is coming",
+      "description": "Battlefield 2042 marks the return to the iconic all-out warfare of the franchise. Adapt and overcome dynamically-changing battlegrounds with the help of your squad and a cutting-edge arsenal. With support for 128 players*, prepare for unprecedented scale on vast environments.",
+      "price": 6999,
+      "currency": "$",
+      "poster": "products/product_posters/image_2023-03-16_124651230.jpg",
+      "status": "New",
+      "created": "2023-02-27T14:40:30.332Z",
+      "modified": "2023-02-27T14:40:30Z",
+      "slug": "battlefield-2042",
+      "amount": 5,
+      "type": "Game",
+      "tags": [
+        2,
+        3,
+        7,
+        8
+      ],
+      "genre": [
+        5,
+        9
+      ],
+      "platform": [
+        2,
+        3
+      ],
+      "publisher": [
+        1
+      ],
+      "developer": [
+        5
+      ],
+      "parent_game": [],
+      "series_games": []
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 15,
+    "fields": {
+      "name": "Hogwarts Legacy",
+      "tagline": "Game is coming",
+      "description": "Hogwarts Legacy is an immersive, open-world action RPG. Now you can take control of the action and be at the center of your own adventure in the wizarding world.",
+      "price": 6999,
+      "currency": "$",
+      "poster": "products/product_posters/image_2023-03-16_125319827.jpg",
+      "status": "New",
+      "created": "2023-02-27T14:40:30.332Z",
+      "modified": "2023-02-27T14:40:30Z",
+      "slug": "hogwarts-legacy",
+      "amount": 5,
+      "type": "Game",
+      "tags": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "genre": [
+        5,
+        7
+      ],
+      "platform": [
+        2,
+        7
+      ],
+      "publisher": [
+        8
+      ],
+      "developer": [
+        2,
+        11
+      ],
+      "parent_game": [],
+      "series_games": []
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 16,
+    "fields": {
+      "name": "The Elder Scrolls V: Skyrim",
+      "tagline": "Game is coming",
+      "description": "The Elder Scrolls V: Skyrim is an action role-playing game, playable from either a first- or third-person perspective. The player may freely roam over the land of Skyrim, an open world environment consisting of wilderness expanses, dungeons, caves, cities, towns, fortresses, and villages.",
+      "price": 2999,
+      "currency": "$",
+      "poster": "products/product_posters/image_2023-02-16_160759464.jpg",
+      "status": "New",
+      "created": "2023-02-27T14:40:30.332Z",
+      "modified": "2023-02-27T14:40:30Z",
+      "slug": "the-elder-scrolls-v-skyrim",
+      "amount": 5,
+      "type": "Game",
+      "tags": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "genre": [
+        5,
+        7
+      ],
+      "platform": [
+        2
+      ],
+      "publisher": [
+        5
+      ],
+      "developer": [
+        7
+      ],
+      "parent_game": [],
+      "series_games": []
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 17,
+    "fields": {
+      "name": "World of Warcraft: Dragonflight",
+      "tagline": "Game is coming",
+      "description": "Dragonflight is the latest expansion for World of Warcraft, taking place in a new \"massive\" Dragon Isles continent. Dragonflight is live now, launching on November 28, 2022. The Dragon Isles were sealed away magically by the Titans, but a surge of power has reawakened the magic beneath the land.",
+      "price": 3999,
+      "currency": "$",
+      "poster": "products/product_posters/image_2023-02-17_151003310.jpg",
+      "status": "New",
+      "created": "2023-02-27T14:40:30.332Z",
+      "modified": "2023-02-27T14:40:30Z",
+      "slug": "world-of-warcraft-dragonflight",
+      "amount": 5,
+      "type": "Game",
+      "tags": [
+        1,
+        5,
+        7
+      ],
+      "genre": [
+        5,
+        7
+      ],
+      "platform": [
+        2
+      ],
+      "publisher": [
+        3
+      ],
+      "developer": [
+        8
+      ],
+      "parent_game": [],
+      "series_games": []
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 18,
+    "fields": {
+      "name": "Cyberpunk 2077",
+      "tagline": "Game is coming",
+      "description": "Cyberpunk 2077 is an open-world, action-adventure story set in Night City, a megalopolis obsessed with power, glamour and body modification. You play as V, a mercenary outlaw going after a one-of-a-kind implant that is the key to immortality.",
+      "price": 5999,
+      "currency": "$",
+      "poster": "products/product_posters/image_2023-02-17_151205125.jpg",
+      "status": "New",
+      "created": "2023-02-27T14:40:30.332Z",
+      "modified": "2023-02-27T14:40:30Z",
+      "slug": "cyberpunk-2077",
+      "amount": 5,
+      "type": "Game",
+      "tags": [
+        1,
+        2,
+        5,
+        6
+      ],
+      "genre": [
+        5,
+        7,
+        9
+      ],
+      "platform": [
+        2
+      ],
+      "publisher": [
+        4
+      ],
+      "developer": [
+        3
+      ],
+      "parent_game": [],
+      "series_games": []
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 19,
+    "fields": {
+      "name": "Grand Theft Auto V",
+      "tagline": "Game is waiting!",
+      "description": "Grand Theft Auto V is an action-adventure game played from either a third-person or first-person perspective. Players complete missions�linear scenarios with set objectives�to progress through the story. Outside of the missions, players may freely roam the open world.",
+      "price": 1999,
+      "currency": "$",
+      "poster": "products/product_posters/image_2023-03-16_125154895.jpg",
+      "status": "New",
+      "created": "2023-02-27T14:40:30.332Z",
+      "modified": "2023-02-27T14:40:30Z",
+      "slug": "grand-theft-auto-v",
+      "amount": 5,
+      "type": "Game",
+      "tags": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "genre": [
+        5
+      ],
+      "platform": [
+        2
+      ],
+      "publisher": [
+        2
+      ],
+      "developer": [
+        4
+      ],
+      "parent_game": [],
+      "series_games": []
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 20,
+    "fields": {
+      "name": "Borderlands 3",
+      "tagline": "Game is coming",
+      "description": "The original shooter-looter returns, packing bazillions of guns and a mayhem-fueled adventure! Blast through new worlds and enemies as one of four new Vault Hunters.",
+      "price": 4999,
+      "currency": "$",
+      "poster": "products/product_posters/image_2023-03-16_125536732.jpg",
+      "status": "New",
+      "created": "2023-03-14T13:50:11.555Z",
+      "modified": "2023-03-14T13:49:24Z",
+      "slug": "borderlands-3",
+      "amount": 5,
+      "type": "Game",
+      "tags": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        8
+      ],
+      "genre": [
+        5,
+        8,
+        9
+      ],
+      "platform": [
+        3,
+        7
+      ],
+      "publisher": [
+        7
+      ],
+      "developer": [
+        9
+      ],
+      "parent_game": [],
+      "series_games": []
+    }
+  },
+  {
+    "model": "products.item",
+    "pk": 21,
+    "fields": {
+      "name": "The Witcher 3: Blood and Wine",
+      "tagline": "Game is waiting!",
+      "description": "Blood and Wine, a 20-hour-plus tale that will introduce the all-new in-game region of Toussaint, will take Geralt to a land untainted by war, where an atmosphere of carefree indulgence and knightly ritual masks an ancient, bloody secret.[3]",
+      "price": 2999,
+      "currency": "$",
+      "poster": "products/product_posters/the-witcher-3-blood-and-wine.webp",
+      "status": "New",
+      "created": "2023-04-05T15:55:42.001Z",
+      "modified": "2023-04-05T15:51:40Z",
+      "slug": "the-witcher-3-blood-and-wine",
+      "amount": 5,
+      "type": "DLC",
+      "tags": [
+        1,
+        6,
+        27
+      ],
+      "genre": [
+        7,
+        8
+      ],
+      "platform": [
+        2
+      ],
+      "publisher": [
+        4
+      ],
+      "developer": [
+        3
+      ],
+      "parent_game": [
+        8
+      ],
+      "series_games": []
+    }
+  }
+]
