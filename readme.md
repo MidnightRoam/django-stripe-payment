@@ -1,5 +1,6 @@
 # A few words about
 ### Online video game store with Stripe payment system connected, written in Python, Django as backend and CSS, JavaScript as frontend part
+### <a href="http://midnightdeveloper.pythonanywhere.com/">OPEN SITE IN BROWSER</a> (may not be available for a while)
 #### Что было реализовано на данный момент:
 #### Приложения:
 <ul>
@@ -47,8 +48,6 @@
     И другие...
 </ul>
 
-# Deployed application address
-### http://midnightlight.pythonanywhere.com (OLD RELEASE, NEW RELEASE IS COMING SOON)
 # Getting started
 ## Using Docker:
 #### 1. Select a hard drive location where the project will be located
