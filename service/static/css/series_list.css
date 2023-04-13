@@ -1,0 +1,90 @@
+/* Game series page styles */
+.series__page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid red;
+}
+
+.series__page .series__list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.series__page .page__title {
+    display: flex;
+    height: 150px;
+    margin-bottom: 50px;
+    align-items: end;
+    position: relative;
+}
+
+.page__title .underline {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    height: 7px;
+    width: 700px;
+    position: absolute;
+    bottom: -20%;
+    right: -40%;
+
+}
+
+.series__page .page__title .name {
+    font-size: 3em;
+    font-weight: 600;
+    color: #252525;
+}
+
+.series__page .page__title .value {
+    font-size: 3em;
+    font-weight: 600;
+    color: #fbbb43;
+    margin-left: 15px;
+}
+
+.series__list .series__card {
+    width: 200px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    align-items: center;
+    position: relative;
+    margin: 10px;
+}
+
+.series__card .title {
+    font-size: 1em;
+    position: absolute;
+    top: -10%;
+    opacity: 0;
+    transition: 0.3s;
+    font-weight: 600;
+    background-color: grey;
+    padding: 2px 5px;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.series__image {
+    background: no-repeat center center;
+    background-size: cover;
+    object-fit: cover;
+    transition: 0.2s;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: inherit;
+}
+
+.series__card:hover .title {
+    opacity: 1;
+    top: 5%;
+}

@@ -1,0 +1,74 @@
+<aside class="popup__catalog" id="items-catalog">
+        <section class="series">
+            <h1 class="title">GAME SERIES</h1>
+            <ul class="list">
+                {% for series in game_series %}
+                     <li class="element">
+                         <a href="{{ series.get_absolute_url }}" class="link">
+                             {{ series.name }}
+                         </a>
+                     </li>
+                {% endfor %}
+                <li class="total">
+                    <a href="{% url 'series_list' %}" class="link">
+                        All game series -
+                        {{ view.total_game_series }}
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <section class="genres">
+            <h1 class="title">GENRES</h1>
+            <ul class="list">
+                {% for genre in genres %}
+                     <li class="genre">
+                         <a href="{{ genre.get_absolute_url }}" class="link">
+                             {{ genre.name }}
+                         </a>
+                     </li>
+                {% endfor %}
+                <li class="total">
+                    <a href="{% url 'index' %}" class="link">
+                        All games -
+                        {{ total_genres }}
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <section class="publishers">
+            <h1 class="title">PUBLISHERS</h1>
+            <ul class="list">
+                {% for publisher in view.get_publishers %}
+                     <li class="publisher">
+                         <a href="{% url 'publisher' publisher.slug %}" class="link">
+                             {{ publisher.name }}
+                         </a>
+                     </li>
+                {% endfor %}
+                <li class="total">
+                    <a href="" class="link">
+                        All publishers -
+                        {{ view.total_publishers }}
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <section class="developers">
+            <h1 class="title">DEVELOPERS</h1>
+            <ul class="list">
+                {% for developer in view.get_developers %}
+                     <li class="developer">
+                         <a href="{% url 'developer' developer.slug %}" class="link">
+                             {{ developer.name }}
+                         </a>
+                     </li>
+                {% endfor %}
+                <li class="total">
+                    <a href="" class="link">
+                        All developers -
+                        {{ view.total_developers }}
+                    </a>
+                </li>
+            </ul>
+        </section>
+</aside>

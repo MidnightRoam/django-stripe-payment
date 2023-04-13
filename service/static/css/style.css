@@ -208,7 +208,7 @@ header .link:hover {
 
 .products__page {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     flex-wrap: wrap;
     min-height: 969px;
     width: 100%;
@@ -739,6 +739,34 @@ header .link:hover {
     color: orange;
 }
 
+.popup__catalog .series {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup__catalog .series .list {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    text-transform: uppercase;
+}
+
+.popup__catalog .series .element {
+    margin-bottom: 25px;
+}
+
+.popup__catalog .series .element .link {
+    font-size: 1.1em;
+    color: #fff;
+    margin-left: 0;
+    transition: 0s;
+}
+
+.popup__catalog .series .element .link:hover {
+    color: orange;
+    text-decoration: underline;
+}
+
 /* Product detail page styles */
 .product-detail__wrapper {
     display: flex;
@@ -1157,6 +1185,25 @@ header .link:hover {
     cursor: zoom-in;
 }
 
+.product__sub-info .screenshots .screenshot__placeholder {
+    width: 700px;
+    height: 395px;
+    border-radius: 10px;
+    margin-right: 30px;
+    background-color: gainsboro;
+}
+
+.screenshots .screenshot__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.screenshots .screenshot__placeholder .title {
+    color: grey;
+    font-size: 1.5em;
+}
+
 .product__about {
     margin-top: 50px;
     width: 80%;
@@ -1183,6 +1230,16 @@ header .link:hover {
     justify-content: space-between;
     overflow: hidden;
 }
+
+.other__products .series__games {
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    overflow: hidden;
+    display: flex;
+    display: none;
+}
+
 
 .other__products .addons .addons__not-found {
     border: 1px solid gainsboro;
@@ -1751,6 +1808,15 @@ footer .footer__top .title {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
+.footer__bot .center {
+    padding: 15px 0px 15px 0px;
+}
+
+.footer__bot .center .fa {
+    margin-right: 15px;
+    color: #fff;
+}
+
 .footer__bot .img__payment {
     margin: 10px;
 }
@@ -1845,10 +1911,10 @@ footer .footer__top .title {
 
 .form__search .btn-primary {
     position: absolute;
-    top: 1.5%;
-    left: -170px;
+    color: #252525;
+    left: -120px;
     background-color: gainsboro;
-    font-weight: 500;
+    font-weight: 600;
     border: 2px solid gainsboro;
     height: 45px;
     border-radius: 20px;
@@ -1890,7 +1956,9 @@ footer .footer__top .title {
 .search__input:focus {
     opacity: 1;
     color: #252525;
-    box-shadow: 0px 0px 50px 45px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.25);
+    box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.25);
 }
 
 .search__input::placeholder {
@@ -2819,9 +2887,7 @@ footer .footer__top .title {
     }
     .hamb__field {
         padding: 4px 8px;
-        border-radius: 10px;
         cursor: pointer;
-        border: 1px solid #fff;
     }
     .bar {
         display: block;

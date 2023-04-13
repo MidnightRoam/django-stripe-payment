@@ -13,7 +13,7 @@ from products.models import Customer, Favorite, Item
 
 class CartPageView(LoginRequiredMixin, ListView):
     """Cart page view"""
-    template_name = 'products/cart_page.html'
+    template_name = 'cart/cart_page.html'
     login_url = reverse_lazy('login')
 
     def get(self, request, *args, **kwargs):
@@ -28,7 +28,7 @@ class CartPageView(LoginRequiredMixin, ListView):
         total_amount = cart.item.aggregate(total_amount=Sum('price') / 100)['total_amount']
         favorites = Favorite.objects.filter(user=request.user).select_related('item')
 
-        return render(request, 'products/cart_page.html', {
+        return render(request, 'cart/cart_page.html', {
             'cart': cart,
             'items': items,
             'total_amount': total_amount,

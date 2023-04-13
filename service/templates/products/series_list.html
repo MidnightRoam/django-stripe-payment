@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{ title }} {% endblock %}
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/series_list.css' %}">
+{% endblock %}
+{% block content %}
+<div class="container series__page">
+    {% include 'include/search_bar.html' %}
+    <div class="page__title">
+        <p class="name">GAME SERIES</p>
+        <p class="value">{{ view.total_game_series }}</p>
+        <hr class="underline" />
+    </div>
+    <section class="series__list">
+    {% for series in game_series %}
+        <a class="series__card" href="{{ series.get_absolute_url }}">
+            <h2 class="title">{{ series.name }}</h2>
+            <div class="series__image" style='background-image: url("{{ series.image.url }}")'></div>
+        </a>
+    {% endfor %}
+    </section>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/IndexPage-UI.js' %}"></script>
+{% endblock %}

@@ -35,6 +35,7 @@ class Item(MPTTModel):
     description = models.TextField()
     price = models.IntegerField(default=0)  # in cents
     currency = models.CharField(max_length=20, choices=ItemCurrency.choices, default=ItemCurrency.USD)
+    series = models.ForeignKey('Series', blank=True, null=True, verbose_name='Series', on_delete=models.SET_NULL)
     tags = models.ManyToManyField('Tag', verbose_name='Game tags')
     genre = models.ManyToManyField('Genre', verbose_name='Game genres')
     platform = models.ManyToManyField('ItemPlatform')
@@ -144,6 +145,36 @@ class Item(MPTTModel):
         if self.amount < 1:
             result = 'SOLD OUT'
         return result
+
+
+class Series(models.Model):
+    """Game series model"""
+    name = models.CharField(max_length=124)
+    description = models.TextField()
+    image = models.ImageField(upload_to='products/series_screenshots', blank=True)
+    slug = models.SlugField(editable=False, default='')
+
+    class Meta:
+        verbose_name = 'Series'
+        verbose_name_plural = "Series"
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        """Auto set slug field as series name"""
+        bad_symbols = ['.', ',', ':', '!', '@', '?']
+        result_slug = ''
+        if not self.slug:
+            for i in self.name:
+                if i not in bad_symbols:
+                    result_slug += i
+            self.slug = from_cyrillic_to_latin(str(result_slug))
+        super(Series, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        """Returns absolute url for each game series"""
+        return reverse('series_detail', kwargs={'series_slug': self.slug})
 
 
 class ItemScreenshot(models.Model):

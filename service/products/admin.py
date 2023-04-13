@@ -20,6 +20,7 @@ from .models import (
     MinimalSystemRequirements,
     RegionOfActivation,
     Region,
+    Series,
 )
 
 admin.site.site_header = "Pixel Playground | Administration"
@@ -153,3 +154,9 @@ class LanguageAdmin(admin.ModelAdmin):
 class RegionAdmin(admin.ModelAdmin):
     """Game region of activation admin model"""
     pass
+
+
+@admin.register(Series)
+class SeriesAdmin(admin.ModelAdmin):
+    """Game series admin model"""
+    list_display = ('name', 'slug', )

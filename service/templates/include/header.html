@@ -18,9 +18,9 @@
         <a href="{% url 'index' %}" class="link">Store</a>
         <a href="{% url 'news' %}" class="link">News</a>
         {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}" class="link">Logout</a>
+        <a href="{% url 'logout' %}" class="link fa fa-sign-out"></a>
         {% else %}
-        <a href="{% url 'login' %}" class="link">Sign In</a>
+        <a href="{% url 'login' %}" class="link fa fa-sign-in"></a>
         {% endif %}
     </ul>
 </header>

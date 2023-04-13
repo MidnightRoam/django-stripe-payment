@@ -158,17 +158,12 @@
                             </div>
                         {% endfor %}
                     {% else %}
-                        {% for addon in item.parent_game.all %}
-                            {% for screenshot in addon.screenshots.all %}
-                            <div class="popup">
-                                <p class="cross hide" id="screenshot-close">&#10006;</p>
-                                <img src="{{ screenshot.image.url }}"
-                                     alt="{{ screenshot.item.name }}"
-                                     class="screenshot"
-                                >
-                            </div>
-                            {% endfor %}
-                        {% endfor %}
+                        <div class="screenshot__placeholder">
+                            <h1 class="title">There are no screenshots available yet</h1>
+                        </div>
+                        <div class="screenshot__placeholder">
+                            <h1 class="title">There are no screenshots available yet</h1>
+                        </div>
                     {% endif %}
                 </div>
                 <div class="trailers" id="trailer-popup">
@@ -184,7 +179,7 @@
                 <nav class="about__navigation">
                     <div class="left">
                         <a href="" class="link active others__switcher">Related games</a>
-                        <a href="" class="link others__switcher">Series games</a>
+                        <a href="" class="link others__switcher">Game series</a>
                     </div>
                     <div class="right">
                         <a href="" class="about__link active">ABOUT GAME</a>
@@ -193,7 +188,7 @@
                 </nav>
                 <section class="main">
                     <div class="other__products">
-                        <div class="addons active">
+                        <div class="addons active related__games">
                         {% if children %}
                             {% recursetree children %}
                                     <a href="{{ node.get_absolute_url }}"
@@ -255,36 +250,18 @@
                             </section>
                         {% endif %}
                         </div>
-                        <div class="series__games">
-<!--                        {% for addon in item.parent_game.all %}-->
-<!--                            <a href="{{ addon.get_absolute_url }}"-->
-<!--                               class="addon__link"-->
-<!--                               {% if addon.poster.url %}-->
-<!--                               style="background-image: url('{{ addon.poster.url }}')"-->
-<!--                               {% else %}-->
-<!--                               style="background-image: url('{{ item.poster.url }}')"-->
-<!--                               {% endif %}-->
-<!--                            >-->
-<!--                                <div class="addon">-->
-<!--                                    <p class="title">ЬБУБ</p>-->
-<!--                                    <div class="price">-->
-<!--                                        <p class="value">{{ addon.get_discounted_price }}</p>-->
-<!--                                        {% if addon.discounts.exists %}-->
-<!--                                        <p class="discount">{{ addon.get_percent_discount }}</p>-->
-<!--                                        {% endif %}-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <form action="{% url 'item_detail' addon.pk %}" method="POST" class="to-cart__form">-->
-<!--                                 {% csrf_token %}-->
-<!--                                <input-->
-<!--                                        class="btn-primary {% if addon.amount < 1 %}disable{% endif %}"-->
-<!--                                        {% if not item.amount %} disabled {% endif %}-->
-<!--                                        type="submit" value="TO CART"-->
-<!--                                >-->
-<!--                                </form>-->
-<!--                            </a>-->
-<!--                        {% endfor %}-->
+                        {% if item.series %}
+                        <div class="series__games related__games">
+                            <a href="{{ item.series.get_absolute_url }}"
+                               style="background-image: url('{{ item.series.image.url }}')"
+                               class="addon__link"
+                            >
+                                <div class="addon">
+                                    <p class="title">{{ item.series.name }}</p>
+                                </div>
+                            </a>
                         </div>
+                        {% endif %}
                     </div>
                     <div class="sub-info" id="product-sub-info">
                         <div class="description" id="product-description">
@@ -407,4 +384,5 @@
         });
     </script>
     <script src="{% static 'js/ui-components.js' %}"></script>
+    <script src="{% static 'js/gameDetailPage-UI.js' %}"></script>
 {% endblock %}

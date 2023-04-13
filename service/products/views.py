@@ -11,7 +11,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
 
-from .models import Item, Tag, Customer, Favorite, ItemScreenshot, ItemPlatform, Genre
+from .models import Item, Tag, Customer, Favorite, ItemScreenshot, ItemPlatform, Genre, Series
 from game_studios.models import Developer, Publisher
 from cart.models import Order
 from reviews.models import ItemRating
@@ -38,6 +38,10 @@ class DevelopersPublishers:
         """Return a number of publishers"""
         return Publisher.objects.values('id').count()
 
+    def total_game_series(self):
+        """Return a number of game series"""
+        return Series.objects.values('id').count()
+
 
 class IndexPageView(DevelopersPublishers, ListView):
     """
@@ -56,6 +60,7 @@ class IndexPageView(DevelopersPublishers, ListView):
         items = Item.objects.prefetch_related('tags', 'discounts', 'platform').all()
         genres = Genre.objects.all()
         total_games = Item.objects.values('id').count()
+        game_series = Series.objects.all()
         title = 'Pixel Playground'
 
         search_query = self.request.GET.get('q')
@@ -84,6 +89,7 @@ class IndexPageView(DevelopersPublishers, ListView):
             'total_genres': total_games,
             'tags': p.page(context['page_obj'].number),
             'platforms': platforms,
+            'game_series': game_series,
             'title': title,
         })
         return context
@@ -231,3 +237,44 @@ class JsonFilterGamesView(ListView):
 #         )
 #         return items
 
+
+class GameSeriesListView(DevelopersPublishers, ListView):
+    """List of game series"""
+    model = Series
+    template_name = 'products/series_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        title = 'Game series'
+        game_series = Series.objects.all()
+
+        series_name = self.request.GET.get('q')
+        if series_name:
+            game_series = Series.objects.filter(Q(name__icontains=series_name))
+
+        context.update({
+            'title': f'{title}',
+            'game_series': game_series
+        })
+        return context
+
+
+class GameSeriesDetailView(DetailView):
+    """Detail page of game series"""
+    model = Series
+    template_name = 'products/series_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        title = self.object.name
+        context.update({
+            'title': title,
+
+        })
+        return context
+
+    def get_object(self):
+        """Returns a Series object"""
+        slug = self.kwargs.get('series_slug')
+        return get_object_or_404(Series, slug=slug)
