@@ -188,70 +188,56 @@
                 </nav>
                 <section class="main">
                     <div class="other__products">
-                        <div class="addons active related__games">
-                        {% if children %}
-                            {% recursetree children %}
-                                    <a href="{{ node.get_absolute_url }}"
-                                       class="addon__link"
-                                       style="background-image: url('{{ node.poster.url }}')"
-                                    >
+                        <section class="addons active related__games">
+                            {% if children %}
+                                {% recursetree children %}
+                                    <a href="{{ node.get_absolute_url }}" class="addon__link addon__switcher" style="background-image: url('{{ node.poster.url }}')">
                                         <div class="addon">
                                             <p class="title">{{ node.name }}</p>
                                             <div class="price">
                                                 <p class="value">{{ node.get_discounted_price }}</p>
                                                 {% if node.discounts.exists %}
-                                                <p class="discount">{{ node.get_percent_discount }}</p>
+                                                    <p class="discount">{{ node.get_percent_discount }}</p>
                                                 {% endif %}
                                             </div>
                                         </div>
                                         <form action="{% url 'item_detail' node.pk %}" method="POST" class="to-cart__form">
-                                         {% csrf_token %}
-                                        <input
-                                                class="btn-primary {% if node.amount < 1 %}disable{% endif %}"
-                                                {% if not item.amount %} disabled {% endif %}
-                                                type="submit" value="TO CART"
-                                        >
+                                            {% csrf_token %}
+                                            <input class="btn-primary {% if node.amount < 1 %}disable{% endif %}" {% if not item.amount %} disabled {% endif %} type="submit" value="TO CART">
+                                        </form>
+                                        {% if node.is_leaf_node %}
+                                            <ul class="children">
+                                                {{ children.name }}
+                                            </ul>
+                                        {% endif %}
+                                    </a>
+                                {% endrecursetree %}
+                            {% elif object.get_ancestors %}
+                                {% for ancestor in object.get_ancestors %}
+                                    <a href="{{ ancestor.get_absolute_url }}" class="addon__link" style="background-image: url('{{ ancestor.poster.url }}')">
+                                        <div class="addon">
+                                            <p class="title">{{ ancestor.name }}</p>
+                                            <div class="price">
+                                                <p class="value">{{ ancestor.get_discounted_price }}</p>
+                                                {% if ancestor.discounts.exists %}
+                                                    <p class="discount">{{ ancestor.get_percent_discount }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <form action="{% url 'item_detail' ancestor.pk %}" method="POST" class="to-cart__form">
+                                            {% csrf_token %}
+                                            <input class="btn-primary {% if ancestor.amount < 1 %}disable{% endif %}" {% if not item.amount %} disabled {% endif %} type="submit" value="TO CART">
                                         </form>
                                     </a>
-                                    {% if node.is_leaf_node %}
-                                        <ul class="children">
-                                            {{ children.name }}
-                                        </ul>
-                                    {% endif %}
-                            {% endrecursetree %}
-                        {% elif object.get_ancestors %}
-                            {% for ancestor in object.get_ancestors %}
-                            <a href="{{ ancestor.get_absolute_url }}"
-                               class="addon__link"
-                               style="background-image: url('{{ ancestor.poster.url }}')"
-                            >
-                                <div class="addon">
-                                    <p class="title">{{ ancestor.name }}</p>
-                                    <div class="price">
-                                        <p class="value">{{ ancestor.get_discounted_price }}</p>
-                                        {% if ancestor.discounts.exists %}
-                                        <p class="discount">{{ ancestor.get_percent_discount }}</p>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                <form action="{% url 'item_detail' ancestor.pk %}" method="POST" class="to-cart__form">
-                                 {% csrf_token %}
-                                <input
-                                        class="btn-primary {% if ancestor.amount < 1 %}disable{% endif %}"
-                                        {% if not item.amount %} disabled {% endif %}
-                                        type="submit" value="TO CART"
-                                >
-                                </form>
-                            </a>
-                            {% endfor %}
-                        {% else %}
-                            <section class="addons__not-found">
-                                <h2 class="title">This game doesn't have any DLC yet</h2>
-                            </section>
-                        {% endif %}
-                        </div>
+                                {% endfor %}
+                            {% else %}
+                                <section class="addons__not-found">
+                                    <h2 class="title">This game doesn't have any DLC yet</h2>
+                                </section>
+                            {% endif %}
+                        </section>
                         {% if item.series %}
-                        <div class="series__games related__games">
+                        <section class="series__games related__games">
                             <a href="{{ item.series.get_absolute_url }}"
                                style="background-image: url('{{ item.series.image.url }}')"
                                class="addon__link"
@@ -260,8 +246,12 @@
                                     <p class="title">{{ item.series.name }}</p>
                                 </div>
                             </a>
-                        </div>
+                        </section>
                         {% endif %}
+                        <section class="others__controls">
+                            <p id="other-products-left" class="fa fa-arrow-left control"></p>
+                            <p id="other-products-right" class="fa fa-arrow-right control"></p>
+                        </section>
                     </div>
                     <div class="sub-info" id="product-sub-info">
                         <div class="description" id="product-description">

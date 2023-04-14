@@ -39,3 +39,34 @@ function otherSectionsActive() {
     })
 }
 
+function addonsSectionSlider() {
+    // Слайдер для прокрутки списка связанных с игрой игр
+    const switcherLeft = document.getElementById('other-products-left');
+    const switcherRight = document.getElementById('other-products-right');
+    const addons = document.querySelectorAll('.addon__switcher');
+    let offset = 0
+
+    switcherLeft.addEventListener('click', () => {
+        if (offset >= 0) {
+            offset -= 50 * (addons.length - 1)
+        } else {
+            offset += 50;
+        }
+        addons.forEach(addon => {
+            addon.style.left = `${offset}%`
+        })
+    });
+
+    switcherRight.addEventListener('click', () => {
+        if (offset <= -(50 * (addons.length - 1))) {
+            offset = 0;
+        } else {
+            offset -= 50;
+        }
+        addons.forEach(addon => {
+            addon.style.left = `${offset}%`
+        })
+    });
+}
+
+addonsSectionSlider();

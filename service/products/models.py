@@ -361,9 +361,9 @@ class MinimalSystemRequirements(models.Model):
         version_9 = 'Version 9'
         version_8 = 'Version 8'
 
-    os = models.CharField(max_length=50, default='Windows 10', verbose_name='OS')
-    processor = models.CharField(max_length=60, default='Intel', verbose_name='Processor')
-    graphics_card = models.CharField(max_length=150, default='NVIDIA or AMD', verbose_name='Graphics card')
+    os = models.CharField(max_length=50, default='No data', verbose_name='OS')
+    processor = models.CharField(max_length=60, default='No data', verbose_name='Processor')
+    graphics_card = models.CharField(max_length=150, default='No data', verbose_name='Graphics card')
     ram = models.IntegerField(max_length=150, choices=RamChoices.choices, default=RamChoices.four, verbose_name='RAM')
     directx = models.CharField(max_length=50,
                                choices=DirectxChoices.choices,

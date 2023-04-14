@@ -1213,10 +1213,43 @@ header .link:hover {
 }
 
 .product__about .other__products {
-    width: 400px;
+    width: 405px;
     height: 300px;
     overflow: hidden;
     margin-top: 10px;
+    margin-bottom: 70px;
+}
+
+.other__products .others__controls {
+    position: absolute;
+    width: 400px;
+    padding: 0px 0px;
+    margin-top: 25px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.other__products .others__controls .control {
+    color: #252525;
+    border: 3px solid #252525;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0px 10px 0px 10px;
+    padding: 20px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.others__controls .control:hover {
+    color: orange;
+    border-color: orange;
+    font-size: 1.5em;
+    cursor: pointer;
 }
 
 .other__products .active {
@@ -1228,7 +1261,6 @@ header .link:hover {
     height: 100%;
     display: none;
     justify-content: space-between;
-    overflow: hidden;
 }
 
 .other__products .series__games {
@@ -1271,6 +1303,7 @@ header .link:hover {
     box-shadow: inset 0px -102px 15px -18px rgba(0,0,0,0.91);
     text-decoration: none;
     position: relative;
+    transition: 0.3s;
 }
 
 .addon__link .to-cart__form {
@@ -1304,6 +1337,8 @@ header .link:hover {
     align-items: start;
     padding: 10px;
     transition: 0.1s;
+    left: 0;
+    position: relative;
 }
 .other__products .addon__link:hover .btn-primary {
     display: block;

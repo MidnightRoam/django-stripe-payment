@@ -60,12 +60,14 @@ function sliderGameScreenshots() {
     let offset = 0
 
     left.addEventListener('click', () => {
-    if (offset >= 0) return
+    if (offset >= 0) {
+        offset -= 100 * (screenshots.length - 1 )
+    } else {
         offset += 100;
+    }
         screenshots.forEach(screenshot => {
           screenshot.style.left = `${offset}%`;
         });
-        console.log('right')
     });
 
     right.addEventListener('click', () => {
@@ -76,7 +78,6 @@ function sliderGameScreenshots() {
         screenshots.forEach(screenshot => {
           screenshot.style.left = `${offset}%`;
         });
-        console.log('left')
     });
 }
 
@@ -95,7 +96,6 @@ function sliderGameTrailers() {
         screenshots.forEach(screenshot => {
           screenshot.style.left = `${offset}%`;
         });
-        console.log('right')
     });
 
     right.addEventListener('click', () => {
@@ -106,7 +106,6 @@ function sliderGameTrailers() {
         screenshots.forEach(screenshot => {
           screenshot.style.left = `${offset}%`;
         });
-        console.log('left')
     });
 }
 
