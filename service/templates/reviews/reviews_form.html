@@ -56,7 +56,7 @@
                     <p class="review__text">{{ review.text }}</p>
                     <p class="review__date">{{ review.created_at }}</p>
                 </div>
-                <p class="review__rate">Rate: {{ review.rate }}</p>
+                <p class="review__rate">{{ review.rate }} / 5</p>
             </div>
             {% endfor %}
             {% else %}

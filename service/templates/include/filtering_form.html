@@ -1,0 +1,61 @@
+<form action="" class="form__filtering" id="filtering-form" method="get" name="filter">
+    <section class="main__content">
+        <div class="left">
+            <select class="select__main select" name="order_by">
+                <option value="name">By alphabet</option>
+                <option value="price">Cheapest first</option>
+                <option value="-price">Expensive first</option>
+                <option value="-discounts">Discounts first</option>
+            </select>
+            <select class="select" name="genre">
+                <option value="">All genres</option>
+                {% for genre in genres %}
+                    <option value="{{ genre.slug }}">{{ genre.name }}</option>
+                {% endfor %}
+            </select>
+            <select class="select" name="prices">
+                <option value="">All prices</option>
+                <option value="3000">Up to 30$</option>
+                <option value="2000">Up to 20$</option>
+                <option value="1000">Up to 10$</option>
+            </select>
+        </div>
+        <div class="right">
+            <a href="{% url 'index' %}" class="btn-title">Clear</a>
+            <button class="btn-primary" id="open-filter-form">All filters</button>
+            <button class="btn-primary" type="submit">Sort</button>
+        </div>
+    </section>
+    <section class="hidden__content" id="hidden-content">
+        <select class="select" name="platforms">
+            <option value="">All platforms</option>
+            {% for platform in platforms %}
+                <option value="{{ platform.slug }}">{{ platform.name }}</option>
+            {% endfor %}
+        </select>
+        <select class="select" name="region">
+            <option value="">All regions</option>
+            {% for region in regions %}
+                <option value="{{ region.id }}">{{ region }}</option>
+            {% endfor %}
+        </select>
+        <select class="select" name="publishers">
+            <option value="">All publishers</option>
+            {% for publisher in view.get_publishers %}
+                <option value="{{ publisher.slug }}">{{ publisher.name }}</option>
+            {% endfor %}
+        </select>
+        <select class="select" name="developers">
+            <option value="">All developers</option>
+            {% for developer in view.get_developers %}
+                <option value="{{ developer.slug }}" name="developer">{{ developer.name }}</option>
+            {% endfor %}
+        </select>
+        <select class="select" name="tags">
+            <option value="">All tags</option>
+            {% for tag in tags %}
+                <option value="{{ tag.slug }}" name="tag">{{ tag.name }}</option>
+            {% endfor %}
+        </select>
+    </section>
+</form>

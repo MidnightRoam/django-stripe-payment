@@ -1,4 +1,6 @@
 from django.core.validators import FileExtensionValidator
+from django.db.models import Avg
+
 from django.db.models.fields import related
 from django.utils import timezone
 from django.contrib.auth.models import User

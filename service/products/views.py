@@ -11,7 +11,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView, ListView, DetailView, FormView, CreateView
 
-from .models import Item, Tag, Customer, Favorite, ItemScreenshot, ItemPlatform, Genre, Series
+from .models import Item, Tag, Customer, Favorite, ItemScreenshot, ItemPlatform, Genre, Series, Region
 from game_studios.models import Developer, Publisher
 from cart.models import Order
 from reviews.models import ItemRating
@@ -62,6 +62,7 @@ class IndexPageView(DevelopersPublishers, ListView):
         total_games = Item.objects.values('id').count()
         game_series = Series.objects.all()
         title = 'Pixel Playground'
+        regions = Region.objects.all()
 
         search_query = self.request.GET.get('q')
         tag = self.kwargs.get('tag_slug')
@@ -83,6 +84,33 @@ class IndexPageView(DevelopersPublishers, ListView):
                 .prefetch_related('tags', 'discounts', 'platform')
             title = 'Search results'
 
+        order_by = self.request.GET.get('order_by')
+        genre_filter = self.request.GET.get('genre')
+        platform_filter = self.request.GET.get('platforms')
+        prices_filter = self.request.GET.get('prices')
+        region_filter = self.request.GET.get('region')
+        publishers_filter = self.request.GET.get('publishers')
+        developers_filter = self.request.GET.get('developers')
+        tags_filter = self.request.GET.get('tags')
+
+        if genre_filter:
+            items = items.filter(genre__slug=genre_filter)
+        if prices_filter:
+            items = items.filter(price__lte=int(prices_filter))
+        if platform_filter:
+            items = items.filter(platform__slug=platform_filter)
+        if region_filter:
+            items = items.filter(regions=region_filter)
+        if publishers_filter:
+            items = items.filter(publisher__slug=publishers_filter)
+        if developers_filter:
+            items = items.filter(developer__slug=developers_filter)
+        if tags_filter:
+            items = items.filter(tags__slug=tags_filter)
+
+        if order_by:
+            items = items.order_by(order_by)
+
         context.update({
             'items': items,
             'genres': genres,
@@ -91,6 +119,7 @@ class IndexPageView(DevelopersPublishers, ListView):
             'platforms': platforms,
             'game_series': game_series,
             'title': title,
+            'regions': regions,
         })
         return context
 
@@ -224,18 +253,31 @@ class JsonFilterGamesView(ListView):
         return JsonResponse({'items': queryset}, safe=False)
 
 
-# class FilterGamesListView(ListView):
-#     template_name = 'products/index.html'
-#
-#     """Filter games"""
-#     def get_queryset(self):
-#         items = Item.objects.filter(
-#             Q(developer__in=self.request.GET.getlist("developer")) |
-#             Q(publisher__in=self.request.GET.getlist("publisher")) |
-#             Q(tags__in=self.request.GET.getlist("tag")) |
-#             Q(name__in=self.request.GET.getlist("name"))
-#         )
-#         return items
+class FilterGamesListView(ListView):
+    template_name = 'products/index.html'
+
+    """Filter games"""
+    def get_queryset(self):
+        items = Item.objects.filter(
+            Q(genre_slug__in=self.request.GET.get("genre_filter")) |
+            Q(platform_slug__in=self.request.GET.get("platform_filter"))
+        )
+
+        return items
+
+        # order_by = self.request.GET.get('order_by')
+        # genre_filter = self.request.GET.get('genre_filter')
+        # platform_filter = self.request.GET.get('platforms')
+        # prices_filter = self.request.GET.get('prices')
+        #
+        # if order_by:
+        #     items = items.order_by(order_by)
+        # if genre_filter:
+        #     items = items.filter(genre__slug=genre_filter)
+        # if prices_filter:
+        #     items = items.filter(price__lte=int(prices_filter))
+        # if platform_filter:
+        #     items = items.filter(platform__slug=platform_filter)
 
 
 class GameSeriesListView(DevelopersPublishers, ListView):

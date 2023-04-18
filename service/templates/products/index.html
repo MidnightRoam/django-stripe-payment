@@ -5,64 +5,7 @@
 <div class="container products__page">
     {% include 'include/sidebar.html' %}
     {% include 'include/platforms_section.html' %}
-    <form action="{% url 'json_filter' %}" class="form__filtering" id="filtering-form" method="get" name="filter">
-            <section class="main__content">
-                <div class="left">
-                    <select class="select__main select">
-                        <option value="price-asc">Cheapest first</option>
-                        <option value="price-desc">Expensive first</option>
-                        <option value="discount">Only with discount</option>
-                        <option value="alphabet">By alphabet</option>
-                        <option value="rating">By rating</option>
-                    </select>
-                    <select class="select" name="genres">
-                        <option value="all-genres">All genres</option>
-                        {% for genre in genres %}
-                        <option name="genre" value="{{ genre.id }}">{{ genre.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <select class="select">
-                        <option>All prices</option>
-                        <option value="up-to-20-prices">Up to 20$</option>
-                        <option value="up-to-10-prices">Up to 10$</option>
-                    </select>
-                </div>
-                <div class="right">
-                    <a href="{% url 'index' %}" class="btn-title">Clear</a>
-                    <button class="btn-primary" id="open-filter-form">All filters</button>
-                </div>
-            </section>
-            <section class="hidden__content" id="hidden-content">
-                <select class="select" name="platforms">
-                    <option value="all-platforms">All platforms</option>
-                    {% for platform in platforms %}
-                        <option value="{{ plaform.id }}" name="platform">{{ platform.name }}</option>
-                    {% endfor %}
-                </select>
-                <select class="select" name="regions">
-                    <option value="all-regions">All regions</option>
-                    <option value="cis-region">Russia, Ukraine and CIS</option>
-                </select>
-                <select class="select" name="publishers">
-                    <option value="all-publishers">All publishers</option>
-                    {% for publisher in view.get_publishers %}
-                        <option value="{{ publisher.id }}" name="publisher">{{ publisher.name }}</option>
-                    {% endfor %}
-                </select>
-                <select class="select" name="developers">
-                    <option value="all-developers">All developers</option>
-                    {% for developer in view.get_developers %}
-                        <option value="{{ developer.id }}" name="developer">{{ developer.name }}</option>
-                    {% endfor %}
-                </select>
-                <select class="select" name="tags">
-                    <option value="all-tags">All tags</option>
-                    {% for tag in tags %}
-                        <option value="{{ tag.id }}" name="tag">{{ tag.name }}</option>
-                    {% endfor %}
-                </select>
-            </section>
-        </form>
+    {% include 'include/filtering_form.html' %}
     {% include 'include/catalog_popup.html' %}
     {% if items %}
     <section class="products">

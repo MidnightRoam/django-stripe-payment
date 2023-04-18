@@ -11,6 +11,7 @@ from .views import (
     GameSeriesListView,
     GameSeriesDetailView,
     JsonFilterGamesView,
+    FilterGamesListView
 )
 
 urlpatterns = [
@@ -27,5 +28,5 @@ urlpatterns = [
     path('success/', SuccessView.as_view(), name='success'),
     path('cancel/', CancelView.as_view(), name='cancel'),
     path('json-filter/', JsonFilterGamesView.as_view(), name='json_filter'),
-    # path('filter/', FilterGamesListView.as_view(), name='filter'),
+    path('filter/', FilterGamesListView.as_view(), name='filter'),
 ]
