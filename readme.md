@@ -45,6 +45,7 @@
     <li>Celery</li>
     <li>Redis</li>
     <li>Stripe API</li>
+    <li>Django MPTT</li>
     И другие...
 </ul>
 
