@@ -1,40 +1,40 @@
 # A few words about
 ### Online video game store with Stripe payment system connected, written in Python, Django as backend and CSS, JavaScript as frontend part
 ### <a href="http://uladzislau.pythonanywhere.com/">OPEN SITE IN BROWSER</a>
-#### Что было реализовано на данный момент:
-#### Приложения:
+#### What has been implemented so far:
+#### Apps:
 <ul>
-    <li>Продукты</li>
-    <li>Пользователи</li>
-    <li>Корзина</li>
-    <li>Новости</li>
-    <li>Отзывы</li>
-    <li>Издатели и разработчики</li>
+    <li>Products</li>
+    <li>Accounts</li>
+    <li>Cart</li>
+    <li>News</li>
+    <li>Reviews</li>
+    <li>Publishers and developers</li>
 </ul>
 
-#### Функционал:
+#### Some of the features:
 <ul>
-    <li>Покупка товаров через Stripe API, используя сессии</li>
-    <li>Поиск товаров по базе данных</li>
-    <li>Фильтрация по тэгам и платформам активации продукта</li>
-    <li>Авторизация и регистрация пользователя, включая регистрацию и вход через GitHub</li>
-    <li>Новости, которые добавляются в базу данных через парсинг новостных сайтов</li>
-    <li>Вывод скриншотов, трейлеров и всей полной информации на странице товара</li>
-    <li>Отзывы об товаре</li>
-    <li>Расчет и вывод среднего рейтинга продукта</li>
-    <li>Возможность добавления товара в избранное или корзину и вывод количества людей, добавившие товар в избранное</li>
-    <li>Скидочный функционал</li>
-    <li>Информация об локализации товара, его системные требования</li>
-    И многое другое...
+    <li>Purchase of products through Stripe API, using sessions</li>
+    <li>Search for products in the database</li>
+    <li>Extensive filtering of products by many criteria</li>
+    <li>User authorization and registration, including registration and login through GitHub</li>
+    <li>News that is added to the database through parsing of news websites</li>
+    <li>Display of screenshots, trailers, and all full information on the product page</li>
+    <li>Product reviews</li>
+    <li>Calculation and display of the average product rating</li>
+    <li>Option to add products to favorites or cart and display the number of people who added the product to their favorites</li>
+    <li>Discount functionality</li>
+    <li>Information about the localization of the product, its system requirements</li>
+    And much more!
 </ul>
 
-#### Другое
+#### Additional
 <ul>
-    <li>Дизайн</li>
-    <li>Верстка</li>
+    <li>Design</li>
+    <li>Layout</li>
 </ul>
 
-#### Инструменты разработки
+#### Tools of development
 <ul>
     <li>Python</li>
     <li>Django</li>
@@ -46,7 +46,7 @@
     <li>Redis</li>
     <li>Stripe API</li>
     <li>Django MPTT</li>
-    И другие...
+    And others...
 </ul>
 
 # Getting started
