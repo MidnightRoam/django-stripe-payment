@@ -1,6 +1,6 @@
 # A few words about
 ### Online video game store with Stripe payment system connected, written in Python, Django as backend and CSS, JavaScript as frontend part
-### <a href="http://uladzislau.pythonanywhere.com/">OPEN SITE IN BROWSER</a> (may not be available for a while)
+### <a href="http://uladzislau.pythonanywhere.com/">OPEN SITE IN BROWSER</a>
 #### Что было реализовано на данный момент:
 #### Приложения:
 <ul>
