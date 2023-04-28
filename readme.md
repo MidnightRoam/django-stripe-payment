@@ -1,5 +1,5 @@
 # A few words about Pixel Playground
-### Online video game store with Stripe payment system connected, written in Python, Django as backend and CSS, JavaScript as frontend part
+### Ecommerce video game store with Stripe payment system connected, written in Python, Django as backend and CSS, JavaScript as frontend part
 ### <a href="http://uladzislau.pythonanywhere.com/">OPEN SITE IN BROWSER</a>
 #### What has been implemented so far:
 #### Apps:
