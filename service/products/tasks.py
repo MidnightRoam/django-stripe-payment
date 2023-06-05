@@ -12,6 +12,5 @@ def delete_expired_discounts():
     items = ItemDiscount.objects.filter(end_date__lte=current_time)
     if items:
         items.delete()
-        print('Удалено')
     else:
-        print('Удалять нечего')
+        pass
